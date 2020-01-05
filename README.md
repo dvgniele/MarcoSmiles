@@ -26,10 +26,12 @@
 
 <a name="changelog"></a>
 ## Changelog
+```
 > Version -> 0.1
 - Project Started
 - Creating basic UI
 - Hand Visualization
+```
 
 
 <a name="workingon"></a>
