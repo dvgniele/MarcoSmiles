@@ -14,7 +14,7 @@
 
 <a name="features"></a>
 ## Features 
-> implemented and to implement
+> ##### implemented and to implement
 
 - [ ] Possibility to save hands positions
 - [x] Hand Position Camera
