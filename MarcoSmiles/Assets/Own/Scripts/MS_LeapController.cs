@@ -21,7 +21,7 @@ public class MS_LeapController : MonoBehaviour
         controller = new Controller();
 
         controller.Device += MS_LeapListener.OnLeapConnect;
-        //controller.FrameReady += MS_LeapListener.OnFrame;
+        controller.FrameReady += MS_LeapListener.OnFrame;
 
 
     }

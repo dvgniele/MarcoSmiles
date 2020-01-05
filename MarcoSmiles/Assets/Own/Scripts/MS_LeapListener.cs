@@ -45,13 +45,17 @@ public class MS_LeapListener : MonoBehaviour
         {
             var handType = hand.IsRight ? "Right Hand" : "Left Hand";
 
-            Debug.Log($"{handType}, Hand id: {hand.Id}, palm position: {hand.PalmPosition}, fingers: {hand.Fingers.Count}");
+            //Debug.Log($"{handType}, Hand id: {hand.Id}, palm position: {hand.PalmPosition}");
 
             Vector normal = hand.PalmNormal;
             Vector direction = hand.Direction;
-            Debug.Log($"Hand pitch: {direction.Pitch * 180.0f / (float)Mathf.PI} degrees," +
-                $" roll: {normal.Roll * 180.0f / (float)Mathf.PI} degrees," +
-                $" yaw: {direction.Yaw * 180.0f / (float)Mathf.PI} degrees");
+            Debug.Log($"{handType},   Hand id: {hand.Id},   Palm position: {hand.PalmPosition}," +
+                $"      Hand pitch: {direction.Pitch * 180.0f / (float)Mathf.PI} degrees," +
+                $"      Hand Roll: {normal.Roll * 180.0f / (float)Mathf.PI} degrees," +
+                $"      Hand Yaw: {direction.Yaw * 180.0f / (float)Mathf.PI} degrees" +
+                $"      ");
+
+            var kek = hand.Fingers[1].
 
             // hand.Fingers[3].bones[2].Direction.Yaw
 
