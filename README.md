@@ -42,15 +42,15 @@
 
 <a name="developedby"></a>
 ## Developed By
-* [Daniele Perrella](github.com/dvgniele)
-* [Antonino Manuele Gargiulo](github.com/gepp4)
-* [Gianluca Mannini](github.com/gmann7)
-under supervision of
-* [Rocco Zaccagnino]() 
+> * [Daniele Perrella](github.com/dvgniele)
+> * [Antonino Manuele Gargiulo](github.com/gepp4)
+> * [Gianluca Mannini](github.com/gmann7)
+> #### under supervision of
+> * [Rocco Zaccagnino]() 
 
 
 <a name="wiki"></a>
-> Project
+## Wiki
+> #### The Project
 - This Project is dedicated to all people who can't play a real instrument due to their disability.
 - It's developed with Unity3D and requires the user to have the [LeapMotion Controller](https://www.leapmotion.com/) to work.
-- 
