@@ -36,9 +36,9 @@
 
 <a name="workingon"></a>
 ## Working On
-> Basic UI
+### Basic UI
 - hand visualization avaiable with some basic informations.
-> Hand Data Rapresentation
+### Hand Data Rapresentation
 - we need another hand data rapresentation to save hands position into a dataset.
 
 
