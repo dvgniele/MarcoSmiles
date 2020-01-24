@@ -55,7 +55,7 @@ public class MS_LeapListener : MonoBehaviour
                 $"      Hand Yaw: {direction.Yaw * 180.0f / (float)Mathf.PI} degrees" +
                 $"      ");
 
-            var kek = hand.Fingers[1].
+            //var kek = hand.Fingers[1];
 
             // hand.Fingers[3].bones[2].Direction.Yaw
 
