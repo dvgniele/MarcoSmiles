@@ -32,10 +32,12 @@ public class MS_LeapListener : MonoBehaviour
 
         Frame frame = args.frame;
 
+        /*
         Debug.Log($"" +
             $"Frame id: {frame.Id}," +
             $"timestamp: {frame.Timestamp}," +
             $" hands: {frame.Hands.Count}");
+            */
 
 
         //  per ogni mano, sceglie se è dx o sx, e stampa i seguenti dati
@@ -49,15 +51,37 @@ public class MS_LeapListener : MonoBehaviour
 
             Vector normal = hand.PalmNormal;
             Vector direction = hand.Direction;
-            Debug.Log($"{handType},   Hand id: {hand.Id},   Palm position: {hand.PalmPosition}," +
+
+            /*
+            Debug.Log($"{handType},   Hand id: {hand.Id},   Palm position: {hand.PalmPosition},     Palm rotation: {hand.PalmPosition.}" +
                 $"      Hand pitch: {direction.Pitch * 180.0f / (float)Mathf.PI} degrees," +
                 $"      Hand Roll: {normal.Roll * 180.0f / (float)Mathf.PI} degrees," +
                 $"      Hand Yaw: {direction.Yaw * 180.0f / (float)Mathf.PI} degrees" +
                 $"      ");
 
-            //var kek = hand.Fingers[1];
+             */
 
-            // hand.Fingers[3].bones[2].Direction.Yaw
+            //  FF Finger Flection
+            //  angolo tra metacarpo (bones[0]) e falange intermedia (bones[2])
+            //var kek = DatasetHandler.getFF(hand.Fingers[1]);                   //  utilizzando classe DatasetHandler
+            //var kek = hand.Fingers[1].bones[0].Direction.AngleTo(hand.Fingers[1].bones[2].Direction) *180.0f / (float)Mathf.PI;
+
+
+            //  NFA Nearest Fingers Angles
+            //  angolo tra dita
+            var kek = DatasetHandler.getNFA(hand.Fingers[1], hand.Fingers[2]);   //  utilizzando classe DatasetHandler
+
+
+
+            //  distanza tra mani
+            //var kek = frame.Hands[0].Direction.DistanceTo(frame.Hands[1].Direction);
+
+
+
+            Debug.Log($"{handType}, angle: {kek}, flesso: {hand.Fingers[1].IsExtended}");
+
+
+            //hand.Fingers[3].bones[2].Direction.Yaw
 
 
         }
