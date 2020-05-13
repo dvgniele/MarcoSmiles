@@ -80,6 +80,7 @@ public class MS_LeapListener : MonoBehaviour
 
             Debug.Log($"{handType}, angle: {kek}, flesso: {hand.Fingers[1].IsExtended}");
 
+            
 
             //hand.Fingers[3].bones[2].Direction.Yaw
 

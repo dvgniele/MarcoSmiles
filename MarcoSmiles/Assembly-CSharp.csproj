@@ -298,6 +298,7 @@
     <Compile Include="Assets\LeapMotion\Modules\UIInput\Scripts\Utilities\SliderVolume.cs" />
     <Compile Include="Assets\LeapMotion\Modules\UIInput\Scripts\Utilities\ToggleToggler.cs" />
     <Compile Include="Assets\Own\Scripts\DatasetHandler.cs" />
+    <Compile Include="Assets\Own\Scripts\Geppa.cs" />
     <Compile Include="Assets\Own\Scripts\MS_LeapController.cs" />
     <Compile Include="Assets\Own\Scripts\MS_LeapListener.cs" />
     <None Include="Assets\LeapMotion\Core\Resources\LeapCG.cginc" />
