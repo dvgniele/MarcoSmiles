@@ -9,7 +9,7 @@ public class DatasetHandler : MonoBehaviour
 {
     public static float getFF(Finger f)
     {
-        return grads(f.bones[0].Direction.AngleTo(f.bones[2].Direction));
+        return grads(f.bones[0].Direction.AngleTo(f.bones[3].Direction));
     }
 
     public static float getNFA(Finger f1, Finger f2)
