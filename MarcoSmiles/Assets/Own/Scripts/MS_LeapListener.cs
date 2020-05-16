@@ -69,8 +69,15 @@ public class MS_LeapListener : MonoBehaviour
 
             //  NFA Nearest Fingers Angles
             //  angolo tra dita
-            var kek = DatasetHandler.getNFA(hand.Fingers[1], hand.Fingers[2]);   //  utilizzando classe DatasetHandler
+            //var kek = DatasetHandler.getNFA(hand.Fingers[1], hand.Fingers[2]);   //  utilizzando classe DatasetHandler
+            //            Debug.Log($"{handType}, angle: {kek}, flesso: {hand.Fingers[1].IsExtended}");
 
+
+
+            //  TESTTTTTTT
+            //  angolo palmo dito
+            var kek = DatasetHandler.getFPA(hand, hand.Fingers[2]);
+            Debug.Log($"{handType}, angle: {kek}");
 
 
             //  distanza tra mani
@@ -78,9 +85,10 @@ public class MS_LeapListener : MonoBehaviour
 
 
 
-            Debug.Log($"{handType}, angle: {kek}, flesso: {hand.Fingers[1].IsExtended}");
 
-            
+
+
+
 
             //hand.Fingers[3].bones[2].Direction.Yaw
 
