@@ -77,7 +77,9 @@ public class MS_LeapListener : MonoBehaviour
             //  TESTTTTTTT
             //  angolo palmo dito
             var kek = DatasetHandler.getFPA(hand, hand.Fingers[2]);
-            Debug.Log($"{handType}, angle: {kek}");
+            //Debug.Log($"{handType}, angle: {kek}");
+
+            //Debug.Log($"PALM SEGMENT: {kek}");
 
 
             //  distanza tra mani

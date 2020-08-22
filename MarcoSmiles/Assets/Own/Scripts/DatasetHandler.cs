@@ -25,10 +25,19 @@ public class DatasetHandler : MonoBehaviour
     /// NON FUNZIONA BENEEEEEE
     /// </summary>
     /// <param name="h1">MANOOOOO</param>
-    /// <param name="f1">DITOOOOOOO</param>
+    /// <param name="f1">DITOOOOOOO</param> 
     public static float getFPA(Hand h1, Finger f1)
     {
-        return grads(h1.Direction.AngleTo(f1.Direction));
+        var segment = h1.Fingers[0].Direction;
+
+        var palmSegment = h1.PalmPosition;
+
+        //Debug.Log($"PALM SEGMENT: {palmSegment.ToString()}");
+
+        Debug.Log($"VETTORE DIREZZZIONE DI UN DITO: {h1.Fingers[1].Direction.ToString()}");
+
+        //return grads(h1.Direction.AngleTo(f1.Direction));
+        return 0.0f;
     }
     
     #endregion
