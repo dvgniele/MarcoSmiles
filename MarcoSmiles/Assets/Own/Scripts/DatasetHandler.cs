@@ -34,7 +34,7 @@ public class DatasetHandler : MonoBehaviour
 
         //Debug.Log($"PALM SEGMENT: {palmSegment.ToString()}");
 
-        Debug.Log($"VETTORE DIREZZZIONE DI UN DITO: {h1.Fingers[1].Direction.ToString()}");
+        //Debug.Log($"VETTORE DIREZZZIONE DI UN DITO: {h1.Fingers[1].Direction.ToString()}");
 
         //return grads(h1.Direction.AngleTo(f1.Direction));
         return 0.0f;

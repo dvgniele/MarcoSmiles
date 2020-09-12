@@ -18,10 +18,13 @@ public class TrainingScript : MonoBehaviour
     */
     private void FUNZIONE_DI_GEPAO()
     {
-        DataToStore skrt = new DataToStore(DatasetHandler.getFF(_GM.hand_R.Fingers[1]), DatasetHandler.getNFA(_GM.hand_R.Fingers[1], _GM.hand_R.Fingers[2]));
+        var skrt = new DataToStore(DatasetHandler.getFF(_GM.hand_R.Fingers[1]), DatasetHandler.getNFA(_GM.hand_R.Fingers[1], _GM.hand_R.Fingers[2]));
 
         FileUtils.Save(skrt);
         Debug.Log(skrt.ToString());
+
+        var skrt2 = FileUtils.Load();
+        Debug.Log("load" + skrt2.ToString());
     }
 
 
