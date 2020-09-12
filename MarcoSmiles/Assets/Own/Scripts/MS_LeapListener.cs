@@ -47,9 +47,18 @@ public class MS_LeapListener : MonoBehaviour
         {
             var handType = hand.IsRight ? "Right Hand" : "Left Hand";
 
-            //Debug.Log($"{handType}, Hand id: {hand.Id}, palm position: {hand.PalmPosition}");
+            if (hand.IsRight)
+                _GM.hand_R = hand;
+            else
+            {
+                if (hand.IsLeft)
+                    _GM.hand_L = hand;
+            }
 
-            Vector normal = hand.PalmNormal;
+
+                //Debug.Log($"{handType}, Hand id: {hand.Id}, palm position: {hand.PalmPosition}");
+
+                Vector normal = hand.PalmNormal;
             Vector direction = hand.Direction;
 
             /*

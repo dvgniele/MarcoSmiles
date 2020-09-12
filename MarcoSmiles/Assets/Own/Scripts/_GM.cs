@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Leap;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Hosting;
 using UnityEngine;
@@ -7,6 +8,8 @@ using UnityEngine.SceneManagement;
 public class _GM : MonoBehaviour
 {
     public TrainingScript trainer;
+    public static Hand hand_R;
+    public static Hand hand_L;
 
     // Start is called before the first frame update
     void Start()
