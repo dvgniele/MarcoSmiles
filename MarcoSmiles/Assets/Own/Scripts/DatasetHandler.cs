@@ -8,11 +8,23 @@ using Leap;
 public class DatasetHandler : MonoBehaviour
 {
     #region Getters
+
+    /// <summary>
+    /// Analizza la flessione di un dito
+    /// </summary>
+    /// <param name="f">Dito da analizzare</param>
+    /// <returns></returns>
     public static float getFF(Finger f)
     {
         return grads(f.bones[0].Direction.AngleTo(f.bones[3].Direction));
     }
 
+    /// <summary>
+    /// Analizza l'angolo tra le coppie di dita
+    /// </summary>
+    /// <param name="f1">Dito 1</param>
+    /// <param name="f2">Dito 2</param>
+    /// <returns></returns>
     public static float getNFA(Finger f1, Finger f2)
     {
         return grads(f1.Direction.AngleTo(f2.Direction));
