@@ -78,6 +78,8 @@ public static class FileUtils
 
     private static string GeneratePath(string filename)
     {
+        Debug.Log($"{path}/{filename}.gepao");
+
         return $"{path}/{filename}.gepao";
     }
 }
