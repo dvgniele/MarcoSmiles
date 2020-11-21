@@ -6,7 +6,6 @@ using Leap;
 [System.Serializable]
 public class DataToStore
 {
-    public long ID { get; set; }
     public Hand hand { get; set; }
     public float FF1 { get; set; }
     public float FF2 { get; set; }
@@ -20,8 +19,6 @@ public class DataToStore
 
     public DataToStore(Hand hand, float FF1, float FF2, float FF3, float FF4, float FF5, float NFA1, float NFA2, float NFA3, float NFA4)
     {
-        this.ID = ID;
-
         this.hand = hand;
 
         this.FF1 = FF1;
@@ -38,7 +35,7 @@ public class DataToStore
 
     public override string ToString()
     {
-        return base.ToString() + $"ID: {ID}," +
+        return base.ToString() +
             $" Hand: {hand}," +
             $" FF1: {FF1}"+
             $" FF2: {FF2}"+

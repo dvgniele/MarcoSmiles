@@ -11,14 +11,14 @@ public class _GM : MonoBehaviour
     public static Hand hand_R;
     public static Hand hand_L;
 
-    public static List<DataToStore> listaRobaccia;
+    public static List<Position> list_posizioni;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        listaRobaccia = new List<DataToStore>();
-        listaRobaccia = FileUtils.LoadList();
+        list_posizioni = new List<Position>();
+        //list_posizioni = FileUtils.LoadList();
     }
 
     // Update is called once per frame

@@ -11,8 +11,12 @@ public class TrainingScript : MonoBehaviour
     public Text recording_Text;
     public Text position_Text;
 
+    [Range(0,11)]
+    [SerializeField]
+    public int currentNoteId;
+
     int count = 3;
-    int record_count = 5;
+    int record_count = 3;
 
     bool counting_flag = false;
     bool recording_flag = false;
@@ -27,6 +31,7 @@ public class TrainingScript : MonoBehaviour
         GEPPA LAVORA IN QUESTA
 
     */
+    /*
     private void FUNZIONE_DI_GEPAO()
     {
         var skrt = new DataToStore(
@@ -49,11 +54,24 @@ public class TrainingScript : MonoBehaviour
         var skrt2 = FileUtils.Load();
         Debug.Log("load" + skrt2.ToString());
     }
-
+    */
 
     private void FUNZIONE_DI_GEPAO_2()
     {
-        var skrt = new DataToStore(
+        var left_hand = new DataToStore(
+            _GM.hand_R,
+            DatasetHandler.getFF(_GM.hand_L.Fingers[0]),
+            DatasetHandler.getFF(_GM.hand_L.Fingers[1]),
+            DatasetHandler.getFF(_GM.hand_L.Fingers[2]),
+            DatasetHandler.getFF(_GM.hand_L.Fingers[3]),
+            DatasetHandler.getFF(_GM.hand_L.Fingers[4]),
+
+            DatasetHandler.getNFA(_GM.hand_L.Fingers[0], _GM.hand_L.Fingers[1]),
+            DatasetHandler.getNFA(_GM.hand_L.Fingers[1], _GM.hand_L.Fingers[2]),
+            DatasetHandler.getNFA(_GM.hand_L.Fingers[2], _GM.hand_L.Fingers[3]),
+            DatasetHandler.getNFA(_GM.hand_L.Fingers[3], _GM.hand_L.Fingers[4]));
+
+        var right_hand = new DataToStore(
             _GM.hand_R,
             DatasetHandler.getFF(_GM.hand_R.Fingers[0]),
             DatasetHandler.getFF(_GM.hand_R.Fingers[1]),
@@ -66,9 +84,7 @@ public class TrainingScript : MonoBehaviour
             DatasetHandler.getNFA(_GM.hand_R.Fingers[2], _GM.hand_R.Fingers[3]),
             DatasetHandler.getNFA(_GM.hand_R.Fingers[3], _GM.hand_R.Fingers[4]));
 
-            skrt.ID = _GM.listaRobaccia.Count;
-
-        _GM.listaRobaccia.Add(skrt);
+        _GM.list_posizioni.Add(new Position(left_hand: left_hand, right_hand: right_hand, id: currentNoteId));
     }
 
 
@@ -84,6 +100,7 @@ public class TrainingScript : MonoBehaviour
         if(!counting_flag)
         {
             count = 4;
+            record_count = 5;
 
             StartCoroutine(Waiter());
             counting_flag = true;
@@ -104,10 +121,22 @@ public class TrainingScript : MonoBehaviour
         else
         {
             counting_flag = false;
-
+        
             StartCoroutine(WaiterRecording());
+            
         }
 
+    }
+
+    IEnumerator NewWaiter()
+    {
+        if(record_count>0)
+        {
+            Debug.Log(record_count--);
+
+            yield return new WaitForSeconds(0.5f);
+            StartCoroutine(NewWaiter());
+        }
     }
 
     IEnumerator WaiterRecording()
@@ -115,10 +144,10 @@ public class TrainingScript : MonoBehaviour
         if (record_count > 0)
         {
             record_count--;
-            recording_Text.text = count.ToString();
-            position_Text.text = text1;
+            recording_Text.text = record_count.ToString();
+            position_Text.text = text2;
 
-
+            
             yield return new WaitForSeconds(1f);
 
             //try
@@ -133,7 +162,7 @@ public class TrainingScript : MonoBehaviour
             FUNZIONE_DI_GEPAO_2();
 
 
-            StartCoroutine(Waiter());
+            StartCoroutine(WaiterRecording());
         }
         else
         {
@@ -144,16 +173,19 @@ public class TrainingScript : MonoBehaviour
 
             recording_flag = false;
 
-            FileUtils.Save(_GM.listaRobaccia);
+            FileUtils.Save(_GM.list_posizioni);
+
+            /*
 
             var skrt2 = FileUtils.LoadList();
 
             Debug.Log($"lista attuale: {skrt2.Count.ToString()}");
             Debug.Log($"lista caricata: {_GM.listaRobaccia.Count.ToString()}");
+            */
 
-            foreach(var item in _GM.listaRobaccia)
+            foreach(var item in _GM.list_posizioni)
             {
-                Debug.Log(item.ToString());
+                //Debug.Log(item.ToString());
             }
         }
     }
