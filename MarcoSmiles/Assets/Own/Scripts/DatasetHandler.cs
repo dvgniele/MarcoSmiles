@@ -13,10 +13,12 @@ public class DatasetHandler : MonoBehaviour
     /// Analizza la flessione di un dito
     /// </summary>
     /// <param name="f">Dito da analizzare</param>
+    /// <param name="isThumb">vero se è pollice, falso altrimenti</param>
     /// <returns></returns>
-    public static float getFF(Finger f)
+    public static float getFF(Finger f, bool isThumb = false)
     {
-        return grads(f.bones[0].Direction.AngleTo(f.bones[3].Direction));
+        return (isThumb) ? grads(f.bones[1].Direction.AngleTo(f.bones[3].Direction)) :
+            grads(f.bones[0].Direction.AngleTo(f.bones[3].Direction));
     }
 
     /// <summary>

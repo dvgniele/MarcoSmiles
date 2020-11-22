@@ -19,7 +19,7 @@ public class TrainingScript : MonoBehaviour
     int record_count = 3;
 
     const int COUNT_DEF = 3;
-    const int RECORD_COUNT_DEF = 120;
+    const int RECORD_COUNT_DEF = 10;
 
     bool counting_flag = false;
     bool recording_flag = false;
@@ -63,7 +63,7 @@ public class TrainingScript : MonoBehaviour
     {
         var left_hand = new DataToStore(
             _GM.hand_R,
-            DatasetHandler.getFF(_GM.hand_L.Fingers[0]),
+            DatasetHandler.getFF(_GM.hand_L.Fingers[0], true),
             DatasetHandler.getFF(_GM.hand_L.Fingers[1]),
             DatasetHandler.getFF(_GM.hand_L.Fingers[2]),
             DatasetHandler.getFF(_GM.hand_L.Fingers[3]),
@@ -76,7 +76,7 @@ public class TrainingScript : MonoBehaviour
 
         var right_hand = new DataToStore(
             _GM.hand_R,
-            DatasetHandler.getFF(_GM.hand_R.Fingers[0]),
+            DatasetHandler.getFF(_GM.hand_R.Fingers[0], true),
             DatasetHandler.getFF(_GM.hand_R.Fingers[1]),
             DatasetHandler.getFF(_GM.hand_R.Fingers[2]),
             DatasetHandler.getFF(_GM.hand_R.Fingers[3]),
