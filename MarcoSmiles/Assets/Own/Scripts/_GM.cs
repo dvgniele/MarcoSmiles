@@ -14,20 +14,16 @@ public class _GM : MonoBehaviour
     public static List<Position> list_posizioni;
 
 
-    // Start is called before the first frame update
     void Start()
     {
         list_posizioni = new List<Position>();
         //list_posizioni = FileUtils.LoadList();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
-
-
 
 
 

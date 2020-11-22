@@ -19,7 +19,7 @@ public class TrainingScript : MonoBehaviour
     int record_count = 3;
 
     const int COUNT_DEF = 3;
-    const int RECORD_COUNT_DEF = 120;
+    const int RECORD_COUNT_DEF = 250;
 
     bool counting_flag = false;
     bool recording_flag = false;
@@ -29,37 +29,7 @@ public class TrainingScript : MonoBehaviour
 
 
 
-    /*
-    
-        GEPPA LAVORA IN QUESTA
-
-    */
-    /*
-    private void FUNZIONE_DI_GEPAO()
-    {
-        var skrt = new DataToStore(
-            _GM.hand_R,
-            DatasetHandler.getFF(_GM.hand_R.Fingers[0]),
-            DatasetHandler.getFF(_GM.hand_R.Fingers[1]),
-            DatasetHandler.getFF(_GM.hand_R.Fingers[2]),
-            DatasetHandler.getFF(_GM.hand_R.Fingers[3]),
-            DatasetHandler.getFF(_GM.hand_R.Fingers[4]),
-
-            DatasetHandler.getNFA(_GM.hand_R.Fingers[0], _GM.hand_R.Fingers[1]),
-            DatasetHandler.getNFA(_GM.hand_R.Fingers[1], _GM.hand_R.Fingers[2]),
-            DatasetHandler.getNFA(_GM.hand_R.Fingers[2], _GM.hand_R.Fingers[3]),
-            DatasetHandler.getNFA(_GM.hand_R.Fingers[3], _GM.hand_R.Fingers[4]));
-
-        FileUtils.Save(skrt);
-        Debug.Log(skrt.ToString());
-
-
-        var skrt2 = FileUtils.Load();
-        Debug.Log("load" + skrt2.ToString());
-    }
-    */
-
-    private void FUNZIONE_DI_GEPAO_2()
+    private void DataSelector()
     {
         var left_hand = new DataToStore(
             _GM.hand_R,
@@ -89,11 +59,6 @@ public class TrainingScript : MonoBehaviour
 
         _GM.list_posizioni.Add(new Position(left_hand: left_hand, right_hand: right_hand, id: currentNoteId));
     }
-
-
-
-
-
 
 
 
@@ -131,17 +96,6 @@ public class TrainingScript : MonoBehaviour
 
     }
 
-    IEnumerator NewWaiter()
-    {
-        if(record_count>0)
-        {
-            Debug.Log(record_count--);
-
-            yield return new WaitForSeconds(0.5f);
-            StartCoroutine(NewWaiter());
-        }
-    }
-
     IEnumerator WaiterRecording()
     {
         if (record_count > 0)
@@ -151,45 +105,24 @@ public class TrainingScript : MonoBehaviour
             position_Text.text = text2;
 
             
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.25f);
 
-            //try
-            //{
-            //    FUNZIONE_DI_GEPAO_2();
-            //}
-            //catch(Exception ex)
-            //{
-            //    Debug.Log($"SKKKKKKKKRT: {ex.Message}");
-            //}
-
-            FUNZIONE_DI_GEPAO_2();
-
+            DataSelector();
 
             StartCoroutine(WaiterRecording());
         }
         else
         {
-            //
-            //      DA SISTEMARE!!!!!!11!!1!11!!11!!!!1!  carica doppie robe
-            //
-
-
             recording_flag = false;
 
             FileUtils.Save(_GM.list_posizioni);
 
             /*
-
-            var skrt2 = FileUtils.LoadList();
-
-            Debug.Log($"lista attuale: {skrt2.Count.ToString()}");
-            Debug.Log($"lista caricata: {_GM.listaRobaccia.Count.ToString()}");
-            */
-
             foreach(var item in _GM.list_posizioni)
             {
-                //Debug.Log(item.ToString());
+                Debug.Log(item.ToString());
             }
+            */
         }
     }
 

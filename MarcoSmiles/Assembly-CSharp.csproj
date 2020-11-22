@@ -300,7 +300,6 @@
     <Compile Include="Assets\Own\Scripts\DataToStore.cs" />
     <Compile Include="Assets\Own\Scripts\DatasetHandler.cs" />
     <Compile Include="Assets\Own\Scripts\FileUtils.cs" />
-    <Compile Include="Assets\Own\Scripts\Geppa.cs" />
     <Compile Include="Assets\Own\Scripts\HandDataToStore.cs" />
     <Compile Include="Assets\Own\Scripts\MS_LeapController.cs" />
     <Compile Include="Assets\Own\Scripts\MS_LeapListener.cs" />
