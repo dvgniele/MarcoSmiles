@@ -19,7 +19,7 @@ public class TrainingScript : MonoBehaviour
     int record_count = 3;
 
     const int COUNT_DEF = 3;
-    const int RECORD_COUNT_DEF = 10;
+    const int RECORD_COUNT_DEF = 120;
 
     bool counting_flag = false;
     bool recording_flag = false;
