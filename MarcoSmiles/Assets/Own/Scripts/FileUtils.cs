@@ -21,6 +21,10 @@ public static class FileUtils
 
     public static void Save(List<Position> data)
     {
+        System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+        customCulture.NumberFormat.NumberDecimalSeparator = ".";
+        System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+
         if(File.Exists(GeneratePath(filename)))
         {
             foreach (var item in data)
@@ -29,14 +33,17 @@ public static class FileUtils
                     $" {item.Left_Hand.NFA1}, {item.Left_Hand.NFA2}, {item.Left_Hand.NFA3}, {item.Left_Hand.NFA4}," +
                     $" {item.Right_Hand.FF1}, {item.Right_Hand.FF2}, {item.Right_Hand.FF3}, {item.Right_Hand.FF4}, {item.Right_Hand.FF5}," +
                     $" {item.Right_Hand.NFA1}, {item.Right_Hand.NFA2}, {item.Right_Hand.NFA3}, {item.Right_Hand.NFA4}," +
-                    $" {item.ID}" +
-                    Environment.NewLine;
+                    $" {item.ID}"
+                    .ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
+
+                str += Environment.NewLine;
 
                 Debug.Log(str);
                 File.AppendAllText(GeneratePath(filename), str);
             }
 
-            Debug.Log("Saved dataset");
+            _GM.list_posizioni.Clear();
+            Debug.Log("DATASET SAVED");
         }
         else
         {

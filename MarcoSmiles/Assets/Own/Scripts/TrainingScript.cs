@@ -18,6 +18,9 @@ public class TrainingScript : MonoBehaviour
     int count = 3;
     int record_count = 3;
 
+    const int COUNT_DEF = 3;
+    const int RECORD_COUNT_DEF = 120;
+
     bool counting_flag = false;
     bool recording_flag = false;
 
@@ -99,8 +102,8 @@ public class TrainingScript : MonoBehaviour
     {
         if(!counting_flag)
         {
-            count = 4;
-            record_count = 5;
+            count = COUNT_DEF + 1;
+            record_count = RECORD_COUNT_DEF;
 
             StartCoroutine(Waiter());
             counting_flag = true;
@@ -148,7 +151,7 @@ public class TrainingScript : MonoBehaviour
             position_Text.text = text2;
 
             
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
 
             //try
             //{
