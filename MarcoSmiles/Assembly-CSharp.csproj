@@ -306,6 +306,7 @@
     <Compile Include="Assets\Own\Scripts\Position.cs" />
     <Compile Include="Assets\Own\Scripts\TrainingScript.cs" />
     <Compile Include="Assets\Own\Scripts\_GM.cs" />
+    <None Include="Assets\Own\Datasets\marcosmiles_dataset.csv.out.txt" />
     <None Include="Assets\LeapMotion\Core\Version.txt" />
     <None Include="Assets\LeapMotion\Core\Resources\RuntimeGizmos.shader" />
     <None Include="Assets\LeapMotion\Core\readme.txt" />
@@ -314,6 +315,7 @@
     <None Include="Assets\LeapMotion\Core\Resources\VertexOffsetShader.shader" />
     <None Include="Assets\LeapMotion\Core\Resources\PassthroughBackground.shader" />
     <None Include="Assets\LeapMotion\Core\Resources\PassthroughForeground.shader" />
+    <None Include="Assets\Own\Datasets\marcosmiles_outmarcosmiles_out.csv.txt" />
     <None Include="Assets\LeapMotion\Core\Dependencies.txt" />
     <None Include="Assets\LeapMotion\Core\Resources\ThresholdOverlay.shader" />
     <None Include="Assets\LeapMotion\Core\Resources\LeapCG.cginc" />
