@@ -176,3 +176,14 @@ print('fscore: {}'.format(fscore))
 print("Weight e Bias")
 print(classificatore.coefs_) #The ith element in the list represents the weight W matrix corresponding to layer i.
 print(classificatore.intercepts_) #The ith element in the list represents the bias B vector corresponding to layer i + 1.
+
+with open('weights_out.txt','w') as fw:       # new line \n identifica l'inizio di un nuovo layer
+    for w_layer in classificatore.coefs_:
+        fw.write(w_layer)
+        fw.write("\n")
+        
+with open('bias_out.txt','w') as fb:       # new line \n identifica l'inizio di un nuovo layer, inizia dal layer i + 1
+    for b_layer in classificatore.intercepts_:
+        fb.write(b_layer)
+        fb.write("\n")
+        
