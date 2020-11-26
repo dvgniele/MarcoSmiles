@@ -52,7 +52,8 @@ def feature_importance(X,y):
 def grid(cl,classifier,param_grid,n_folds,t_s_D,tLab_downsampled):
     with open(cl+".out.txt","w") as f: # cambiare il percorso dove si salvano i vari esperimenti di validation con k-fold cross-validation
 
-        estimator = GridSearchCV(classifier, cv=n_folds, param_grid=param_grid, n_jobs=20, verbose=1,scoring='f1_weighted')
+        #####   CAMBIARE NUMERO DI JOBS A SECONDA DELLA PROPRIA CPU ALTRIMENTI SKRT, ORA STA MESSO 20 SOLO PERCHE' VOGLIO FLEXARE 
+        estimator = GridSearchCV(classifier, cv=n_folds, param_grid=param_grid, n_jobs=20, verbose=1,scoring='f1_weighted')     
         estimator.fit(t_s_D, tLab_downsampled)
         means = estimator.cv_results_['mean_test_score']
         stds = estimator.cv_results_['std_test_score']
@@ -179,11 +180,11 @@ print(classificatore.intercepts_) #The ith element in the list represents the bi
 
 with open('weights_out.txt','w') as fw:       # new line \n identifica l'inizio di un nuovo layer
     for w_layer in classificatore.coefs_:
-        fw.write(w_layer)
+        fw.write(str(w_layer))
         fw.write("\n")
         
 with open('bias_out.txt','w') as fb:       # new line \n identifica l'inizio di un nuovo layer, inizia dal layer i + 1
     for b_layer in classificatore.intercepts_:
-        fb.write(b_layer)
+        fb.write(str(b_layer))
         fb.write("\n")
         

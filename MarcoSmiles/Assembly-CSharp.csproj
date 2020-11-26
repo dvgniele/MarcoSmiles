@@ -315,10 +315,11 @@
     <None Include="Assets\LeapMotion\Core\Resources\VertexOffsetShader.shader" />
     <None Include="Assets\LeapMotion\Core\Resources\PassthroughBackground.shader" />
     <None Include="Assets\LeapMotion\Core\Resources\PassthroughForeground.shader" />
-    <None Include="Assets\Own\Datasets\marcosmiles_outmarcosmiles_out.csv.txt" />
     <None Include="Assets\LeapMotion\Core\Dependencies.txt" />
     <None Include="Assets\LeapMotion\Core\Resources\ThresholdOverlay.shader" />
     <None Include="Assets\LeapMotion\Core\Resources\LeapCG.cginc" />
+    <None Include="Assets\Own\Datasets\bias_out.txt" />
+    <None Include="Assets\Own\Datasets\weights_out.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
