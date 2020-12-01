@@ -154,7 +154,7 @@ classificatore=MLPClassifier()
 pg = {'activation' : ['tanh', 'relu'],'learning_rate' : ['invscaling','adaptive','constant'],
 'solver' : ['adam','lbfgs','sgd'],
               'learning_rate_init':[0.01, 0.05, 0.1, 0.15, 0.2], 'hidden_layer_sizes':[3, 5, 10, 15, 17],
-      'max_iter':[500, 1000, 2500, 3000]}
+      'max_iter':[2500, 5000, 10000]}
 bestMLPparam=grid("marcosmiles_dataset.csv",classificatore,pg,n_folds,training_set_data,training_set_labels)
 print("I migliori parametri per MLP sono:")
 print(bestMLPparam)

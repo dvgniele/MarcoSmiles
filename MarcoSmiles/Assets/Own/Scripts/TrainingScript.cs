@@ -19,7 +19,7 @@ public class TrainingScript : MonoBehaviour
     int record_count = 3;
 
     const int COUNT_DEF = 3;
-    const int RECORD_COUNT_DEF = 250;
+    const int RECORD_COUNT_DEF = 500;
 
     bool counting_flag = false;
     bool recording_flag = false;
@@ -105,7 +105,7 @@ public class TrainingScript : MonoBehaviour
             position_Text.text = text2;
 
             
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.125f);
 
             DataSelector();
 
