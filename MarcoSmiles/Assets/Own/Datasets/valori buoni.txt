@@ -1,0 +1,21 @@
+1.000 (+/-0.001) for {'activation': 'relu', 'hidden_layer_sizes': 15, 'learning_rate': 'adaptive', 'learning_rate_init': 0.01, 'max_iter': 10000, 'solver': 'adam'}
+
+1.000 (+/-0.002) for {'activation': 'relu', 'hidden_layer_sizes': 15, 'learning_rate': 'adaptive', 'learning_rate_init': 0.01, 'max_iter': 2500, 'solver': 'adam'}
+
+1.000 (+/-0.000) for {'activation': 'relu', 'hidden_layer_sizes': 15, 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_iter': 5000, 'solver': 'adam'}
+
+1.000 (+/-0.001) for {'activation': 'relu', 'hidden_layer_sizes': 15, 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_iter': 10000, 'solver': 'adam'}
+
+1.000 (+/-0.002) for {'activation': 'relu', 'hidden_layer_sizes': 17, 'learning_rate': 'invscaling', 'learning_rate_init': 0.01, 'max_iter': 2500, 'solver': 'adam'}
+
+1.000 (+/-0.001) for {'activation': 'relu', 'hidden_layer_sizes': 17, 'learning_rate': 'invscaling', 'learning_rate_init': 0.01, 'max_iter': 5000, 'solver': 'adam'}
+
+1.000 (+/-0.000) for {'activation': 'relu', 'hidden_layer_sizes': 17, 'learning_rate': 'invscaling', 'learning_rate_init': 0.01, 'max_iter': 10000, 'solver': 'adam'}
+
+1.000 (+/-0.002) for {'activation': 'relu', 'hidden_layer_sizes': 17, 'learning_rate': 'adaptive', 'learning_rate_init': 0.01, 'max_iter': 2500, 'solver': 'adam'}
+
+1.000 (+/-0.001) for {'activation': 'relu', 'hidden_layer_sizes': 17, 'learning_rate': 'adaptive', 'learning_rate_init': 0.01, 'max_iter': 5000, 'solver': 'adam'}
+
+1.000 (+/-0.000) for {'activation': 'relu', 'hidden_layer_sizes': 17, 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_iter': 5000, 'solver': 'adam'}
+
+1.000 (+/-0.001) for {'activation': 'relu', 'hidden_layer_sizes': 17, 'learning_rate': 'constant', 'learning_rate_init': 0.01, 'max_iter': 10000, 'solver': 'adam'}

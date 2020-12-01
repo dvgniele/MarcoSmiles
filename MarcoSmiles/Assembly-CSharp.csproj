@@ -312,6 +312,7 @@
     <None Include="Assets\Own\Datasets\bias_out.txt" />
     <None Include="Assets\LeapMotion\Core\readme.txt" />
     <None Include="Assets\LeapMotion\Core\README_BEFORE_UPDATING.txt" />
+    <None Include="Assets\Own\Datasets\valori buoni.txt" />
     <None Include="Assets\LeapMotion\Modules\DetectionExamples\Shaders\LeapPinchLine.shader" />
     <None Include="Assets\LeapMotion\Core\Resources\VertexOffsetShader.shader" />
     <None Include="Assets\LeapMotion\Core\Resources\PassthroughBackground.shader" />
