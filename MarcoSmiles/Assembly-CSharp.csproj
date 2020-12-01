@@ -304,6 +304,7 @@
     <Compile Include="Assets\Own\Scripts\MS_LeapController.cs" />
     <Compile Include="Assets\Own\Scripts\MS_LeapListener.cs" />
     <Compile Include="Assets\Own\Scripts\Position.cs" />
+    <Compile Include="Assets\Own\Scripts\TestML.cs" />
     <Compile Include="Assets\Own\Scripts\TrainingScript.cs" />
     <Compile Include="Assets\Own\Scripts\_GM.cs" />
     <None Include="Assets\LeapMotion\Core\Version.txt" />
