@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestML
+public static class TestML
 {
-    double[] ReteNeurale(double[] features)
+    public static double[] ReteNeurale(double[] features)
     {
         var W1 = new double[][]
         {
