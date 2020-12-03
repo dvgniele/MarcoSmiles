@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -21,6 +23,12 @@ public class TestingML1 : MonoBehaviour
         var res = new double[12];
             res = TestML.ReteNeurale(features);
 
+
+        int maxIndex = res.ToList().IndexOf(res.Max());   //rappresenta la nota che deve essere suonata
+
+        Debug.Log("L'indice che rappresenta la nota da suonare è:  " + maxIndex );
+
+        //c# riesce a fare automaticamente confronti tra double in notazione scientifica
         for (int i = 0; i < res.Length; i++)
         {
             
