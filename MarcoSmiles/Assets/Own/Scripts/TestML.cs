@@ -249,7 +249,7 @@ public static class TestML
         var output_hidden1 = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
         var output_hidden2 = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 
-        double[] scaledFeatures = ScaleValues(features);
+        //double[] scaledFeatures = ScaleValues(features);
 
 
         double x, w, r;
