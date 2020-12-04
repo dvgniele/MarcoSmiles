@@ -311,6 +311,7 @@
     <None Include="Assets\LeapMotion\Core\Version.txt" />
     <None Include="Assets\LeapMotion\Core\Resources\RuntimeGizmos.shader" />
     <None Include="Assets\Own\Datasets\bias_out.txt" />
+    <None Include="Assets\Own\Datasets\min&amp;max_values_dataset_out.txt" />
     <None Include="Assets\LeapMotion\Core\readme.txt" />
     <None Include="Assets\LeapMotion\Core\README_BEFORE_UPDATING.txt" />
     <None Include="Assets\Own\Datasets\valori buoni.txt" />

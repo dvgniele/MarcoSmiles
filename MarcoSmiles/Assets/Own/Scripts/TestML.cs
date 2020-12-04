@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using UnityEngine;
 
 public static class TestML
@@ -246,9 +249,11 @@ public static class TestML
         var output_hidden1 = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
         var output_hidden2 = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 
+        double[] scaledFeatures = ScaleValues(features);
+
+
         double x, w, r;
         var flag = false;
-
         for(int i = 0; i < output_hidden1.Length; i++)
         {
             output_hidden1[i] += B1[0][i];
@@ -292,4 +297,49 @@ public static class TestML
 
         return toRet;
     }
+
+
+    private static double[] ScaleValues(double[] unscaledFeatures)
+    {
+        var scaledFeatures = new double[unscaledFeatures.Length];
+        var minValues = new double[unscaledFeatures.Length];
+        var maxValues = new double[unscaledFeatures.Length];
+
+        string[] readText = File.ReadAllLines("Assets/Own/Datasets/min&max_values_dataset_out.txt");        //primo elemento contiene riga contenente valori min
+                                                                                                            //secondo elemento contiene riga contenente valori max
+        string[] min = readText[0].Split(' ');
+        string[] max = readText[1].Split(' ');
+
+        for (int i=0 ; i<unscaledFeatures.Length; i++)
+        {
+            minValues[i] = Double.Parse(min[i], CultureInfo.InvariantCulture);
+            maxValues[i] = Double.Parse(max[i], CultureInfo.InvariantCulture);
+        }
+
+        for (int i = 0; i < minValues.Length; i++)
+        {
+            Debug.Log("index " + i +" (valori min): " + minValues[i]);
+        }
+        for (int i = 0; i < maxValues.Length; i++)
+        {
+            Debug.Log("index " + i + " (valori max): " + maxValues[i]);
+        }
+
+
+        for (int i = 0; i<unscaledFeatures.Length; i++)
+        {
+            scaledFeatures[i] = (unscaledFeatures[i] - minValues[i]) / (maxValues[i] - minValues[i]);
+        }
+    /*
+       foreach (double e in scaledFeatures){
+            Debug.Log("features scalate  : " + e);
+        }
+ */
+        return scaledFeatures;
+
+    }
+
+
+
+
 }
