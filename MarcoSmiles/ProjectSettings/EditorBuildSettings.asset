@@ -8,10 +8,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Own/Scenes/MainPage.unity
     guid: 0c2a4357048a3254cb7801d9f3e1784f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Own/Scenes/Test.unity
     guid: 3cdde01cf1d63eb4684e8540683c194e
   - enabled: 1
-    path: Assets/Own/Scenes/TrainingScene.unity
-    guid: 2f37f9e2438273f4fb974dc363c23127
+    path: Assets/Own/Scenes/Suonah.unity
+    guid: ae0b697bf1fcdee4983a3f27bf88426f
+  - enabled: 1
+    path: Assets/Own/Scenes/TrainingScene 1.unity
+    guid: 1b852d491d3f94949916cae6f6e2188d
   m_configObjects: {}

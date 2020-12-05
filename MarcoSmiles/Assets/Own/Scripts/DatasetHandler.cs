@@ -15,7 +15,7 @@ public class DatasetHandler : MonoBehaviour
     /// <param name="f">Dito da analizzare</param>
     /// <param name="isThumb">vero se è pollice, falso altrimenti</param>
     /// <returns></returns>
-    public static float getFF(Finger f, bool isThumb = false)
+    public static double getFF(Finger f, bool isThumb = false)
     {
         return (isThumb) ? grads(f.bones[1].Direction.AngleTo(f.bones[3].Direction)) :
             grads(f.bones[0].Direction.AngleTo(f.bones[3].Direction));
@@ -27,7 +27,7 @@ public class DatasetHandler : MonoBehaviour
     /// <param name="f1">Dito 1</param>
     /// <param name="f2">Dito 2</param>
     /// <returns></returns>
-    public static float getNFA(Finger f1, Finger f2)
+    public static double getNFA(Finger f1, Finger f2)
     {
         return grads(f1.Direction.AngleTo(f2.Direction));
     }
@@ -40,7 +40,7 @@ public class DatasetHandler : MonoBehaviour
     /// </summary>
     /// <param name="h1">MANOOOOO</param>
     /// <param name="f1">DITOOOOOOO</param> 
-    public static float getFPA(Hand h1, Finger f1)
+    public static double getFPA(Hand h1, Finger f1)
     {
         var segment = h1.Fingers[0].Direction;
 

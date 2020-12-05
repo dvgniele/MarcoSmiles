@@ -7,10 +7,10 @@ using Leap;
 public class HandDataToStore
 {
     //public Hand hand { get; set; }
-    public float FF { get; set; }
-    public float NFA { get; set; }
+    public double FF { get; set; }
+    public double NFA { get; set; }
 
-    public HandDataToStore(float FF, float NFA)
+    public HandDataToStore(double FF, double NFA)
     {
         this.FF = FF;
         this.NFA = NFA;

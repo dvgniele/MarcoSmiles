@@ -7,17 +7,17 @@ using Leap;
 public class DataToStore
 {
     public Hand hand { get; set; }
-    public float FF1 { get; set; }
-    public float FF2 { get; set; }
-    public float FF3 { get; set; }
-    public float FF4 { get; set; }
-    public float FF5 { get; set; }
-    public float NFA1 { get; set; }
-    public float NFA2 { get; set; }
-    public float NFA3 { get; set; }
-    public float NFA4 { get; set; }
+    public double FF1 { get; set; }
+    public double FF2 { get; set; }
+    public double FF3 { get; set; }
+    public double FF4 { get; set; }
+    public double FF5 { get; set; }
+    public double NFA1 { get; set; }
+    public double NFA2 { get; set; }
+    public double NFA3 { get; set; }
+    public double NFA4 { get; set; }
 
-    public DataToStore(Hand hand, float FF1, float FF2, float FF3, float FF4, float FF5, float NFA1, float NFA2, float NFA3, float NFA4)
+    public DataToStore(Hand hand, double FF1, double FF2, double FF3, double FF4, double FF5, double NFA1, double NFA2, double NFA3, double NFA4)
     {
         this.hand = hand;
 

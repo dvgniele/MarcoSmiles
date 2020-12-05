@@ -14,15 +14,21 @@ using UnityEngine.SceneManagement;
 
 public class _GM : MonoBehaviour
 {
-    public TrainingScript trainer;
+    public TrainingScript trainer;                          // viene usata solo nella scena di training per salvare nel dataset
     public static Hand hand_R;
     public static Hand hand_L;
 
-    public static List<Position> list_posizioni;            // ?sarebbe l'array delle features?
+    [Range(1,2)]
+    public int octaves;
 
-    public static bool isActive;                //if true sound is played (isactive is true if hands are detected) [se isactive = false, gain in PCMOscillator = 0]
-    public static double[] currentFeatures;     //attualmente le features sono floats, risolviamo sto problemo
-    public static int indexPlayingNote;         //indice della nota da suonare che è letta da PCMOscillator
+    public static List<Position> list_posizioni;            // viene usata solo nella scena di training per salvare nel dataset
+
+    public bool shouldPlay = false;                         //  decide se bisogna suonare IN BASE ALLA SCENA ATTIVA. true solo se è nella scena di testing
+
+    //public static bool isActive = false;            //  se ci sono le mani, suona, altrimenti va a c'rac
+    public static bool isActive = true;            //  se ci sono le mani, suona, altrimenti va a c'rac
+    public static double[] current_Features;        //  attualmente le features sono floats, risolviamo sto problemo
+    public static int indexPlayingNote;             //  indice della nota da suonare che è letta da PCMOscillator
 
 
     void Start()
@@ -31,15 +37,15 @@ public class _GM : MonoBehaviour
         //list_posizioni = FileUtils.LoadList();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         /* Aggiornare array delle features currentFeatures
          * in modo tale che venga calcolata la nota giusta ad ogni update
          * */
+        current_Features = TestingScript.GetCurrentFeatures();
 
-
-        var res = new double[12];        //12 è il numero delle note (classi)
-        res = TestML.ReteNeurale(currentFeatures);
+        var res = new double[12*octaves];        //12 è il numero delle note (classi)
+        res = TestML.ReteNeurale(current_Features);
 
         indexPlayingNote = res.ToList().IndexOf(res.Max());                     //rappresenta la nota che deve essere suonata
 

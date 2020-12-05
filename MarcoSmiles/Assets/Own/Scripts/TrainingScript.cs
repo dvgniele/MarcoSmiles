@@ -32,7 +32,7 @@ public class TrainingScript : MonoBehaviour
     private void DataSelector()
     {
         var left_hand = new DataToStore(
-            _GM.hand_R,
+            _GM.hand_L,
             DatasetHandler.getFF(_GM.hand_L.Fingers[0], true),
             DatasetHandler.getFF(_GM.hand_L.Fingers[1]),
             DatasetHandler.getFF(_GM.hand_L.Fingers[2]),
@@ -59,7 +59,6 @@ public class TrainingScript : MonoBehaviour
 
         _GM.list_posizioni.Add(new Position(left_hand: left_hand, right_hand: right_hand, id: currentNoteId));
     }
-
 
 
 
