@@ -23,7 +23,7 @@ public class PCMOscillator : MonoBehaviour
         }
         else
         {
-            gain = 0;           //in teoria -inf
+            gain = 0.0f;           //in teoria -inf
         }
         changeNote(_GM.indexPlayingNote);
     }
@@ -37,7 +37,7 @@ public class PCMOscillator : MonoBehaviour
         }
         else
         {
-            gain = 0;           //in teoria -inf
+            gain = 0.0f;           //in teoria -inf
         }
 
         changeNote(_GM.indexPlayingNote);

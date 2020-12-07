@@ -20,20 +20,9 @@ public class TestingML1 : MonoBehaviour
                 149.6153, 149.4406, 150.7445, 4.826088, 8.815902, 9.580413,
             };
 
-        var res = new double[12];
-            res = TestML.ReteNeurale(features);
-
-
-        int maxIndex = res.ToList().IndexOf(res.Max());   //rappresenta la nota che deve essere suonata
+        int maxIndex = TestML.ReteNeurale(features);   //rappresenta la nota che deve essere suonata
 
         Debug.Log("L'indice che rappresenta la nota da suonare è:  " + maxIndex );
-
-        //c# riesce a fare automaticamente confronti tra double in notazione scientifica
-        for (int i = 0; i < res.Length; i++)
-        {
-            
-            Debug.Log("index " + i +": " +  res[i]);
-        }
 
     }
 

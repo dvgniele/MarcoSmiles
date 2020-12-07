@@ -300,6 +300,8 @@ public static class TestML
     }
 
 
+    //Funzione per scalare i valori: converte le features in valori da 0 a 1
+    /*
     private static double[] ScaleValues(double[] unscaledFeatures)
     {
         var scaledFeatures = new double[unscaledFeatures.Length];
@@ -331,16 +333,16 @@ public static class TestML
         {
             scaledFeatures[i] = (unscaledFeatures[i] - minValues[i]) / (maxValues[i] - minValues[i]);
         }
-    /*
-       foreach (double e in scaledFeatures){
-            Debug.Log("features scalate  : " + e);
-        }
- */
+    
+       //foreach (double e in scaledFeatures){
+       //     Debug.Log("features scalate  : " + e);
+       // }
+ 
         return scaledFeatures;
 
     }
 
-
+*/
 
 
 }
