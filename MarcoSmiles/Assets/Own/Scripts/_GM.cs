@@ -39,15 +39,12 @@ public class _GM : MonoBehaviour
 
     void FixedUpdate()
     {
-        /* Aggiornare array delle features currentFeatures
+        /* Aggiorna array delle features currentFeatures
          * in modo tale che venga calcolata la nota giusta ad ogni update
          * */
         current_Features = TestingScript.GetCurrentFeatures();
 
-        var res = new double[12*octaves];        //12 è il numero delle note (classi)
-        res = TestML.ReteNeurale(current_Features);
-
-        indexPlayingNote = res.ToList().IndexOf(res.Max());                     //rappresenta la nota che deve essere suonata
+        indexPlayingNote = TestML.ReteNeurale(current_Features);                    //rappresenta la nota che deve essere suonata
 
         //Debug.Log("L'indice che rappresenta la nota da suonare è:  " + indexPlayingNote);
     }

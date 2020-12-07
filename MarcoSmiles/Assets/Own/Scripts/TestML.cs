@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public static class TestML
 {
-    public static double[] ReteNeurale(double[] features)
+    public static int ReteNeurale(double[] features)
     {
         var W1 = new double[][]
         {
@@ -295,7 +296,7 @@ public static class TestML
             toRet[i] = Mathf.Exp((float)output_hidden2[i]) /sum; 
         }
 
-        return toRet;
+        return toRet.ToList().IndexOf(toRet.Max());  // restituisce l'indice del valore dell'array che ha il valore più alto, questo è l'indice corrispopndente alla nota da suonare
     }
 
 
