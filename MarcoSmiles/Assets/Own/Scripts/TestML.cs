@@ -5,9 +5,7 @@ using UnityEngine;
 
 public static class TestML
 {
-    public static int ReteNeurale(double[] features)
-    {
-        var W1 = new double[][]
+    private static double[][] W1 = new double[][]
         {
             new double[]{
                 0.1007911, 0.17900273, -0.06193091, 0.22252459, 0.16601526, -0.06660582,
@@ -135,18 +133,18 @@ public static class TestML
 
         };
 
-        var B1 = new double[][]
-        {
+    private static double[][] B1 = new double[][]
+    {
             new double[]
             {
                 -0.42381459, 0.23535611, -0.74888681, 0.10036356, 0.16283649, 0.03082952,
                 -0.01362044, -0.15004871, 0.1123109, -0.23832611, 0.08209701, -0.44509756,
                 0.35717264, -0.63315696, 0.35160417
             }
-        };
+    };
 
-        var W2 = new double[][]
-        {
+    private static double[][] W2 = new double[][]
+    {
             new double[]{
                 -0.182809475, -0.182203933, 0.315318103, 0.319717142, 0.115788438, 0.156306339,
                 -0.0720877887, -0.0457656772, -0.0458832812, -0.308210656, 0.00372011321, 0.0893403297
@@ -233,17 +231,24 @@ public static class TestML
                 -0.163850538, -0.000000730, 0.00293516496, 0.00812371848, -0.106608725, 0.00497186352,
                 0.0000000001, 0.0657407746, -0.0923276946, 0.216043581, -0.0368627355, -0.277114599
             },
-        };
+    };
 
-        var B2 = new double[][]
-        {
+    private static double[][] B2 = new double[][]
+    {
             new double[]
             {
                 -0.0096941, 0.61652314, 0.22538885, 0.0519365, 0.39038265, -0.09174195,
                 -0.28781865, 0.01863683, 0.2438597, -0.37556753, 0.51495179, -0.18689297
             }
-        };
+    };
 
+    private static void Populate()
+    {
+
+    }
+
+    public static int ReteNeurale(double[] features)
+    {
         // output_hidden1 ha lo stesso numero di elementi di B1
         var output_hidden1 = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
         // output_hidden2 ha lo stesso numero di elementi di B2
