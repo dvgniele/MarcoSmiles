@@ -30,7 +30,7 @@ public class _GM : MonoBehaviour
     public static double[] current_Features;        //  attualmente le features sono floats, risolviamo sto problemo
     public static int indexPlayingNote;             //  indice della nota da suonare che è letta da PCMOscillator
 
-    private TestML testML;
+    //private TestML testML;
 
     void Start()
     {
@@ -45,7 +45,7 @@ public class _GM : MonoBehaviour
          * */
         current_Features = TestingScript.GetCurrentFeatures();
 
-        indexPlayingNote = testML.ReteNeurale(current_Features);                    //rappresenta la nota che deve essere suonata
+        indexPlayingNote = TestML.ReteNeurale(current_Features);                    //rappresenta la nota che deve essere suonata
 
         //Debug.Log("L'indice che rappresenta la nota da suonare è:  " + indexPlayingNote);
     }

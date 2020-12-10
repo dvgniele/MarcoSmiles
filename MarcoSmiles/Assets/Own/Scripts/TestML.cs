@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using UnityEngine;
 
-public class TestML 
+public static class TestML
 {
-    private static double[][] W1 = new double[][]
+    public static int ReteNeurale(double[] features)
+    {
+        var W1 = new double[][]
         {
             new double[]{
                 0.1007911, 0.17900273, -0.06193091, 0.22252459, 0.16601526, -0.06660582,
@@ -136,20 +135,18 @@ public class TestML
 
         };
 
-
-    private static double[][]  B1 = new double[][]
-    {
+        var B1 = new double[][]
+        {
             new double[]
             {
                 -0.42381459, 0.23535611, -0.74888681, 0.10036356, 0.16283649, 0.03082952,
                 -0.01362044, -0.15004871, 0.1123109, -0.23832611, 0.08209701, -0.44509756,
                 0.35717264, -0.63315696, 0.35160417
             }
-    };
+        };
 
-
-    private static double[][] W2 = new double[][]
-    {
+        var W2 = new double[][]
+        {
             new double[]{
                 -0.182809475, -0.182203933, 0.315318103, 0.319717142, 0.115788438, 0.156306339,
                 -0.0720877887, -0.0457656772, -0.0458832812, -0.308210656, 0.00372011321, 0.0893403297
@@ -236,59 +233,29 @@ public class TestML
                 -0.163850538, -0.000000730, 0.00293516496, 0.00812371848, -0.106608725, 0.00497186352,
                 0.0000000001, 0.0657407746, -0.0923276946, 0.216043581, -0.0368627355, -0.277114599
             },
-    };
+        };
 
-
-    private double[][] B2 = new double[][]
-    {
+        var B2 = new double[][]
+        {
             new double[]
             {
                 -0.0096941, 0.61652314, 0.22538885, 0.0519365, 0.39038265, -0.09174195,
                 -0.28781865, 0.01863683, 0.2438597, -0.37556753, 0.51495179, -0.18689297
             }
-    };
+        };
 
-
-    // output_hidden1 ha lo stesso numero di elementi di B1
-    public static double[] output_hidden1 = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-    // output_hidden2 ha lo stesso numero di elementi di B2
-    public static double[] output_hidden2 = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-
-
-    //Costruttore
-    public TestML()
-    {
-        /* Leggi W e B Dai File
-         * e riempi le variabili W1,B1,W2,B2
-         * 
-         * */
-        
-        //inizializo output_hidden1
-        output_hidden1 = new double[B1.Length];
-        for (int i = 0; i < output_hidden1.Length; i++)
-        {
-            output_hidden1[i] = 0.0;
-        }
-
-        //inizializo output_hidden2
-        output_hidden2 = new double[B2.Length];
-        for (int i = 0; i < output_hidden2.Length; i++)
-        {
-            output_hidden2[i] = 0.0;
-        }
-    }
-
-
-    public int ReteNeurale(double[] features)
-    {
-        //double[] scaledFeatures = ScaleValues(features);
+        // output_hidden1 ha lo stesso numero di elementi di B1
+        var output_hidden1 = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+        // output_hidden2 ha lo stesso numero di elementi di B2
+        var output_hidden2 = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 
         double x, w, r;
         var flag = false;
-        for(int i = 0; i < output_hidden1.Length; i++)
+
+        for (int i = 0; i < output_hidden1.Length; i++)
         {
             output_hidden1[i] += B1[0][i];
-            for(int j = 0; j < features.Length; j++)
+            for (int j = 0; j < features.Length; j++)
             {
                 x = features[j];
                 w = W1[j][i];
@@ -301,10 +268,10 @@ public class TestML
                 output_hidden1[i] = 0;
         }
 
-        for(int i = 0; i<output_hidden2.Length; i++)
+        for (int i = 0; i < output_hidden2.Length; i++)
         {
             output_hidden2[i] += B2[0][i];
-            for(int j = 0; j < output_hidden1.Length; j++)
+            for (int j = 0; j < output_hidden1.Length; j++)
             {
                 x = output_hidden1[j];
                 w = W2[j][i];
@@ -321,58 +288,58 @@ public class TestML
         }
 
         var toRet = new double[output_hidden2.Length];
-        for(int i =0; i< output_hidden2.Length; i++)
+        for (int i = 0; i < output_hidden2.Length; i++)
         {
-            toRet[i] = Mathf.Exp((float)output_hidden2[i]) /sum; 
+            toRet[i] = Mathf.Exp((float)output_hidden2[i]) / sum;
         }
 
-        return toRet.ToList().IndexOf(toRet.Max());  // restituisce l'indice del valore dell'array che ha il valore più alto, questo è l'indice corrispopndente alla nota da suonare
+        return  toRet.ToList().IndexOf(toRet.Max()); 
     }
+}
 
 
-    //Funzione per scalare i valori: converte le features in valori da 0 a 1
-    /*
-    private static double[] ScaleValues(double[] unscaledFeatures)
+//Funzione per scalare i valori: converte le features in valori da 0 a 1
+/*
+private static double[] ScaleValues(double[] unscaledFeatures)
+{
+    var scaledFeatures = new double[unscaledFeatures.Length];
+    var minValues = new double[unscaledFeatures.Length];
+    var maxValues = new double[unscaledFeatures.Length];
+
+    string[] readText = File.ReadAllLines("Assets/Own/Datasets/min&max_values_dataset_out.txt");        //primo elemento contiene riga contenente valori min
+                                                                                                        //secondo elemento contiene riga contenente valori max
+    string[] min = readText[0].Split(' ');
+    string[] max = readText[1].Split(' ');
+
+    for (int i=0 ; i<unscaledFeatures.Length; i++)
     {
-        var scaledFeatures = new double[unscaledFeatures.Length];
-        var minValues = new double[unscaledFeatures.Length];
-        var maxValues = new double[unscaledFeatures.Length];
-
-        string[] readText = File.ReadAllLines("Assets/Own/Datasets/min&max_values_dataset_out.txt");        //primo elemento contiene riga contenente valori min
-                                                                                                            //secondo elemento contiene riga contenente valori max
-        string[] min = readText[0].Split(' ');
-        string[] max = readText[1].Split(' ');
-
-        for (int i=0 ; i<unscaledFeatures.Length; i++)
-        {
-            minValues[i] = Double.Parse(min[i], CultureInfo.InvariantCulture);
-            maxValues[i] = Double.Parse(max[i], CultureInfo.InvariantCulture);
-        }
-
-        for (int i = 0; i < minValues.Length; i++)
-        {
-            Debug.Log("index " + i +" (valori min): " + minValues[i]);
-        }
-        for (int i = 0; i < maxValues.Length; i++)
-        {
-            Debug.Log("index " + i + " (valori max): " + maxValues[i]);
-        }
-
-
-        for (int i = 0; i<unscaledFeatures.Length; i++)
-        {
-            scaledFeatures[i] = (unscaledFeatures[i] - minValues[i]) / (maxValues[i] - minValues[i]);
-        }
-    
-       //foreach (double e in scaledFeatures){
-       //     Debug.Log("features scalate  : " + e);
-       // }
- 
-        return scaledFeatures;
-
+        minValues[i] = Double.Parse(min[i], CultureInfo.InvariantCulture);
+        maxValues[i] = Double.Parse(max[i], CultureInfo.InvariantCulture);
     }
+
+    for (int i = 0; i < minValues.Length; i++)
+    {
+        Debug.Log("index " + i +" (valori min): " + minValues[i]);
+    }
+    for (int i = 0; i < maxValues.Length; i++)
+    {
+        Debug.Log("index " + i + " (valori max): " + maxValues[i]);
+    }
+
+
+    for (int i = 0; i<unscaledFeatures.Length; i++)
+    {
+        scaledFeatures[i] = (unscaledFeatures[i] - minValues[i]) / (maxValues[i] - minValues[i]);
+    }
+
+   //foreach (double e in scaledFeatures){
+   //     Debug.Log("features scalate  : " + e);
+   // }
+
+    return scaledFeatures;
+
+}
 
 */
 
 
-}

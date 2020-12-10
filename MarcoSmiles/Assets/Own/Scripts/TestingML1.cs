@@ -10,7 +10,7 @@ using UnityEngine;
 public class TestingML1 : MonoBehaviour
 {
     double[] features;
-    private TestML testML;
+   // private TestML testML;
     void Start()
     {
         features = new double[]             //esempio che rappresenta nota con indice 0  
@@ -20,8 +20,8 @@ public class TestingML1 : MonoBehaviour
                 149.6153, 149.4406, 150.7445, 4.826088, 8.815902, 9.580413,
             };
 
-        testML = new TestML();
-        int maxIndex = testML.ReteNeurale(features);   //rappresenta la nota che deve essere suonata
+        //testML = new TestML();
+        int maxIndex = TestML.ReteNeurale(features);   //rappresenta la nota che deve essere suonata
 
         Debug.Log("L'indice che rappresenta la nota da suonare è:  " + maxIndex );
 
