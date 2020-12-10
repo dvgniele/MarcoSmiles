@@ -19,7 +19,7 @@ public class _GM : MonoBehaviour
     public static Hand hand_L;
 
     [Range(1,2)]
-    public int octaves;
+    public static int octaves;
 
     public static List<Position> list_posizioni;            // viene usata solo nella scena di training per salvare nel dataset
 
@@ -30,6 +30,7 @@ public class _GM : MonoBehaviour
     public static double[] current_Features;        //  attualmente le features sono floats, risolviamo sto problemo
     public static int indexPlayingNote;             //  indice della nota da suonare che è letta da PCMOscillator
 
+    private TestML testML;
 
     void Start()
     {
@@ -44,7 +45,7 @@ public class _GM : MonoBehaviour
          * */
         current_Features = TestingScript.GetCurrentFeatures();
 
-        indexPlayingNote = TestML.ReteNeurale(current_Features);                    //rappresenta la nota che deve essere suonata
+        indexPlayingNote = testML.ReteNeurale(current_Features);                    //rappresenta la nota che deve essere suonata
 
         //Debug.Log("L'indice che rappresenta la nota da suonare è:  " + indexPlayingNote);
     }

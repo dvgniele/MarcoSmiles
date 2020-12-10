@@ -6,11 +6,9 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-public static class TestML
+public class TestML 
 {
-    public static int ReteNeurale(double[] features)
-    {
-        var W1 = new double[][]
+    private static double[][] W1 = new double[][]
         {
             new double[]{
                 0.1007911, 0.17900273, -0.06193091, 0.22252459, 0.16601526, -0.06660582,
@@ -138,18 +136,20 @@ public static class TestML
 
         };
 
-        var B1 = new double[][]
-        {
+
+    private static double[][]  B1 = new double[][]
+    {
             new double[]
             {
                 -0.42381459, 0.23535611, -0.74888681, 0.10036356, 0.16283649, 0.03082952,
                 -0.01362044, -0.15004871, 0.1123109, -0.23832611, 0.08209701, -0.44509756,
                 0.35717264, -0.63315696, 0.35160417
             }
-        };
+    };
 
-        var W2 = new double[][]
-        {
+
+    private static double[][] W2 = new double[][]
+    {
             new double[]{
                 -0.182809475, -0.182203933, 0.315318103, 0.319717142, 0.115788438, 0.156306339,
                 -0.0720877887, -0.0457656772, -0.0458832812, -0.308210656, 0.00372011321, 0.0893403297
@@ -161,7 +161,7 @@ public static class TestML
             },
             new double[]
             {
-                0.0833677354, 0.148730218, -0.0256045861, 0.0533143101, 0.105484368, -0.148332231, 
+                0.0833677354, 0.148730218, -0.0256045861, 0.0533143101, 0.105484368, -0.148332231,
                 0.147129576, 0.0483280425, 0.186765793, -0.110626194, -0.12230173, -0.173105632
             },
             new double[]
@@ -177,14 +177,14 @@ public static class TestML
             },
 
             new double[]
-            {   
+            {
                 0.0943952221, 0.0760369456, 0.0207111746, 0.157196053, -0.362016729, 0.200996012,
                 -0.0888814997, 0.0226081492, -0.104949524, -0.10825461, 0.302842997, 0.28662486
             },
 
             new double[]
             {
-                -0.0821469489, -0.28148441, -0.0612207727, 0.0721086926, 0.178240022, 0.637876719, 
+                -0.0821469489, -0.28148441, -0.0612207727, 0.0721086926, 0.178240022, 0.637876719,
                 0.0473511979, 0.0363042981, 0.17287111, 0.216859132, -0.142862045, -0.0223539779
             },
 
@@ -203,7 +203,7 @@ public static class TestML
 
             new double[]
             {
-                -0.181015011, -0.0000000001, 0.0000000001, 0.0000000001, -0.0000000027, 0.441613222, 
+                -0.181015011, -0.0000000001, 0.0000000001, 0.0000000001, -0.0000000027, 0.441613222,
                 -0.0656601752, 0.0000599372, 0.169782503, -0.0000373813, 0.0000000001, 0.0000000001
             },
 
@@ -236,22 +236,52 @@ public static class TestML
                 -0.163850538, -0.000000730, 0.00293516496, 0.00812371848, -0.106608725, 0.00497186352,
                 0.0000000001, 0.0657407746, -0.0923276946, 0.216043581, -0.0368627355, -0.277114599
             },
-        };
+    };
 
-        var B2 = new double[][]
-        {
+
+    private double[][] B2 = new double[][]
+    {
             new double[]
             {
                 -0.0096941, 0.61652314, 0.22538885, 0.0519365, 0.39038265, -0.09174195,
                 -0.28781865, 0.01863683, 0.2438597, -0.37556753, 0.51495179, -0.18689297
             }
-        };
+    };
 
-        var output_hidden1 = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-        var output_hidden2 = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 
+    // output_hidden1 ha lo stesso numero di elementi di B1
+    public static double[] output_hidden1 = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+    // output_hidden2 ha lo stesso numero di elementi di B2
+    public static double[] output_hidden2 = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+
+
+    //Costruttore
+    public TestML()
+    {
+        /* Leggi W e B Dai File
+         * e riempi le variabili W1,B1,W2,B2
+         * 
+         * */
+        
+        //inizializo output_hidden1
+        output_hidden1 = new double[B1.Length];
+        for (int i = 0; i < output_hidden1.Length; i++)
+        {
+            output_hidden1[i] = 0.0;
+        }
+
+        //inizializo output_hidden2
+        output_hidden2 = new double[B2.Length];
+        for (int i = 0; i < output_hidden2.Length; i++)
+        {
+            output_hidden2[i] = 0.0;
+        }
+    }
+
+
+    public int ReteNeurale(double[] features)
+    {
         //double[] scaledFeatures = ScaleValues(features);
-
 
         double x, w, r;
         var flag = false;

@@ -11,7 +11,7 @@ public class TrainingScript : MonoBehaviour
     public Text recording_Text;
     public Text position_Text;
 
-    [Range(0,11)]
+    [Range(0,23)]
     [SerializeField]
     public int currentNoteId;
 

@@ -305,6 +305,7 @@
     <Compile Include="Assets\Own\Scripts\MS_LeapListener.cs" />
     <Compile Include="Assets\Own\Scripts\PCMOscillator.cs" />
     <Compile Include="Assets\Own\Scripts\Position.cs" />
+    <Compile Include="Assets\Own\Scripts\ReadMLFromFile.cs" />
     <Compile Include="Assets\Own\Scripts\TestML.cs" />
     <Compile Include="Assets\Own\Scripts\TestingML1.cs" />
     <Compile Include="Assets\Own\Scripts\TestingScript.cs" />
