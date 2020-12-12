@@ -178,6 +178,24 @@ print("Weight e Bias")
 print(classificatore.coefs_) #The ith element in the list represents the weight W matrix corresponding to layer i.
 print(classificatore.intercepts_) #The ith element in the list represents the bias B vector corresponding to layer i + 1.
 
+with open('precision_out.txt','w') as aw:       
+    aw.write("Accuracy: ")
+    aw.write(str(accuracy))
+    aw.write("\n")
+    aw.write("Precision: ")
+    aw.write(str(precision))
+    aw.write("\n")
+    aw.write("Recall: ")
+    aw.write(str(recall))
+    aw.write("\n")
+    aw.write("fscore: ")
+    aw.write(str(fscore))
+    aw.write("\n")
+    
+    
+
+
+
 with open('weights_out.txt','w') as fw:       # new line \n identifica l'inizio di un nuovo layer
     for w_layer in classificatore.coefs_:
         fw.write(str(w_layer))
