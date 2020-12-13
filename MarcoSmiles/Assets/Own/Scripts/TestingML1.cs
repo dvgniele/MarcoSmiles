@@ -13,11 +13,12 @@ public class TestingML1 : MonoBehaviour
    // private TestML testML;
     void Start()
     {
-        features = new double[]             //esempio che rappresenta nota con indice 0  
+        TestML.Populate();
+        features = new double[]             //esempio che rappresenta nota con indice 18
             {
-                61.4049, 146.6705, 145.6753, 145.5838, 147.2906, 153.1232,
-                1.755243, 9.343422, 10.85496, 50.51425, 152.7829, 149.1697,
-                149.6153, 149.4406, 150.7445, 4.826088, 8.815902, 9.580413,
+              52.98770905, 24.97154236, 29.72991753, 23.85840797, 25.60717583, 34.48836517,
+                10.40907669, 9.875915527, 10.22246742, 37.64592361, 175.954834, 152.2133942,
+                151.710434, 152.0919647, 114.0123672, 28.66732407, 8.403100014, 10.74728107
             };
 
         //testML = new TestML();

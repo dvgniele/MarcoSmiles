@@ -36,6 +36,7 @@ public class _GM : MonoBehaviour
     {
         list_posizioni = new List<Position>();
         //list_posizioni = FileUtils.LoadList();
+        TestML.Populate();
     }
 
     void FixedUpdate()
