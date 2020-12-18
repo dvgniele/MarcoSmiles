@@ -6,11 +6,6 @@ using System.Runtime.Hosting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- * QUESTO SCRIPT IN TEORIA è QUELLO CHE SERVE SOLO ALLA FASE DI TEST (QUANDO DI SUONA).. ANDREBBE FATTO UN GM PER OGNI SCENA (TRAINING E TESTING)
- * COSI DA GESTIRE AL MEGLIO LE COSE ALL'INTERNO DEL METODO UPDATE
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- */
 
 public class _GM : MonoBehaviour
 {

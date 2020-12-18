@@ -15,7 +15,23 @@ public static class TestML
 
     private static double[][] B2;
 
-
+    /*ReadArraysFromFormattedFile Restituisce una lista di array double. Gli array sono inseriti nella lista nell'ordine in cui vengono letti dal file.
+     * La lista è formattata nel seguente modo:
+     * Finchè leggendo il file vengono letti vettori, allora questi vettori vengono aggiunti alla lista e restituiti.
+     * Nel momento in cui la funzione capisce di aver letto una matrice, inserisce nella lista un array vuoto [].
+     * 
+     * Ad esempio:
+     * - nel file bias.txt, sono contenuti array. Ogni array rappresenta un bias: 
+     *      Il primo array rappresenta B1; il secondo array B2 etc...
+     * 
+     * - nel file weights.txt, sono contenute matrici, ognuna contiene una lista di array. Quindi tutti gli array contenuti nella lista restituita,
+     *   finchè non si legge un array vuoto [], faranno parte della prima matrice letta.
+     *   In questo modo, si formatta la lista in n blocchi di array, dove n è il numero di matrici contenuti nel file:
+     *      Tutti gli array contenuti nel primo blocco di array (quelli che si trovano prima del primo array vuoto[]) rappresentano la matrice W1,
+     *      Tutti gli array contenuti nel secondo blocco di array (quelli che si trovano dopo il primo array vuoto[] e prima del secondo array vuoto [])
+     *      rappresentano la matrice W2 
+     *      etc...
+     * */
     private static List<double[]> ReadArraysFromFormattedFile(string path)
     {
         var text = File.ReadAllText(path);
