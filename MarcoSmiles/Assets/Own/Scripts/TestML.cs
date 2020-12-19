@@ -81,8 +81,8 @@ public static class TestML
         B1 = new double[biasArrays.ElementAt(0).Length][];
         B2 = new double[biasArrays.ElementAt(1).Length][];
 
-        B1[0] = biasArrays.ElementAt(0);
-        B2[0] = biasArrays.ElementAt(1);
+        B1[0] = (double[]) biasArrays.ElementAt(0).Clone();
+        B2[0] = (double[]) biasArrays.ElementAt(1).Clone();
 
         List<double[]> weightsArrays = ReadArraysFromFormattedFile("../MarcoSmiles/Assets/Own/Datasets/weights_out.txt");
 
@@ -99,7 +99,7 @@ public static class TestML
 
         for(int i = 0; i < j ; i++)
         {
-            W1[i] = weightsArrays.ElementAt(i);     
+            W1[i] = (double[]) weightsArrays.ElementAt(i).Clone();     
 
         }
 
@@ -114,7 +114,7 @@ public static class TestML
 
         for (int i = 0 ; i < k - (j + 1) ; i++)
         {
-            W2[i] = weightsArrays.ElementAt(j + 1 + i);
+            W2[i] = (double[]) weightsArrays.ElementAt(j + 1 + i).Clone();
 
         }
          /*
