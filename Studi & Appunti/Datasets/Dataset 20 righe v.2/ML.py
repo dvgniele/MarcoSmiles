@@ -13,7 +13,7 @@ from sklearn.ensemble import ExtraTreesClassifier
 import matplotlib.pyplot as plt
 
 import pandas as pd
-from _datetime import datetime
+from datetime import datetime
 
 
 
@@ -63,7 +63,7 @@ def grid(cl,classifier,param_grid,n_folds,t_s_D,tLab_downsampled):
     with open(cl+".out.txt","w") as f: # cambiare il percorso dove si salvano i vari esperimenti di validation con k-fold cross-validation
 
         #####   CAMBIARE NUMERO DI JOBS A SECONDA DELLA PROPRIA CPU ALTRIMENTI SKRT, ORA STA MESSO 20 SOLO PERCHE' VOGLIO FLEXARE 
-        estimator = GridSearchCV(classifier, cv=n_folds, param_grid=param_grid, n_jobs=20, verbose=1,scoring='f1_weighted')     
+        estimator = GridSearchCV(classifier, cv=n_folds, param_grid=param_grid, n_jobs=5, verbose=1,scoring='f1_weighted')     
         estimator.fit(t_s_D, tLab_downsampled)
         means = estimator.cv_results_['mean_test_score']
         stds = estimator.cv_results_['std_test_score']
@@ -164,7 +164,7 @@ classificatore=MLPClassifier()
 pg = {'activation' : ['tanh', 'relu'],'learning_rate' : ['invscaling','adaptive','constant'],
 'solver' : ['adam','lbfgs','sgd'],
               'learning_rate_init':[0.01, 0.05, 0.1, 0.15, 0.2], 'hidden_layer_sizes':[3, 5, 10, 15, 17],
-      'max_iter':[2500, 5000, 10000]}
+      'max_iter':[50, 100, 500]}
 bestMLPparam=grid("marcosmiles_dataset.csv",classificatore,pg,n_folds,training_set_data,training_set_labels)
 print("I migliori parametri per MLP sono:")
 print(bestMLPparam)
