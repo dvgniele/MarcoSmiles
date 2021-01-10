@@ -15,26 +15,34 @@ public static class TestML
 
     private static double[][] B2;
 
-    /*ReadArraysFromFormattedFile Restituisce una lista di array double. Gli array sono inseriti nella lista nell'ordine in cui vengono letti dal file.
-     * La lista è formattata nel seguente modo:
-     * Finchè leggendo il file vengono letti vettori, allora questi vettori vengono aggiunti alla lista e restituiti.
-     * Nel momento in cui la funzione capisce di aver letto una matrice, inserisce nella lista un array vuoto [].
-     * 
-     * Ad esempio:
-     * - nel file bias.txt, sono contenuti array. Ogni array rappresenta un bias: 
-     *      Il primo array rappresenta B1; il secondo array B2 etc...
-     * 
-     * - nel file weights.txt, sono contenute matrici, ognuna contiene una lista di array. Quindi tutti gli array contenuti nella lista restituita,
-     *   finchè non si legge un array vuoto [], faranno parte della prima matrice letta.
-     *   In questo modo, si formatta la lista in n blocchi di array, dove n è il numero di matrici contenuti nel file:
-     *      Tutti gli array contenuti nel primo blocco di array (quelli che si trovano prima del primo array vuoto[]) rappresentano la matrice W1,
-     *      Tutti gli array contenuti nel secondo blocco di array (quelli che si trovano dopo il primo array vuoto[] e prima del secondo array vuoto [])
-     *      rappresentano la matrice W2 
-     *      etc...
-     * */
-    private static List<double[]> ReadArraysFromFormattedFile(string path)
+
+
+    /// <summary>
+    ///  ReadArraysFromFormattedFile Restituisce una lista di array double. Gli array sono inseriti nella lista nell'ordine in cui vengono letti dal file.
+    ///  La lista è formattata nel seguente modo:
+    /// Finchè leggendo il file vengono letti vettori, allora questi vettori vengono aggiunti alla lista e restituiti.
+    /// Nel momento in cui la funzione capisce di aver letto una matrice, inserisce nella lista un array vuoto [].
+    ///
+    /// Ad esempio:
+    /// - nel file bias.txt, sono contenuti array. Ogni array rappresenta un bias: 
+    /// Il primo array rappresenta B1; il secondo array B2 etc...
+    ///  
+    ///  - nel file weights.txt, sono contenute matrici, ognuna contiene una lista di array. Quindi tutti gli array contenuti nella lista restituita,
+    /// finchè non si legge un array vuoto [], faranno parte della prima matrice letta.
+    /// In questo modo, si formatta la lista in n blocchi di array, dove n è il numero di matrici contenuti nel file:
+    ///  Tutti gli array contenuti nel primo blocco di array (quelli che si trovano prima del primo array vuoto[]) rappresentano la matrice W1,
+    /// Tutti gli array contenuti nel secondo blocco di array (quelli che si trovano dopo il primo array vuoto[] e prima del secondo array vuoto [])
+    /// rappresentano la matrice W2 
+    /// etc...
+    /// </summary>
+    /// <param name="name">Nome del file da aprire</param>
+    /// <returns>
+    /// Una lista di double contenente i numeri letti da file. La lista e formattato logicamente in modo tale da poter costrutire gli eventuali array contenuti nel file.
+    /// </returns>
+    private static List<double[]> ReadArraysFromFormattedFile(string name)
     {
-        var text = File.ReadAllText(path);
+        //stringa
+        var text = FileUtils.LoadFile(name);
 
         text = text.Replace("[", "");
         text = text.Replace("\n", "");
@@ -76,7 +84,9 @@ public static class TestML
 
     public static void Populate()
     {
-        List<double[]> biasArrays = ReadArraysFromFormattedFile("../MarcoSmiles/Assets/Own/Datasets/bias_out.txt");
+        List<double[]> biasArrays = ReadArraysFromFormattedFile("bias_out.txt");
+
+
 
         B1 = new double[biasArrays.ElementAt(0).Length][];
         B2 = new double[biasArrays.ElementAt(1).Length][];
@@ -84,7 +94,7 @@ public static class TestML
         B1[0] = (double[]) biasArrays.ElementAt(0).Clone();
         B2[0] = (double[]) biasArrays.ElementAt(1).Clone();
 
-        List<double[]> weightsArrays = ReadArraysFromFormattedFile("../MarcoSmiles/Assets/Own/Datasets/weights_out.txt");
+        List<double[]> weightsArrays = ReadArraysFromFormattedFile("weights_out.txt");
 
         //finchè non arrivo ad un array uguale a {} sono array che rappresentano W1
         int j = 0; 
@@ -130,6 +140,9 @@ public static class TestML
 
     public static int ReteNeurale(double[] features)
     {
+
+
+
         // output_hidden1 ha lo stesso numero di elementi di B1
         var output_hidden1 = new double[B1.Length];
         // output_hidden2 ha lo stesso numero di elementi di B2

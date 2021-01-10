@@ -20,24 +20,30 @@ public class _GM : MonoBehaviour
     public bool shouldPlay = false;                         //  decide se bisogna suonare IN BASE ALLA SCENA ATTIVA. true solo se è nella scena di testing
 
     //public static bool isActive = false;            //  se ci sono le mani, suona, altrimenti va a c'rac
+
     public static bool isActive = true;            //  se ci sono le mani, suona, altrimenti va a c'rac
     public static double[] current_Features;        //  attualmente le features sono floats, risolviamo sto problemo
     public static int indexPlayingNote;             //  indice della nota da suonare che è letta da PCMOscillator
 
     //private TestML testML;
 
+
+
+    private void Awake()
+    {
+        TestML.Populate();
+        list_posizioni = new List<Position>();
+    }
+
     void Start()
     {
-        list_posizioni = new List<Position>();
-        //list_posizioni = FileUtils.LoadList();
-        TestML.Populate();
+        
+       
     }
 
     void FixedUpdate()
     {
-        /* Aggiorna array delle features currentFeatures
-         * in modo tale che venga calcolata la nota giusta ad ogni update
-         * */
+        // Aggiorna array delle features currentFeatures in modo tale che venga calcolata la nota giusta ad ogni update 
         current_Features = TestingScript.GetCurrentFeatures();
 
         indexPlayingNote = TestML.ReteNeurale(current_Features);                    //rappresenta la nota che deve essere suonata

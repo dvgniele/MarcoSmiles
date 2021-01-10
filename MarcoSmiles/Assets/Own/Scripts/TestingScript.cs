@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class TestingScript
 {
+
+   private static double[] current_features = new double[18];
+
     public static double[] GetCurrentFeatures()
     {
-        double[] current_features = new double[18];
+        //double[] current_features = new double[18];
 
         var left_hand = new DataToStore(
             _GM.hand_L,

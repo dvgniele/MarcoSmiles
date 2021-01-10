@@ -9,14 +9,14 @@ public static class FileUtils
 {
     static string path = Application.persistentDataPath;
 
-    static string filename = "marcosmiles_dataset";
-    static string ext = "csv";
+    static string filename = "marcosmiles_dataset.csv";
+    //static string ext = "csv";
 
     private static string GeneratePath(string filename)
     {
-        Debug.Log($"{path}/{filename}.{ext}");
+        Debug.Log($"{path}/{filename}");
 
-        return $"{path}/{filename}.{ext}";
+        return $"{path}/{filename}";
     }
 
     public static void Save(List<Position> data)
@@ -51,6 +51,19 @@ public static class FileUtils
             Save(data);
 
             Debug.Log("FILE CREATO");
+        }
+    }
+
+    public static string LoadFile(string name)
+    {
+        if (File.Exists(GeneratePath($"{name}")))
+        {
+            return File.ReadAllText(GeneratePath($"{name}"));
+        }
+        else
+        {
+            Debug.LogError("File non trovato");
+            return null;
         }
     }
 

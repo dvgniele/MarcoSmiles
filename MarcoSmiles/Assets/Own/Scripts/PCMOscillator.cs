@@ -13,7 +13,8 @@ public class PCMOscillator : MonoBehaviour
     public float volume = 0.4f;
 
     private float[] frequencies = new float[] { 
-                        261.630f , 277.180f , 293.660f , 311.130f , 329.630f , 349.990f , 369.990f , 392.000f , 415.300f , 440.000f , 466.160f , 493.880f };
+                        261.630f , 277.180f , 293.660f , 311.130f , 329.630f , 349.990f ,
+                        369.990f , 392.000f , 415.300f , 440.000f , 466.160f , 493.880f };
 
     // Start is called before the first frame update
     void Start()
