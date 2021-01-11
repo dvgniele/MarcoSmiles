@@ -85,18 +85,27 @@ public class _GM : MonoBehaviour
 
     private void ChangeColor(int id_prev, int id_curr)
     {
-        if (listaPulsanti[id_curr].GetComponent<UnityEngine.UI.Image>().color == Color.red)
+        //Quando si suonano note della seconda ottava non resetta il colore del tasto. Daniele aggiusta
+        if (id_curr > 11 || id_prev > 11)
         {
             return;
         }
-        else
+
+        if (id_prev == id_curr)
         {
-            if (id_prev != id_curr)
+
+            if (listaPulsanti[id_curr].GetComponent<UnityEngine.UI.Image>().color == Color.red)
             {
-                listaPulsanti[id_prev].GetComponent<UnityEngine.UI.Image>().color = listaPulsanti[id_prev].colors.normalColor;
-                listaPulsanti[id_curr].GetComponent<UnityEngine.UI.Image>().color = Color.red;
+                return;
             }
         }
+
+        if (id_prev != id_curr)
+        {
+            listaPulsanti[id_prev].GetComponent<UnityEngine.UI.Image>().color = listaPulsanti[id_prev].colors.normalColor;
+            listaPulsanti[id_curr].GetComponent<UnityEngine.UI.Image>().color = Color.red;
+        }
+
     }
 
     #region NAVIGATION
