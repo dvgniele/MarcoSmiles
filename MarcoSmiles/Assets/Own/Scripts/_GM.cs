@@ -35,7 +35,7 @@ public class _GM : MonoBehaviour
 
     [SerializeField]
     public List<Button> listaPulsanti;
-
+    public GameObject piano;
     //private TestML testML;
 
 
@@ -50,7 +50,13 @@ public class _GM : MonoBehaviour
     {
         currentScene = SceneManager.GetActiveScene();
         list_posizioni = new List<Position>();
-        
+
+        if(currentScene.buildIndex == 0)        //mainpage  
+        {
+            piano.SetActive(false);
+        }
+
+
     }
 
     void FixedUpdate()
@@ -80,30 +86,31 @@ public class _GM : MonoBehaviour
 
     /* NON SO COME SI FA QUEL FATTO DELLA DOCUMENTAZIONE
         ChangeColor cambia il colore della nota da suonare e ripristina il colore di default della nota che si stava suonando in precedenza (se c'è bisogno).
-        Altrimenti non fa nulla.
+        Altrimenti non fa nulla (caso in cui la nota precedentemente suonata è uguale a quella che si sta suonando adesso).
      */
 
     private void ChangeColor(int id_prev, int id_curr)
     {
-        //Quando si suonano note della seconda ottava non resetta il colore del tasto. Daniele aggiusta
-        if (id_curr > 11 || id_prev > 11)
+        if (id_prev == id_curr)
         {
             return;
         }
-
-        if (id_prev == id_curr)
+        else
         {
+            //resetta il colore di default al tasto corrispondente alla nota precedente
+            //il colore di default è "salvato" nella variabile DisabledColor del ColorBlock del Button
+            Button b_prev = listaPulsanti[id_prev];
+            ColorBlock cb_prev = b_prev.colors;
+            cb_prev.normalColor = cb_prev.disabledColor;
+            b_prev.colors = cb_prev;
 
-            if (listaPulsanti[id_curr].GetComponent<UnityEngine.UI.Image>().color == Color.red)
-            {
-                return;
-            }
-        }
+            //evidenzia il tasto corrispondente alla nota che si sta suonando
+            //il colore che evidenzia il tasto è "salvato" nella variabile PressedColor del ColorBlock del Button
+            Button b_curr = listaPulsanti[id_curr];
+            ColorBlock cb_curr = b_curr.colors;
+            cb_curr.normalColor = cb_curr.pressedColor;
+            b_curr.colors = cb_curr;
 
-        if (id_prev != id_curr)
-        {
-            listaPulsanti[id_prev].GetComponent<UnityEngine.UI.Image>().color = listaPulsanti[id_prev].colors.normalColor;
-            listaPulsanti[id_curr].GetComponent<UnityEngine.UI.Image>().color = Color.red;
         }
 
     }
