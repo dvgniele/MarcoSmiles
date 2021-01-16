@@ -298,6 +298,9 @@
     <Compile Include="Assets\LeapMotion\Modules\UIInput\Scripts\Utilities\SliderShadow.cs" />
     <Compile Include="Assets\LeapMotion\Modules\UIInput\Scripts\Utilities\SliderVolume.cs" />
     <Compile Include="Assets\LeapMotion\Modules\UIInput\Scripts\Utilities\ToggleToggler.cs" />
+    <Compile Include="Assets\Own\Scripts\AudioEffects\DelayLine.cs" />
+    <Compile Include="Assets\Own\Scripts\AudioEffects\MathUtil.cs" />
+    <Compile Include="Assets\Own\Scripts\AudioEffects\NReverb.cs" />
     <Compile Include="Assets\Own\Scripts\DataToStore.cs" />
     <Compile Include="Assets\Own\Scripts\DatasetHandler.cs" />
     <Compile Include="Assets\Own\Scripts\DebugBuild.cs" />
