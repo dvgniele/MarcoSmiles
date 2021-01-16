@@ -19,6 +19,13 @@ public static class FileUtils
         return $"{path}/{filename}";
     }
 
+    public static string PrintPath()
+    {
+        return $"{GeneratePath("")}";
+
+    }
+    
+
     public static void Save(List<Position> data)
     {
         System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
@@ -67,6 +74,32 @@ public static class FileUtils
         }
     }
 
+    /*     Converte bytes in un file .py e lo scrive in GeneratePath [AppData/LocalLow]
+     */
+    public static void SavePy(byte[] file, string name)
+    {
+        string filename = name + ".py";
+        //Debug.Log(file);
+        try
+        {
+            if (!File.Exists(GeneratePath(filename)))
+            {
+                using (var fs = new FileStream(GeneratePath(filename), FileMode.Create, FileAccess.Write))
+                {
+                    //Debug.Log(file);                  
+                    fs.Write(file, 0, file.Length);
+                }
+            }
+            else
+            {
+                Debug.Log("FILE GIA ESISTENTE");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("Exception caught in process:" + ex.ToString());
+        }
+    }
 
     /*
     public static void Save(DataToStore data)

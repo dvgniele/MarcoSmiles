@@ -308,6 +308,7 @@
     <Compile Include="Assets\Own\Scripts\PCMOscillator.cs" />
     <Compile Include="Assets\Own\Scripts\Position.cs" />
     <Compile Include="Assets\Own\Scripts\ReadMLFromFile.cs" />
+    <Compile Include="Assets\Own\Scripts\StartLearning.cs" />
     <Compile Include="Assets\Own\Scripts\TestML.cs" />
     <Compile Include="Assets\Own\Scripts\TestingML1.cs" />
     <Compile Include="Assets\Own\Scripts\TestingScript.cs" />
@@ -316,6 +317,7 @@
     <Compile Include="Assets\Own\Scripts\_GM_testing.cs" />
     <None Include="Assets\LeapMotion\Core\Version.txt" />
     <None Include="Assets\LeapMotion\Core\Resources\RuntimeGizmos.shader" />
+    <None Include="Assets\Resources\Text\test.txt" />
     <None Include="Assets\LeapMotion\Core\readme.txt" />
     <None Include="Assets\LeapMotion\Core\README_BEFORE_UPDATING.txt" />
     <None Include="Assets\LeapMotion\Modules\DetectionExamples\Shaders\LeapPinchLine.shader" />
@@ -326,6 +328,7 @@
     <None Include="Assets\LeapMotion\Core\Dependencies.txt" />
     <None Include="Assets\Own\Datasets\marcosmiles_dataset.csv.out.txt" />
     <None Include="Assets\Own\Datasets\precision_out.txt" />
+    <None Include="Assets\Resources\Text\ML.txt" />
     <None Include="Assets\Own\Datasets\bias_out.txt" />
     <None Include="Assets\LeapMotion\Core\Resources\ThresholdOverlay.shader" />
     <None Include="Assets\LeapMotion\Core\Resources\LeapCG.cginc" />

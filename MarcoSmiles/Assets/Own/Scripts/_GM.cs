@@ -42,20 +42,21 @@ public class _GM : MonoBehaviour
 
     private void Awake()
     {
-        TestML.Populate();
-       
+        currentScene = SceneManager.GetActiveScene();
+
+        if (currentScene.buildIndex == 1)
+        {
+            TestML.Populate();
+        }
     }
 
     void Start()
     {
-        currentScene = SceneManager.GetActiveScene();
+        string nameFile = "ML";           //Nome del file python. 
+        var MLFile = Resources.Load<TextAsset>("Text/" + nameFile);     //carica lo script dalla cartella resources (file .txt)
+        FileUtils.SavePy(MLFile.bytes, MLFile.name);                    //Converte il file .txt in script .py
+
         list_posizioni = new List<Position>();
-
-        if(currentScene.buildIndex == 0)        //mainpage  
-        {
-            piano.SetActive(false);
-        }
-
 
     }
 
@@ -72,9 +73,6 @@ public class _GM : MonoBehaviour
 
             ChangeColor(indexPreviousNote, indexPlayingNote);
         }
-
-
-
         //Debug.Log("L'indice che rappresenta la nota da suonare è:  " + indexPlayingNote);
     }
 
