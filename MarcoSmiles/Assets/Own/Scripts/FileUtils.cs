@@ -45,7 +45,8 @@ public static class FileUtils
 
                 str += Environment.NewLine;
 
-                Debug.Log(str);
+                //  stampa la riga che si sta salvando sul file
+                //Debug.Log(str);
                 File.AppendAllText(GeneratePath(filename), str);
             }
 

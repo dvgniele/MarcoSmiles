@@ -15,11 +15,18 @@ public class TrainingScript : MonoBehaviour
     [SerializeField]
     public int currentNoteId;
 
+    public int aumenta;
+
+    private void FixedUpdate()
+    {
+        //ChangeNoteId(aumenta);
+    }
+
     int count = 3;
-    int record_count = 3;
+    int record_count = 0;
 
     const int COUNT_DEF = 3;
-    const int RECORD_COUNT_DEF = 500;
+    const int RECORD_COUNT_DEF = 20;
 
     bool counting_flag = false;
     bool recording_flag = false;
@@ -28,6 +35,15 @@ public class TrainingScript : MonoBehaviour
     string text2 = "Hold the position.";
 
 
+
+    public void ChangeNoteId(int note_id)
+    {
+        //_GM.currentNoteId = note_id;
+        //currentNoteId = _GM.currentNoteId;
+        currentNoteId = note_id;
+
+        Debug.Log(currentNoteId);
+    }
 
     private void DataSelector()
     {

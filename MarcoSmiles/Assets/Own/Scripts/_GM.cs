@@ -19,6 +19,8 @@ public class _GM : MonoBehaviour
     public static Hand hand_R;
     public static Hand hand_L;
 
+    //public static int currentNoteId;
+
     [Range(1, 2)]
     public static int octaves;
 
@@ -38,11 +40,31 @@ public class _GM : MonoBehaviour
     public GameObject piano;
     //private TestML testML;
 
+    private  enum SceneEnum
+    {
+        Mainpage,
+        Suonah,
+        TrainingScene
+    }
 
+    private SceneEnum currSceneEnum;
 
     private void Awake()
     {
         currentScene = SceneManager.GetActiveScene();
+
+        switch(currentScene.buildIndex)
+        {
+            case (0):
+                currSceneEnum = SceneEnum.Mainpage;
+                break;
+            case (1):
+                currSceneEnum = SceneEnum.Suonah;
+                break;
+            case (2):
+                currSceneEnum = SceneEnum.TrainingScene;
+                break;
+        }
 
         if (currentScene.buildIndex == 1)
         {
@@ -62,7 +84,7 @@ public class _GM : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (currentScene.buildIndex == 1)
+        if (currSceneEnum == SceneEnum.Suonah)
         {
             // Aggiorna array delle features currentFeatures in modo tale che venga calcolata la nota giusta ad ogni update 
             current_Features = TestingScript.GetCurrentFeatures();
@@ -74,6 +96,11 @@ public class _GM : MonoBehaviour
             ChangeColor(indexPreviousNote, indexPlayingNote);
         }
         //Debug.Log("L'indice che rappresenta la nota da suonare è:  " + indexPlayingNote);
+
+        if(currSceneEnum == SceneEnum.TrainingScene)
+        {
+
+        }
     }
 
 
@@ -109,8 +136,24 @@ public class _GM : MonoBehaviour
             cb_curr.normalColor = cb_curr.pressedColor;
             b_curr.colors = cb_curr;
 
+
+            //  se è la scena di training
+            if(currSceneEnum == SceneEnum.TrainingScene)
+            {
+                //  cambia l'id della nota nel trainer
+                trainer.ChangeNoteId(id_curr);
+            }
+            
         }
 
+    }
+
+    public void GetClickedKey(Button sender)
+    {
+        var skrtino = listaPulsanti.IndexOf(listaPulsanti.FirstOrDefault(x => x.gameObject.Equals(sender.gameObject)));
+        trainer.ChangeNoteId(skrtino);
+
+        //Debug.Log($"{listaPulsanti[skrtino].gameObject.name}, {skrtino}");
     }
 
     #region NAVIGATION
