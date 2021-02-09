@@ -30,7 +30,7 @@ public class _GM : MonoBehaviour
 
     //public static bool isActive = false;                  //  se ci sono le mani, suona, altrimenti va a c'rac
 
-    public static bool isActive = true;                     //  se ci sono le mani, suona, altrimenti va a c'rac
+    public static bool isActive = false;                     //  se ci sono le mani, suona, altrimenti va a c'rac
     public static double[] current_Features;                //  attualmente le features sono floats, risolviamo sto problemo
     public static int indexPlayingNote;                     //  indice della nota da suonare che è letta da PCMOscillator
     public static int indexPreviousNote;                    //  indice della nota suonata nel fixed update precedente

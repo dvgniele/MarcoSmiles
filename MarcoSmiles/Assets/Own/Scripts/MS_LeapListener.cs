@@ -32,19 +32,31 @@ public class MS_LeapListener : MonoBehaviour
 
         Frame frame = args.frame;
 
-
-        //  per ogni mano, sceglie se è dx o sx, e stampa i seguenti dati
-        //  DATI GENERICI:          dx o sx, tupla di coords (x,y,z) dal sensore leap, numero dita,
-        //  ROTAZIONI relative:     rotazione su asse-x (hand pitch), rotazione su asse-z (hand roll), rotazione su asse-y (hand yaw)
-        foreach (var hand in frame.Hands)
+        //  ci sono delle mani rilevate
+        if(frame.Hands.Count > 0)
         {
-            //  seleziona se è la mano destra
+            _GM.isActive = true;            //  deve suonare
 
-            if (hand.IsRight)
-                _GM.hand_R = hand;
-            else if (hand.IsLeft)
-                _GM.hand_L = hand;
-            
+            //  per ogni mano, sceglie se è dx o sx, e stampa i seguenti dati
+            //  DATI GENERICI:          dx o sx, tupla di coords (x,y,z) dal sensore leap, numero dita,
+            //  ROTAZIONI relative:     rotazione su asse-x (hand pitch), rotazione su asse-z (hand roll), rotazione su asse-y (hand yaw)
+            foreach (var hand in frame.Hands)
+            {
+                //  seleziona se è la mano destra
+
+                if (hand.IsRight)
+                    _GM.hand_R = hand;
+                else if (hand.IsLeft)
+                    _GM.hand_L = hand;
+
+            }
         }
+        else
+        {
+            //  non ci sono delle mani rilevate
+
+            _GM.isActive = false;           //  non deve suonare
+        }
+
     }
 }
