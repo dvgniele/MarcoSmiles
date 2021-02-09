@@ -46,6 +46,7 @@ public class DatasetHandler : MonoBehaviour
 
         var palmSegment = h1.PalmPosition;
 
+
         //Debug.Log($"PALM SEGMENT: {palmSegment.ToString()}");
 
         //Debug.Log($"VETTORE DIREZZZIONE DI UN DITO: {h1.Fingers[1].Direction.ToString()}");
@@ -53,12 +54,16 @@ public class DatasetHandler : MonoBehaviour
         //return grads(h1.Direction.AngleTo(f1.Direction));
         return 0.0f;
     }
-    
-    #endregion
 
     #endregion
 
+    #endregion
 
+    /// <summary>
+    /// Converte un float in gradianti
+    /// </summary>
+    /// <param name="num">valore da convertire</param>
+    /// <returns>Valore in gradianti</returns>
     private static float grads(float num)
     {
         return num * 180.0f / Mathf.PI;

@@ -7,6 +7,9 @@ using Debug = UnityEngine.Debug;
 public class StartLearning : MonoBehaviour
 {
 
+    /// <summary>
+    /// Avvia lo script ML.py, avvia quindi il learning sul datasets attuale
+    /// </summary>
     public void Learn()
     {
         UnityEngine.Debug.Log("Python Starting");
@@ -49,34 +52,6 @@ public class StartLearning : MonoBehaviour
         UnityEngine.Debug.Log("Python Has finished!");
 
     }
-
-    /*          
-               PER AVERE OUTPUT NEL DEBUG DI UNITY COPIARE QUESTO DOPO AVER ESEGUITO IL PROCESSO
-
-                using (StreamReader reader = process.StandardOutput)
-                {
-
-                    string resline = string.Empty;
-                    while (reader.Peek() >= 0)
-                    {
-                        resline = reader.ReadLine();
-                        Debug.Log(resline);
-                    }
-
-                    using (StreamReader readerErr = process.StandardError)
-                    {
-                        string reslineErr = string.Empty;
-                        while (readerErr.Peek() >= 0)
-                        {
-                            reslineErr = readerErr.ReadLine();
-                            Debug.Log(reslineErr);
-                        }
-
-                    }
-                }
-
-    */
-
 
 }
 

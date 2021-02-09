@@ -28,27 +28,32 @@ public class _GM : MonoBehaviour
 
     public bool shouldPlay = false;                         //  decide se bisogna suonare IN BASE ALLA SCENA ATTIVA. true solo se è nella scena di testing
 
-    //public static bool isActive = false;            //  se ci sono le mani, suona, altrimenti va a c'rac
+    //public static bool isActive = false;                  //  se ci sono le mani, suona, altrimenti va a c'rac
 
-    public static bool isActive = true;            //  se ci sono le mani, suona, altrimenti va a c'rac
-    public static double[] current_Features;        //  attualmente le features sono floats, risolviamo sto problemo
-    public static int indexPlayingNote;             //  indice della nota da suonare che è letta da PCMOscillator
-    public static int indexPreviousNote;             //  indice della nota suonata nel fixed update precedente
+    public static bool isActive = true;                     //  se ci sono le mani, suona, altrimenti va a c'rac
+    public static double[] current_Features;                //  attualmente le features sono floats, risolviamo sto problemo
+    public static int indexPlayingNote;                     //  indice della nota da suonare che è letta da PCMOscillator
+    public static int indexPreviousNote;                    //  indice della nota suonata nel fixed update precedente
 
     [SerializeField]
     public List<Button> listaPulsanti;
     public GameObject piano;
     //private TestML testML;
 
-    private  enum SceneEnum
+    /// <summary>
+    /// Enum per le scene unity esistenti
+    /// </summary>
+    private enum SceneEnum
     {
         Mainpage,
         Suonah,
         TrainingScene
     }
-
     private SceneEnum currSceneEnum;
 
+    /// <summary>
+    /// Chiamato quando viene inizializzato un oggetto con lo script _GM.cs
+    /// </summary>
     private void Awake()
     {
         currentScene = SceneManager.GetActiveScene();
@@ -74,6 +79,14 @@ public class _GM : MonoBehaviour
 
     void Start()
     {
+        /*
+         * In unity, possono essere caricati nella build solo determinati tipi di file. File .txt vengono copiati all'interno della cartella 
+         * della build.
+         * In questo modo riusciamo ad avere lo script .py (che in questo momento è un file .txt) all'interno della build.
+         * Dunque, leggiamo il file .txt dalla cartella Resources, e usaando il metodo SavePy, salviamo lo script letto dal file .txt
+         * in un file ad estensione .py. Questo file potrà poi essere lanciato su linea di comando.    
+         */
+
         string nameFile = "ML";           //Nome del file python. 
         var MLFile = Resources.Load<TextAsset>("Text/" + nameFile);     //carica lo script dalla cartella resources (file .txt)
         FileUtils.SavePy(MLFile.bytes, MLFile.name);                    //Converte il file .txt in script .py
@@ -104,16 +117,20 @@ public class _GM : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Lanciato quando viene premuto il pulsante di training
+    /// </summary>
     public void TrainButtonClick()
     {
         trainer.Trainer();
     }
 
-    /* NON SO COME SI FA QUEL FATTO DELLA DOCUMENTAZIONE
-        ChangeColor cambia il colore della nota da suonare e ripristina il colore di default della nota che si stava suonando in precedenza (se c'è bisogno).
-        Altrimenti non fa nulla (caso in cui la nota precedentemente suonata è uguale a quella che si sta suonando adesso).
-     */
-
+    /// <summary>
+    /// Cambia il colore della nota da suonare, ripristinando al colore di dafault la nota precedentemente premuta (se necessario)
+    /// Se la nota da suonare è la stessa della precedente non cambia nulla
+    /// </summary>
+    /// <param name="id_prev">id nota precedenteme</param>
+    /// <param name="id_curr">id nota da suonare</param>
     private void ChangeColor(int id_prev, int id_curr)
     {
         if (id_prev == id_curr)
@@ -148,6 +165,11 @@ public class _GM : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Viene chiamato ogni volta che un pulsante della tastiera (del pianoforte) viene premuto, per far sì che venga cambiato l'id
+    /// della nota corrente
+    /// </summary>
+    /// <param name="sender"></param>
     public void GetClickedKey(Button sender)
     {
         var skrtino = listaPulsanti.IndexOf(listaPulsanti.FirstOrDefault(x => x.gameObject.Equals(sender.gameObject)));
@@ -158,12 +180,24 @@ public class _GM : MonoBehaviour
 
     #region NAVIGATION
 
+    /// <summary>
+    /// Chiude l'applicazione
+    /// </summary>
     public void QuitGame() => Application.Quit();
 
+    /// <summary>
+    /// Effettua la navigazione alla scena principale
+    /// </summary>
     public void NavigateToMainScene() => SceneManager.LoadScene(0);
 
+    /// <summary>
+    /// Effettua la navigazione alla scena di test
+    /// </summary>
     public void NavigateToTestScene() => SceneManager.LoadScene(1);
 
+    /// <summary>
+    /// Effettua la navigazione alla scena di training
+    /// </summary>
     public void NavigateToTrainingtScene() => SceneManager.LoadScene(2);
 
     #endregion

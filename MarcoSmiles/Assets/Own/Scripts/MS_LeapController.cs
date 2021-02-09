@@ -17,13 +17,13 @@ public class MS_LeapController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        //  inizializza un novo controller per il leap
         controller = new Controller();
 
+        //  assegna il device quando un sensore leap motion è connesso
         controller.Device += MS_LeapListener.OnLeapConnect;
+        //  ascolta ogni frame del leap motion
         controller.FrameReady += MS_LeapListener.OnFrame;
-
-
     }
 
     // Update is called once per frame

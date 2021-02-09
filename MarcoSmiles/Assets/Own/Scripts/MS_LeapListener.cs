@@ -32,84 +32,19 @@ public class MS_LeapListener : MonoBehaviour
 
         Frame frame = args.frame;
 
-        /*
-        Debug.Log($"" +
-            $"Frame id: {frame.Id}," +
-            $"timestamp: {frame.Timestamp}," +
-            $" hands: {frame.Hands.Count}");
-            */
-
 
         //  per ogni mano, sceglie se è dx o sx, e stampa i seguenti dati
         //  DATI GENERICI:          dx o sx, tupla di coords (x,y,z) dal sensore leap, numero dita,
         //  ROTAZIONI relative:     rotazione su asse-x (hand pitch), rotazione su asse-z (hand roll), rotazione su asse-y (hand yaw)
         foreach (var hand in frame.Hands)
         {
-            var handType = hand.IsRight ? "Right Hand" : "Left Hand";
+            //  seleziona se è la mano destra
 
             if (hand.IsRight)
                 _GM.hand_R = hand;
-            else
-            {
-                if (hand.IsLeft)
-                    _GM.hand_L = hand;
-            }
-
-
-                //Debug.Log($"{handType}, Hand id: {hand.Id}, palm position: {hand.PalmPosition}");
-
-                Vector normal = hand.PalmNormal;
-            Vector direction = hand.Direction;
-
-            /*
-            Debug.Log($"{handType},   Hand id: {hand.Id},   Palm position: {hand.PalmPosition},     Palm rotation: {hand.PalmPosition.}" +
-                $"      Hand pitch: {direction.Pitch * 180.0f / (float)Mathf.PI} degrees," +
-                $"      Hand Roll: {normal.Roll * 180.0f / (float)Mathf.PI} degrees," +
-                $"      Hand Yaw: {direction.Yaw * 180.0f / (float)Mathf.PI} degrees" +
-                $"      ");
-
-             */
-
-            //  FF Finger Flection
-            //  angolo tra metacarpo (bones[0]) e falange intermedia (bones[2])
-            //var kek = DatasetHandler.getFF(hand.Fingers[1]);                   //  utilizzando classe DatasetHandler
-            //var kek = hand.Fingers[1].bones[0].Direction.AngleTo(hand.Fingers[1].bones[2].Direction) *180.0f / (float)Mathf.PI;
-
-
-            //  NFA Nearest Fingers Angles
-            //  angolo tra dita
-            //var kek = DatasetHandler.getNFA(hand.Fingers[1], hand.Fingers[2]);   //  utilizzando classe DatasetHandler
-            //            Debug.Log($"{handType}, angle: {kek}, flesso: {hand.Fingers[1].IsExtended}");
-
-
-
-            //  TESTTTTTTT
-            //  angolo palmo dito
+            else if (hand.IsLeft)
+                _GM.hand_L = hand;
             
-            
-            
-            //var kek = DatasetHandler.getFPA(hand, hand.Fingers[2]);
-            
-            
-            
-            //Debug.Log($"{handType}, angle: {kek}");
-
-            //Debug.Log($"PALM SEGMENT: {kek}");
-
-
-            //  distanza tra mani
-            //var kek = frame.Hands[0].Direction.DistanceTo(frame.Hands[1].Direction);
-
-
-
-
-
-
-
-
-            //hand.Fingers[3].bones[2].Direction.Yaw
-
-
         }
     }
 }

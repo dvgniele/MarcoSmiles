@@ -303,9 +303,7 @@
     <Compile Include="Assets\Own\Scripts\AudioEffects\NReverb.cs" />
     <Compile Include="Assets\Own\Scripts\DataToStore.cs" />
     <Compile Include="Assets\Own\Scripts\DatasetHandler.cs" />
-    <Compile Include="Assets\Own\Scripts\DebugBuild.cs" />
     <Compile Include="Assets\Own\Scripts\FileUtils.cs" />
-    <Compile Include="Assets\Own\Scripts\HandDataToStore.cs" />
     <Compile Include="Assets\Own\Scripts\MS_LeapController.cs" />
     <Compile Include="Assets\Own\Scripts\MS_LeapListener.cs" />
     <Compile Include="Assets\Own\Scripts\PCMOscillator.cs" />
@@ -328,12 +326,14 @@
     <None Include="Assets\Own\Datasets\weights_out.txt" />
     <None Include="Assets\LeapMotion\Core\Resources\PassthroughBackground.shader" />
     <None Include="Assets\LeapMotion\Core\Resources\PassthroughForeground.shader" />
+    <None Include="Assets\Own\Datasets\min&amp;max_values_dataset_out.txt" />
     <None Include="Assets\LeapMotion\Core\Dependencies.txt" />
     <None Include="Assets\Own\Datasets\marcosmiles_dataset.csv.out.txt" />
     <None Include="Assets\Own\Datasets\precision_out.txt" />
     <None Include="Assets\Resources\Text\ML.txt" />
     <None Include="Assets\Own\Datasets\bias_out.txt" />
     <None Include="Assets\LeapMotion\Core\Resources\ThresholdOverlay.shader" />
+    <None Include="Assets\Own\Datasets\learning_time.txt" />
     <None Include="Assets\LeapMotion\Core\Resources\LeapCG.cginc" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
