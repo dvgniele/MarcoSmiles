@@ -88,6 +88,7 @@ public static class TestML
     /// </summary>
     public static void Populate()
     {
+        
         List<double[]> biasArrays = ReadArraysFromFormattedFile("bias_out.txt");
 
         B1 = new double[biasArrays.ElementAt(0).Length][];

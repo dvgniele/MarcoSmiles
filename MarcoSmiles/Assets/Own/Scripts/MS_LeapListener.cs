@@ -49,7 +49,6 @@ public class MS_LeapListener : MonoBehaviour
                     _GM.hand_R = hand;
                 else if (hand.IsLeft)
                     _GM.hand_L = hand;
-
             }
         }
         else

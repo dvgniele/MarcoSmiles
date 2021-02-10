@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEditor;
+using System.IO;
 
 
 /*__________!Ci Converrebbe fare una classe contenente tutte le costanti,  contenente ad esempio il numero delle note etc....!___________*/
@@ -59,6 +60,8 @@ public class _GM : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        selectedDataset = FileUtils.defaultFolder;
+
         currentScene = SceneManager.GetActiveScene();
 
         switch(currentScene.buildIndex)
@@ -198,7 +201,7 @@ public class _GM : MonoBehaviour
     /// </summary>
     public void NavigateToTestScene()
     {
-        if(selectedDataset == null)
+        if(selectedDataset == FileUtils.defaultFolder)
             OpenPanel();
 
         SceneManager.LoadScene(1);
@@ -216,12 +219,74 @@ public class _GM : MonoBehaviour
     public void OpenPanel()
     {
         //EditorUtility.DisplayDialog("Select Dataset Folder", "Select the Dataset folder you prefer.", "OK.");
-
-        string path = EditorUtility.OpenFolderPanel("Ma che ooooh", $"{FileUtils.PrintPath()}", "");
+        
+        string path = EditorUtility.OpenFolderPanel("Select Dataset", $"{FileUtils.PrintPath()}", "");
         if (path.Length != 0)
         {
             selectedDataset = path.Split('/').Last();
         }
+    }
+
+    [MenuItem("Example/Overwrite File")]
+    public void OpenImportPanel()
+    {
+        var tmp = FileUtils.PrintPath().Split('/').ToList();
+        tmp.Remove(tmp.Last());
+        tmp.Remove(tmp.Last());
+
+        var tmp_path = "";
+        foreach (var item in tmp)
+            tmp_path += item + '/';
+
+        var path = EditorUtility.OpenFolderPanel("Importa Dataset", tmp_path, FileUtils.PrintPath());
+
+        if(Directory.Exists(path))
+        {
+            var newdirName = tmp_path + path.Split('/').ToList().Last();
+
+            ProcessDirectory(path, newdirName);
+        }
 
     }
+    
+    [MenuItem("Example/Save File")]
+    public void OpenExportPanel()
+    {
+
+    }       
+    
+
+    public static void ProcessDirectory(string dir, string destination)
+    {
+        Directory.CreateDirectory(destination);
+
+        string[] files = Directory.GetFiles(dir);
+
+        foreach (var item in files)
+            ProcessFile(item, destination);
+
+
+        string[] dirs = Directory.GetDirectories(dir);
+
+
+        var tmp = dir.Split('/').ToList().Last();
+        selectedDataset = tmp;
+    }
+
+    public static void ProcessFile(string file, string destination)
+    {
+        var tmp = file.Split('/').ToList();
+        var tmp1 = tmp.Last().Split('\\').ToList().Last();
+        var filename = tmp1;
+
+        string str = destination + '/' + filename;
+
+
+        if(!File.Exists(str))
+        {
+            File.Copy(file, str);
+        }
+
+    }
+
 }

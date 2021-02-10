@@ -26,7 +26,7 @@ public static class FileUtils
     /// <summary>
     /// Nome 
     /// </summary>
-    static string defaultFolder = "DefaultDataset";
+    public static string defaultFolder = "DefaultDataset";
 
     /// <summary>
     /// Prende il nome della cartella del dataset
@@ -44,9 +44,9 @@ public static class FileUtils
     /// <returns></returns>
     private static string GeneratePath(string filename)
     {
-        Debug.Log($"{path}/{filename}");
+        //Debug.Log($"{path}/{folderName}/{_GM.selectedDataset}/{filename}");
 
-        return $"{path}/{filename}";
+        return $"{path}/{folderName}/{_GM.selectedDataset}/{filename}";
     }
 
     /// <summary>
@@ -57,9 +57,9 @@ public static class FileUtils
     /// <returns></returns>
     private static string GeneratePath(string filename, string folder)
     {
-        Debug.Log($"{path}/{folder}/{filename}");
+        //Debug.Log($"{path}/{folderName}/{folder}/{filename}");
 
-        return $"{path}/{folder}/{filename}";
+        return $"{path}/{folderName}/{folder}/{filename}";
     }
 
     /// <summary>
@@ -189,5 +189,16 @@ public static class FileUtils
         {
             Debug.Log("Exception caught in process:" + ex.ToString());
         }
+    }
+
+
+    public static void Import(string path)
+    {
+
+    }
+
+    public static void Export(string path)
+    {
+
     }
 }
