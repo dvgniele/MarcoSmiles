@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 
 /*__________!Ci Converrebbe fare una classe contenente tutte le costanti,  contenente ad esempio il numero delle note etc....!___________*/
@@ -39,6 +40,8 @@ public class _GM : MonoBehaviour
     public List<Button> listaPulsanti;
     public GameObject piano;
     //private TestML testML;
+
+    public static string selectedDataset = null;
 
     /// <summary>
     /// Enum per le scene unity esistenti
@@ -193,7 +196,13 @@ public class _GM : MonoBehaviour
     /// <summary>
     /// Effettua la navigazione alla scena di test
     /// </summary>
-    public void NavigateToTestScene() => SceneManager.LoadScene(1);
+    public void NavigateToTestScene()
+    {
+        if(selectedDataset == null)
+            OpenPanel();
+
+        SceneManager.LoadScene(1);
+    }
 
     /// <summary>
     /// Effettua la navigazione alla scena di training
@@ -201,4 +210,18 @@ public class _GM : MonoBehaviour
     public void NavigateToTrainingtScene() => SceneManager.LoadScene(2);
 
     #endregion
+
+
+    [MenuItem("Example/Overwrite File")]
+    public void OpenPanel()
+    {
+        //EditorUtility.DisplayDialog("Select Dataset Folder", "Select the Dataset folder you prefer.", "OK.");
+
+        string path = EditorUtility.OpenFolderPanel("Ma che ooooh", $"{FileUtils.PrintPath()}", "");
+        if (path.Length != 0)
+        {
+            selectedDataset = path.Split('/').Last();
+        }
+
+    }
 }

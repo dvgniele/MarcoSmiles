@@ -19,15 +19,47 @@ public static class FileUtils
     //static string ext = "csv";
 
     /// <summary>
-    /// Genera il path per il dataset da utilizzare
+    /// Nome della cartella del dataset
     /// </summary>
-    /// <param name="filename"></param>
+    static string folderName = "MyDatasets";
+
+    /// <summary>
+    /// Nome 
+    /// </summary>
+    static string defaultFolder = "DefaultDataset";
+
+    /// <summary>
+    /// Prende il nome della cartella del dataset
+    /// </summary>
+    /// <returns>Il nome della cartella del dataset</returns>
+    public static string GetFolderName()
+    {
+        return folderName;
+    }
+
+    /// <summary>
+    /// Genera il path per il file da utilizzare
+    /// </summary>
+    /// <param name="filename">Nome del file</param>
     /// <returns></returns>
     private static string GeneratePath(string filename)
     {
         Debug.Log($"{path}/{filename}");
 
         return $"{path}/{filename}";
+    }
+
+    /// <summary>
+    /// Genera il path per il file da utilizzare da una cartella specifica
+    /// </summary>
+    /// <param name="filename">Nome del file</param>
+    /// <param name="folder">Nome della cartella</param>
+    /// <returns></returns>
+    private static string GeneratePath(string filename, string folder)
+    {
+        Debug.Log($"{path}/{folder}/{filename}");
+
+        return $"{path}/{folder}/{filename}";
     }
 
     /// <summary>
@@ -38,7 +70,17 @@ public static class FileUtils
     {
         return $"{GeneratePath("")}";
     }
-    
+
+    /// <summary>
+    /// Prende il path per il datasaet
+    /// </summary>
+    /// <param name="folder">Nopme della cartella</param>
+    /// <returns>Ritorna il path per il dataset</returns>
+    public static string PrintPathFolder(string folder)
+    {
+        return $"{GeneratePath("",$"{folder}")}";
+    }
+
     /// <summary>
     /// Salva la lista di posizioni su file
     /// </summary>

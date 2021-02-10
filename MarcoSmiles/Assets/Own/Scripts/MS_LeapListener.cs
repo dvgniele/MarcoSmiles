@@ -36,6 +36,7 @@ public class MS_LeapListener : MonoBehaviour
         if(frame.Hands.Count > 0)
         {
             _GM.isActive = true;            //  deve suonare
+            //  qui attivi
 
             //  per ogni mano, sceglie se è dx o sx, e stampa i seguenti dati
             //  DATI GENERICI:          dx o sx, tupla di coords (x,y,z) dal sensore leap, numero dita,
@@ -54,7 +55,7 @@ public class MS_LeapListener : MonoBehaviour
         else
         {
             //  non ci sono delle mani rilevate
-
+            //  qui disattivi
             _GM.isActive = false;           //  non deve suonare
         }
 
