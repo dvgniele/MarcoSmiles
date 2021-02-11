@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 
 using UnityEngine;
@@ -192,13 +193,47 @@ public static class FileUtils
     }
 
 
-    public static void Import(string path)
+    public static void Import(string path, string destination)
     {
-
+        ProcessDirectory(path, destination);
     }
 
-    public static void Export(string path)
+    public static void Export(string path, string destination)
     {
+        ProcessDirectory(path, destination);
+    }
 
+    private static void ProcessDirectory(string dir, string destination, bool setDS = false)
+    {
+        Directory.CreateDirectory(destination);
+
+        string[] files = Directory.GetFiles(dir);
+
+        foreach (var item in files)
+            ProcessFile(item, destination);
+
+
+        string[] dirs = Directory.GetDirectories(dir);
+
+
+        var tmp = dir.Split('/').ToList().Last();
+
+        if(setDS)
+            _GM.selectedDataset = tmp;
+    }
+
+    private static void ProcessFile(string file, string destination)
+    {
+        var tmp = file.Split('/').ToList();
+        var tmp1 = tmp.Last().Split('\\').ToList().Last();
+        var filename = tmp1;
+
+        string str = destination + '/' + filename;
+
+
+        if (!File.Exists(str))
+        {
+            File.Copy(file, str);
+        }
     }
 }

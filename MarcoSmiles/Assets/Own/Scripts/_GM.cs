@@ -238,55 +238,44 @@ public class _GM : MonoBehaviour
         foreach (var item in tmp)
             tmp_path += item + '/';
 
-        var path = EditorUtility.OpenFolderPanel("Importa Dataset", tmp_path, FileUtils.PrintPath());
+        var path = EditorUtility.OpenFolderPanel("Import Dataset", tmp_path, FileUtils.PrintPath());
 
         if(Directory.Exists(path))
         {
             var newdirName = tmp_path + path.Split('/').ToList().Last();
 
-            ProcessDirectory(path, newdirName);
+            FileUtils.Import(path, newdirName);
         }
 
     }
-    
+
     [MenuItem("Example/Save File")]
     public void OpenExportPanel()
     {
+        var tmp = FileUtils.PrintPath().Split('/').ToList();
+        tmp.Remove(tmp.Last());
+        tmp.Remove(tmp.Last());
 
-    }       
-    
+        var tmp_path = "";
+        foreach (var item in tmp)
+            tmp_path += item + '/';
 
-    public static void ProcessDirectory(string dir, string destination)
-    {
-        Directory.CreateDirectory(destination);
+        var path = EditorUtility.OpenFolderPanel("Export Dataset", tmp_path, FileUtils.PrintPath());
 
-        string[] files = Directory.GetFiles(dir);
-
-        foreach (var item in files)
-            ProcessFile(item, destination);
-
-
-        string[] dirs = Directory.GetDirectories(dir);
-
-
-        var tmp = dir.Split('/').ToList().Last();
-        selectedDataset = tmp;
-    }
-
-    public static void ProcessFile(string file, string destination)
-    {
-        var tmp = file.Split('/').ToList();
-        var tmp1 = tmp.Last().Split('\\').ToList().Last();
-        var filename = tmp1;
-
-        string str = destination + '/' + filename;
-
-
-        if(!File.Exists(str))
+        if (Directory.Exists(path))
         {
-            File.Copy(file, str);
-        }
+            var expPath = EditorUtility.OpenFolderPanel("Choose the location to export to", tmp_path, "");
+            expPath += "/" + path.Split('/').ToList().Last();
 
+            Debug.Log(expPath);
+
+            if(!Directory.Exists(expPath))
+                Directory.CreateDirectory(expPath);
+
+            FileUtils.Export(path, expPath);
+        }
     }
+
+
 
 }
