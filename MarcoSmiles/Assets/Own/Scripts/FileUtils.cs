@@ -193,16 +193,32 @@ public static class FileUtils
     }
 
 
+    /// <summary>
+    /// Importa il dataset
+    /// </summary>
+    /// <param name="path">path del dataset da importare</param>
+    /// <param name="destination">path destinazione per il dataset da importare</param>
     public static void Import(string path, string destination)
     {
         ProcessDirectory(path, destination, true);
     }
 
+    /// <summary>
+    /// Esporta il dataset
+    /// </summary>
+    /// <param name="path">path del dataset da esportare</param>
+    /// <param name="destination">path destinazione per il dataset da esportare</param>
     public static void Export(string path, string destination)
     {
         ProcessDirectory(path, destination);
     }
 
+    /// <summary>
+    /// Processa una cartella, salvando tutto il contenuto in un'altra destinazione
+    /// </summary>
+    /// <param name="dir">cartella da copiare</param>
+    /// <param name="destination">path destinazione per la cartella da copiare</param>
+    /// <param name="setDS">True se deve essere selezionato il dataset passato in input, False altrimenti</param>
     private static void ProcessDirectory(string dir, string destination, bool setDS = false)
     {
         Directory.CreateDirectory(destination);
@@ -222,6 +238,11 @@ public static class FileUtils
             _GM.selectedDataset = tmp;
     }
 
+    /// <summary>
+    /// Processa un file, salvandolo in un'altra destinazione
+    /// </summary>
+    /// <param name="file">path del file da copiare</param>
+    /// <param name="destination">path destinazione per il file da copiare</param>
     private static void ProcessFile(string file, string destination)
     {
         var tmp = file.Split('/').ToList();

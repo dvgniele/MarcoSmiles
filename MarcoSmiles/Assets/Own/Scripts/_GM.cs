@@ -215,7 +215,10 @@ public class _GM : MonoBehaviour
     #endregion
 
 
-    [MenuItem("Example/Overwrite File")]
+    /// <summary>
+    /// Apre un pannello per selezionare il dataset da utilizzare nella cartella MyDataset
+    /// </summary>
+    [MenuItem("Select Dataset")]
     public void OpenPanel()
     {
         //EditorUtility.DisplayDialog("Select Dataset Folder", "Select the Dataset folder you prefer.", "OK.");
@@ -227,7 +230,10 @@ public class _GM : MonoBehaviour
         }
     }
 
-    [MenuItem("Example/Overwrite File")]
+    /// <summary>
+    /// Apre un pannello per selezionare un dataset da importare nella cartella MyDataset
+    /// </summary>
+    [MenuItem("Import Dataset")]
     public void OpenImportPanel()
     {
         var tmp = FileUtils.PrintPath().Split('/').ToList();
@@ -249,7 +255,10 @@ public class _GM : MonoBehaviour
 
     }
 
-    [MenuItem("Example/Save File")]
+    /// <summary>
+    /// Apre un pannello per selezionare un dataset da esportare in una qualsiasi directory sul pc
+    /// </summary>
+    [MenuItem("Export Dataset")]
     public void OpenExportPanel()
     {
         var tmp = FileUtils.PrintPath().Split('/').ToList();
