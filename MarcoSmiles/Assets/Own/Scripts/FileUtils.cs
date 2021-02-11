@@ -195,7 +195,7 @@ public static class FileUtils
 
     public static void Import(string path, string destination)
     {
-        ProcessDirectory(path, destination);
+        ProcessDirectory(path, destination, true);
     }
 
     public static void Export(string path, string destination)
