@@ -44,7 +44,7 @@ public class _GM : MonoBehaviour
 
 
     //inizializza la cariabile selectedDataset con la cartella FileUtils.defaultFolder (DefaultDataset)
-    public static string selectedDataset = FileUtils.defaultFolder;
+    public static string selectedDataset = "DefaultDataset";
 
     /// <summary>
     /// Enum per le scene unity esistenti
