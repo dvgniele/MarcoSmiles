@@ -20,17 +20,17 @@ public static class FileUtils
     //static string ext = "csv";
 
     /// <summary>
-    /// Nome della cartella del dataset
+    /// Nome della cartella contenente i datasets importati
     /// </summary>
     static string folderName = "MyDatasets";
 
     /// <summary>
-    /// Nome 
+    /// Nome Dataset
     /// </summary>
     public static string defaultFolder = "DefaultDataset";
 
     /// <summary>
-    /// Prende il nome della cartella del dataset
+    /// Restituisce il nome della cartella del dataset
     /// </summary>
     /// <returns>Il nome della cartella del dataset</returns>
     public static string GetFolderName()
@@ -39,7 +39,8 @@ public static class FileUtils
     }
 
     /// <summary>
-    /// Genera il path per il file da utilizzare
+    /// Genera il path per il file da utilizzare. il path è formato da: path (La cartella in appdata dell'aplicazione); 
+    /// folderName (Cartella dei datasets) e filename (nome del file)
     /// </summary>
     /// <param name="filename">Nome del file</param>
     /// <returns></returns>
@@ -51,7 +52,10 @@ public static class FileUtils
     }
 
     /// <summary>
-    /// Genera il path per il file da utilizzare da una cartella specifica
+    /// Genera il path per il file da utilizzare da una cartella specifica.
+    /// il path è formato da: path (La cartella in appdata dell'aplicazione); folderName (Cartella dei datasets);
+    /// folder (Cartella passato come parametro, all'interno della quale si vuole effettuare la ricerca) e filename (nome del file)
+    /// 
     /// </summary>
     /// <param name="filename">Nome del file</param>
     /// <param name="folder">Nome della cartella</param>
@@ -64,7 +68,7 @@ public static class FileUtils
     }
 
     /// <summary>
-    /// Prende il path per il datasaet
+    /// Prende il path per il datasaet. Versione public di generatepath. [(è davvero necessaria???? o basta mettere generate path a public?)]
     /// </summary>
     /// <returns>Ritorna il path per il dataset</returns>
     public static string PrintPath()
