@@ -16,26 +16,14 @@
 ## Features 
 > ##### implemented and to implement
 
-- [ ] Possibility to save hands positions
+- [x] Possibility to save hands positions
 - [x] Hand Position Camera
-- [ ] Basic UI
-- [ ] Sound Engine
-- [ ] Machine-Learning Agents
+- [x] Basic UI
+- [x] Sound Engine
+- [x] Machine-Learning Agents
 - [ ] Music Session
 
 
-<a name="changelog"></a>
-## Changelog
-```
-> Version -> 0.1
-- Project Started
-- Creating basic UI
-- Hand Visualization
-```
-
-
-<a name="workingon"></a>
-## Working On
 ### Basic UI
 - hand visualization avaiable with some basic informations.
 ### Hand Data Rapresentation
