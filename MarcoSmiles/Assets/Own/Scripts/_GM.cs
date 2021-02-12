@@ -42,7 +42,9 @@ public class _GM : MonoBehaviour
     public GameObject piano;
     //private TestML testML;
 
-    public static string selectedDataset = null;
+
+    //inizializza la cariabile selectedDataset con la cartella FileUtils.defaultFolder (DefaultDataset)
+    public static string selectedDataset = FileUtils.defaultFolder;
 
     /// <summary>
     /// Enum per le scene unity esistenti
