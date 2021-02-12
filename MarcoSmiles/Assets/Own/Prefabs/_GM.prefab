@@ -170,6 +170,7 @@ MonoBehaviour:
   - {fileID: 8510688304592820851}
   - {fileID: 1793891110198325325}
   - {fileID: 3417721531491958323}
+  piano: {fileID: 8168953485374489543}
 --- !u!1 &8168953485374489543
 GameObject:
   m_ObjectHideFlags: 0

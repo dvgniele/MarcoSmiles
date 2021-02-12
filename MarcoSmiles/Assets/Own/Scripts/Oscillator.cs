@@ -61,7 +61,13 @@ public class Oscillator : MonoBehaviour
 
     void Start()
     {
-        sinWeight = 0.75;
+        for(int i = 0; i < frequencies.Length; i++)
+        {
+            frequencies[i] /= 2;
+        }
+
+
+            sinWeight = 0.75;
         sqrWeight = 0.25;
         sawWeight = 0.25;
 
@@ -300,6 +306,7 @@ public class Oscillator : MonoBehaviour
              */
             nextOutput = (float)((nextOutput * lowPass) + (previousOutput * (1 - lowPass)));
 
+            nextOutput = nextOutput * gain;
 
 
 
