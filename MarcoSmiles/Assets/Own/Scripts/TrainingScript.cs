@@ -29,6 +29,11 @@ public class TrainingScript : MonoBehaviour
 
     public int aumenta;
 
+    private void Start()
+    {
+        recording_Text.text = RECORD_COUNT_DEF.ToString();
+    }
+
     /// <summary>
     /// Chiamato per ogni frame 
     /// </summary>
@@ -152,6 +157,8 @@ public class TrainingScript : MonoBehaviour
             count--;
             countDown_Text.text = count.ToString();
             position_Text.text = text1;
+            Debug.Log($"COUNTDOWN: {count.ToString()}");
+
 
             //  effettua una pausa di 1 secondo
             yield return new WaitForSeconds(1);
