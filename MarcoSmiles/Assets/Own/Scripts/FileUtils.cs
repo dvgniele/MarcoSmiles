@@ -37,6 +37,8 @@ public static class FileUtils
         return folderName;
     }
 
+
+
     /// <summary>
     /// Genera il path per il file da utilizzare. il path è formato da: path (La cartella in appdata dell'aplicazione); 
     /// folderName (Cartella dei datasets) e filename (nome del file)
@@ -171,13 +173,15 @@ public static class FileUtils
     {
         //  imposta nome ed estensione al file da salvare
         string filename = name + ".py";
+
+        string filePath = $"{path}/{filename}";
         //Debug.Log(file);
         try
         {
             //  se il file non è presente nel path, lo crea
-            if (!File.Exists(GeneratePath(filename)))
+            if (!File.Exists(filePath))
             {
-                using (var fs = new FileStream(GeneratePath(filename), FileMode.Create, FileAccess.Write))
+                using (var fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
                 {
                     //Debug.Log(file);                  
                     fs.Write(file, 0, file.Length);
