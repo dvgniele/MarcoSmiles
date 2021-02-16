@@ -104,14 +104,18 @@ public class _GM : MonoBehaviour
     {
         if (currSceneEnum == SceneEnum.Suonah)
         {
-            // Aggiorna array delle features currentFeatures in modo tale che venga calcolata la nota giusta ad ogni update 
-            current_Features = TestingScript.GetCurrentFeatures();
+            if(isActive)
+            {
+                // Aggiorna array delle features currentFeatures in modo tale che venga calcolata la nota giusta ad ogni update 
+                current_Features = TestingScript.GetCurrentFeatures();
 
-            //salva la nota che si stava suonando nell'update precedente prima di calcolare la nuova nota
-            indexPreviousNote = indexPlayingNote;
-            indexPlayingNote = TestML.ReteNeurale(current_Features);                    //rappresenta la nota che deve essere suonata
+                //salva la nota che si stava suonando nell'update precedente prima di calcolare la nuova nota
+                indexPreviousNote = indexPlayingNote;
+                indexPlayingNote = TestML.ReteNeurale(current_Features);                    //rappresenta la nota che deve essere suonata
 
-            ChangeColor(indexPreviousNote, indexPlayingNote);
+                ChangeColor(indexPreviousNote, indexPlayingNote);
+            }
+
         }
         //Debug.Log("L'indice che rappresenta la nota da suonare è:  " + indexPlayingNote);
 
