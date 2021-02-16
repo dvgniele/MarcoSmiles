@@ -1,12 +1,9 @@
 ﻿using Leap;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEditor;
-using System.IO;
 
 
 /*__________!Ci Converrebbe fare una classe contenente tutte le costanti,  contenente ad esempio il numero delle note etc....!___________*/
@@ -216,7 +213,7 @@ public class _GM : MonoBehaviour
 
     #endregion
 
-
+    /*
     /// <summary>
     /// Apre un pannello per selezionare il dataset da utilizzare nella cartella MyDataset
     /// </summary>
@@ -231,7 +228,15 @@ public class _GM : MonoBehaviour
             selectedDataset = path.Split('/').Last();
         }
     }
+    */
 
+    public void OpenPanel()
+    {
+        PanelUtils.OpenPanel();
+    }
+
+
+    /*
     /// <summary>
     /// Apre un pannello per selezionare un dataset da importare nella cartella MyDataset
     /// </summary>
@@ -256,7 +261,17 @@ public class _GM : MonoBehaviour
         }
 
     }
+    */
 
+    /// <summary>
+    /// Apre un pannello per selezionare un dataset da importare nella cartella MyDataset
+    /// </summary>
+    public void OpenImportPanel()
+    {
+        PanelUtils.OpenImportPanel();
+    }
+
+    /*
     /// <summary>
     /// Apre un pannello per selezionare un dataset da esportare in una qualsiasi directory sul pc
     /// </summary>
@@ -285,6 +300,15 @@ public class _GM : MonoBehaviour
 
             FileUtils.Export(path, expPath);
         }
+    }
+    */
+
+    /// <summary>
+    /// Apre un pannello per selezionare un dataset da esportare in una qualsiasi directory sul pc
+    /// </summary>
+    public void OpenExportPanel()
+    {
+        PanelUtils.OpenExportPanel();
     }
 
 

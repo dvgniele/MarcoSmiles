@@ -310,6 +310,7 @@
     <Compile Include="Assets\Own\Scripts\MS_LeapListener.cs" />
     <Compile Include="Assets\Own\Scripts\Oscillator.cs" />
     <Compile Include="Assets\Own\Scripts\PCMOscillator.cs" />
+    <Compile Include="Assets\Own\Scripts\PanelUtils.cs" />
     <Compile Include="Assets\Own\Scripts\Position.cs" />
     <Compile Include="Assets\Own\Scripts\ReadMLFromFile.cs" />
     <Compile Include="Assets\Own\Scripts\StartLearning.cs" />
@@ -319,6 +320,18 @@
     <Compile Include="Assets\Own\Scripts\TrainingScript.cs" />
     <Compile Include="Assets\Own\Scripts\_GM.cs" />
     <Compile Include="Assets\Own\Scripts\_GM_testing.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\Sample\BasicSample.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileImage.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileText.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileTextMultiple.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileImage.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileText.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowser.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserEditor.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserMac.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
     <None Include="Assets\LeapMotion\Core\Version.txt" />
     <None Include="Assets\LeapMotion\Core\Resources\RuntimeGizmos.shader" />
     <None Include="Assets\Knob\Resources\Knob.shader" />
@@ -528,6 +541,12 @@
     </Reference>
     <Reference Include="InteractionEngineUtility">
       <HintPath>E:/DEV/C# UNITY/Projects/MarcoSmiles/MarcoSmiles/Assets/LeapMotion/Modules/InteractionEngine/Plugins/InteractionEngineUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="Ookii.Dialogs">
+      <HintPath>E:/DEV/C# UNITY/Projects/MarcoSmiles/MarcoSmiles/Assets/StandaloneFileBrowser/Plugins/Ookii.Dialogs.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>E:/DEV/C# UNITY/Projects/MarcoSmiles/MarcoSmiles/Assets/StandaloneFileBrowser/Plugins/System.Windows.Forms.dll</HintPath>
     </Reference>
     <Reference Include="Google.Protobuf">
       <HintPath>E:/DEV/C# UNITY/Projects/MarcoSmiles/MarcoSmiles/Library/PackageCache/com.unity.barracuda@1.0.2/Barracuda/Runtime/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>

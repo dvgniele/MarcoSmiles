@@ -322,6 +322,12 @@
     <Reference Include="InteractionEngineUtility">
       <HintPath>E:/DEV/C# UNITY/Projects/MarcoSmiles/MarcoSmiles/Assets/LeapMotion/Modules/InteractionEngine/Plugins/InteractionEngineUtility.dll</HintPath>
     </Reference>
+    <Reference Include="Ookii.Dialogs">
+      <HintPath>E:/DEV/C# UNITY/Projects/MarcoSmiles/MarcoSmiles/Assets/StandaloneFileBrowser/Plugins/Ookii.Dialogs.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>E:/DEV/C# UNITY/Projects/MarcoSmiles/MarcoSmiles/Assets/StandaloneFileBrowser/Plugins/System.Windows.Forms.dll</HintPath>
+    </Reference>
     <Reference Include="Google.Protobuf">
       <HintPath>E:/DEV/C# UNITY/Projects/MarcoSmiles/MarcoSmiles/Library/PackageCache/com.unity.barracuda@1.0.2/Barracuda/Runtime/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
     </Reference>

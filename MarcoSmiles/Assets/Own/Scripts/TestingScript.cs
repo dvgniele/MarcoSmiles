@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class TestingScript
+﻿public class TestingScript
 {
 
    //private static double[] current_features = new double[18];

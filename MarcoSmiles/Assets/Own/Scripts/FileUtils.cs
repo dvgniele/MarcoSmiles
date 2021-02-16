@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 
 using UnityEngine;
 
@@ -225,9 +224,12 @@ public static class FileUtils
     /// <param name="setDS">True se deve essere selezionato il dataset passato in input, False altrimenti</param>
     private static void ProcessDirectory(string dir, string destination, bool setDS = false)
     {
+        Debug.Log(dir);
+
         Directory.CreateDirectory(destination);
 
         string[] files = Directory.GetFiles(dir);
+        //Debug.Log(dir);
 
         foreach (var item in files)
             ProcessFile(item, destination);
