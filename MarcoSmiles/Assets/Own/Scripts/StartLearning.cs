@@ -12,10 +12,10 @@ public class StartLearning : MonoBehaviour
     public void Learn()
     {
         UnityEngine.Debug.Log("Python Starting");
-        UnityEngine.Debug.Log(FileUtils.PrintPath());
+        UnityEngine.Debug.Log(FileUtils.GeneratePath());
 
         // Provide arguments
-        string path = FileUtils.PrintPath();
+        string path = FileUtils.GeneratePath();
         string script = @"ML.py";        //Nome del file .py
 
         ProcessStartInfo pythonInfo = new ProcessStartInfo();

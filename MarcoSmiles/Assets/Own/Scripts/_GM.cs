@@ -25,6 +25,8 @@ public class _GM : MonoBehaviour
 
     public static List<Position> list_posizioni;            // viene usata solo nella scena di training per salvare nel dataset
 
+    public static List<int> trainedNotes;
+
     public bool shouldPlay = false;                         //  decide se bisogna suonare IN BASE ALLA SCENA ATTIVA. true solo se è nella scena di testing
 
 
@@ -39,7 +41,7 @@ public class _GM : MonoBehaviour
     //private TestML testML;
 
 
-    //inizializza la cariabile selectedDataset con la cartella FileUtils.defaultFolder (DefaultDataset)
+    //  inizializza la cariabile selectedDataset con la cartella FileUtils.defaultFolder (DefaultDataset)
     public static string selectedDataset = "DefaultDataset";
 
     /// <summary>
@@ -72,8 +74,13 @@ public class _GM : MonoBehaviour
 
         list_posizioni = new List<Position>();
 
-        //  il programma parte con la prima nota della tastiera selezionata
-        listaPulsanti.ElementAt(0).Select();
+        if(currSceneEnum == SceneEnum.TrainingScene)
+        {
+            //  il programma parte con la prima nota della tastiera selezionata
+            listaPulsanti.ElementAt(0).Select();
+
+            FileUtils.UpdateTrainedNotesList(FileUtils.filename);
+        }
     }
 
     /// <summary>
@@ -136,7 +143,13 @@ public class _GM : MonoBehaviour
 
         if(currSceneEnum == SceneEnum.TrainingScene)
         {
-
+            foreach(var item in trainedNotes)
+            {
+                Button btn = listaPulsanti[item];
+                ColorBlock btn_color = btn.colors;
+                btn_color.normalColor = Color.yellow;
+                btn.colors = btn_color;
+            }
         }
     }
 
@@ -150,6 +163,7 @@ public class _GM : MonoBehaviour
     {
         trainer.Trainer();
     }
+
 
     #region Keyboard Buttons
 

@@ -15,7 +15,7 @@ public class PanelUtils
     //[MenuItem("Export Dataset")]
     public static void OpenExportPanel()
     {
-        var tmp = FileUtils.PrintPath().Split('/').ToList();
+        var tmp = FileUtils.GeneratePath().Split('/').ToList();
         tmp.Remove(tmp.Last());
         tmp.Remove(tmp.Last());
 
@@ -51,7 +51,7 @@ public class PanelUtils
     //[MenuItem("Import Dataset")]
     public static void OpenImportPanel()
     {
-        var tmp = FileUtils.PrintPath().Split('/').ToList();
+        var tmp = FileUtils.GeneratePath().Split('/').ToList();
         tmp.Remove(tmp.Last());
         tmp.Remove(tmp.Last());
 
@@ -76,7 +76,7 @@ public class PanelUtils
     //[MenuItem("Select Dataset")]
     public static void OpenPanel()
     {
-        var tmp = FileUtils.PrintPath().Split('/').ToList();
+        var tmp = FileUtils.GeneratePath().Split('/').ToList();
         tmp.Remove(tmp.Last());
         tmp.Remove(tmp.Last());
 

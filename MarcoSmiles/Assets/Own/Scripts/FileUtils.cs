@@ -15,7 +15,7 @@ public static class FileUtils
     /// <summary>
     /// Nome del dataset da utilizzare
     /// </summary>
-    static string filename = "marcosmiles_dataset.csv";
+    public static string filename = "marcosmiles_dataset.csv";
     //static string ext = "csv";
 
     /// <summary>
@@ -36,8 +36,6 @@ public static class FileUtils
     {
         return folderName;
     }
-
-
 
     /// <summary>
     /// Genera il path per il file da utilizzare. il path è formato da: path (La cartella in appdata dell'aplicazione); 
@@ -72,7 +70,7 @@ public static class FileUtils
     /// Prende il path per il datasaet. Versione public di generatepath. [(è davvero necessaria???? o basta mettere generate path a public?)]
     /// </summary>
     /// <returns>Ritorna il path per il dataset</returns>
-    public static string PrintPath()
+    public static string GeneratePath()
     {
         return $"{GeneratePath("")}";
     }
@@ -164,6 +162,23 @@ public static class FileUtils
         }
     }
 
+    public static void UpdateTrainedNotesList(string filename)
+    {
+        var txt = LoadFile(filename);
+        var rows = txt.Split('\n');
+
+        var id_list = new List<int>();
+        foreach(var item in rows)
+        {
+            var tmp = int.Parse(item.Split(',').Last());        //  tmp = ultimo elemento della riga. sappiamo che l'ultimo elemento è l'ID
+
+            if (!id_list.Any(x => id_list.Contains(tmp)))       //  se la lista degli ID non contiene tmp
+                id_list.Add(tmp);                               //  aggiungi tmp alla lista degli ID
+        }
+
+        _GM.trainedNotes = id_list;
+    }
+
     /// <summary>
     /// Converte bytes in un file .py e lo scrive in GeneratePath [AppData/LocalLow]
     /// </summary>
@@ -199,6 +214,7 @@ public static class FileUtils
         }
     }
 
+    #region Import/Export
 
     /// <summary>
     /// Importa il dataset
@@ -219,6 +235,10 @@ public static class FileUtils
     {
         ProcessDirectory(path, destination);
     }
+
+    #endregion
+
+    #region Dataset Folder/Files
 
     /// <summary>
     /// Processa una cartella, salvando tutto il contenuto in un'altra destinazione
@@ -267,4 +287,7 @@ public static class FileUtils
             File.Copy(file, str);
         }
     }
+
+    #endregion
+
 }
