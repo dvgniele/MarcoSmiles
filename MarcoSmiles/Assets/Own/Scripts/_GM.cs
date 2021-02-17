@@ -179,12 +179,31 @@ public class _GM : MonoBehaviour
             if(currSceneEnum == SceneEnum.TrainingScene)
             {
                 //  cambia l'id della nota nel trainer
-                trainer.ChangeNoteId(id_curr);
+                //trainer.ChangeNoteId(id_curr);
+                return;
             }
             
         }
 
     }
+
+    private void ChangeColor(int id_curr)
+    {   
+        foreach (var button in listaPulsanti)
+        { 
+            ColorBlock cb = button.colors;
+            cb.normalColor = cb.disabledColor;
+            button.colors = cb;
+        }
+
+        Button b_curr = listaPulsanti[id_curr+1];
+        ColorBlock cb_curr = b_curr.colors;
+        cb_curr.normalColor = Color.red;
+        b_curr.colors = cb_curr;
+
+        
+    }
+
 
 
     private void HighlightNote(int id_prev, int id_curr)
@@ -199,8 +218,13 @@ public class _GM : MonoBehaviour
         /// <param name="sender"></param>
         public void GetClickedKey(Button sender)
     {
+       // var previousIndexTrainNote = trainer.currentNoteId;
+        //Debug.Log(previousIndexTrainNote);
+        
         var skrtino = listaPulsanti.IndexOf(listaPulsanti.FirstOrDefault(x => x.gameObject.Equals(sender.gameObject)));
+        Debug.Log(skrtino);
         trainer.ChangeNoteId(skrtino);
+        ChangeColor(skrtino);
 
         //Debug.Log($"{listaPulsanti[skrtino].gameObject.name}, {skrtino}");
     }
