@@ -53,34 +53,8 @@ public class _GM : MonoBehaviour
     }
     private SceneEnum currSceneEnum;
 
-    /// <summary>
-    /// Chiamato quando viene inizializzato un oggetto con lo script _GM.cs
-    /// </summary>
-    private void Awake()
-    {
-        //selectedDataset = FileUtils.defaultFolder;
 
-        currentScene = SceneManager.GetActiveScene();
-        Debug.Log("AWAKE GM. AWAKE GM. AWAKE GM. AWAKE GM. AWAKE GM. ");
-
-        switch(currentScene.buildIndex)
-        {
-            case (0):
-                currSceneEnum = SceneEnum.Mainpage;
-                break;
-            case (1):
-                currSceneEnum = SceneEnum.Suonah;
-                break;
-            case (2):
-                currSceneEnum = SceneEnum.TrainingScene;
-                break;
-        }
-
-        if (currentScene.buildIndex == 1)
-        {
-            TestML.Populate();
-        }
-    }
+    #region UNITY METH
 
     void Start()
     {
@@ -98,6 +72,36 @@ public class _GM : MonoBehaviour
 
         list_posizioni = new List<Position>();
 
+        //  il programma parte con la prima nota della tastiera selezionata
+        listaPulsanti.ElementAt(0).Select();
+    }
+
+    /// <summary>
+    /// Chiamato quando viene inizializzato un oggetto con lo script _GM.cs
+    /// </summary>
+    private void Awake()
+    {
+        //selectedDataset = FileUtils.defaultFolder;
+
+        currentScene = SceneManager.GetActiveScene();
+
+        switch (currentScene.buildIndex)
+        {
+            case (0):
+                currSceneEnum = SceneEnum.Mainpage;
+                break;
+            case (1):
+                currSceneEnum = SceneEnum.Suonah;
+                break;
+            case (2):
+                currSceneEnum = SceneEnum.TrainingScene;
+                break;
+        }
+
+        if (currentScene.buildIndex == 1)
+        {
+            TestML.Populate();
+        }
     }
 
     void FixedUpdate()
@@ -136,6 +140,8 @@ public class _GM : MonoBehaviour
         }
     }
 
+    #endregion
+
 
     /// <summary>
     /// Lanciato quando viene premuto il pulsante di training
@@ -144,6 +150,8 @@ public class _GM : MonoBehaviour
     {
         trainer.Trainer();
     }
+
+    #region Keyboard Buttons
 
     /// <summary>
     /// Cambia il colore della nota da suonare, ripristinando al colore di dafault la nota precedentemente premuta (se necessario)
@@ -187,30 +195,6 @@ public class _GM : MonoBehaviour
 
     }
 
-    private void ChangeColor(int id_curr)
-    {   
-        foreach (var button in listaPulsanti)
-        { 
-            ColorBlock cb = button.colors;
-            cb.normalColor = cb.disabledColor;
-            button.colors = cb;
-        }
-
-        Button b_curr = listaPulsanti[id_curr+1];
-        ColorBlock cb_curr = b_curr.colors;
-        cb_curr.normalColor = Color.red;
-        b_curr.colors = cb_curr;
-
-        
-    }
-
-
-
-    private void HighlightNote(int id_prev, int id_curr)
-    {
-    
-    }
-
     /// <summary>
     /// Viene chiamato ogni volta che un pulsante della tastiera (del pianoforte) viene premuto, per far sì che venga cambiato l'id
     /// della nota corrente
@@ -222,12 +206,14 @@ public class _GM : MonoBehaviour
         //Debug.Log(previousIndexTrainNote);
         
         var skrtino = listaPulsanti.IndexOf(listaPulsanti.FirstOrDefault(x => x.gameObject.Equals(sender.gameObject)));
-        Debug.Log(skrtino);
+        //Debug.Log(skrtino);
         trainer.ChangeNoteId(skrtino);
-        ChangeColor(skrtino);
 
         //Debug.Log($"{listaPulsanti[skrtino].gameObject.name}, {skrtino}");
     }
+
+    #endregion
+
 
     #region NAVIGATION
 
@@ -259,55 +245,12 @@ public class _GM : MonoBehaviour
 
     #endregion
 
-    /*
-    /// <summary>
-    /// Apre un pannello per selezionare il dataset da utilizzare nella cartella MyDataset
-    /// </summary>
-    [MenuItem("Select Dataset")]
-    public void OpenPanel()
-    {
-        //EditorUtility.DisplayDialog("Select Dataset Folder", "Select the Dataset folder you prefer.", "OK.");
-        
-        string path = EditorUtility.OpenFolderPanel("Select Dataset", $"{FileUtils.PrintPath()}", "");
-        if (path.Length != 0)
-        {
-            selectedDataset = path.Split('/').Last();
-        }
-    }
-    */
+    #region Panels
 
     public void OpenPanel()
     {
         PanelUtils.OpenPanel();
     }
-
-
-    /*
-    /// <summary>
-    /// Apre un pannello per selezionare un dataset da importare nella cartella MyDataset
-    /// </summary>
-    [MenuItem("Import Dataset")]
-    public void OpenImportPanel()
-    {
-        var tmp = FileUtils.PrintPath().Split('/').ToList();
-        tmp.Remove(tmp.Last());
-        tmp.Remove(tmp.Last());
-
-        var tmp_path = "";
-        foreach (var item in tmp)
-            tmp_path += item + '/';
-
-        var path = EditorUtility.OpenFolderPanel("Import Dataset", tmp_path, FileUtils.PrintPath());
-
-        if(Directory.Exists(path))
-        {
-            var newdirName = tmp_path + path.Split('/').ToList().Last();
-
-            FileUtils.Import(path, newdirName);
-        }
-
-    }
-    */
 
     /// <summary>
     /// Apre un pannello per selezionare un dataset da importare nella cartella MyDataset
@@ -317,38 +260,6 @@ public class _GM : MonoBehaviour
         PanelUtils.OpenImportPanel();
     }
 
-    /*
-    /// <summary>
-    /// Apre un pannello per selezionare un dataset da esportare in una qualsiasi directory sul pc
-    /// </summary>
-    [MenuItem("Export Dataset")]
-    public void OpenExportPanel()
-    {
-        var tmp = FileUtils.PrintPath().Split('/').ToList();
-        tmp.Remove(tmp.Last());
-        tmp.Remove(tmp.Last());
-
-        var tmp_path = "";
-        foreach (var item in tmp)
-            tmp_path += item + '/';
-
-        var path = EditorUtility.OpenFolderPanel("Export Dataset", tmp_path, FileUtils.PrintPath());
-
-        if (Directory.Exists(path))
-        {
-            var expPath = EditorUtility.OpenFolderPanel("Choose the location to export to", tmp_path, "");
-            expPath += "/" + path.Split('/').ToList().Last();
-
-            Debug.Log(expPath);
-
-            if(!Directory.Exists(expPath))
-                Directory.CreateDirectory(expPath);
-
-            FileUtils.Export(path, expPath);
-        }
-    }
-    */
-
     /// <summary>
     /// Apre un pannello per selezionare un dataset da esportare in una qualsiasi directory sul pc
     /// </summary>
@@ -357,6 +268,7 @@ public class _GM : MonoBehaviour
         PanelUtils.OpenExportPanel();
     }
 
+    #endregion
 
 
 }
