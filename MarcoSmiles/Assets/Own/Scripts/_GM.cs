@@ -58,9 +58,10 @@ public class _GM : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        selectedDataset = FileUtils.defaultFolder;
+        //selectedDataset = FileUtils.defaultFolder;
 
         currentScene = SceneManager.GetActiveScene();
+        Debug.Log("AWAKE GM. AWAKE GM. AWAKE GM. AWAKE GM. AWAKE GM. ");
 
         switch(currentScene.buildIndex)
         {

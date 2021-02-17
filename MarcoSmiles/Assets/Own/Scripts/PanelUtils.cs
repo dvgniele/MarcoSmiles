@@ -90,6 +90,9 @@ public class PanelUtils
         if (path.Length != 0)
         {
             _GM.selectedDataset = paths.Last().Split('\\').ToList().Last();
+
+            //Popola matrici della rete neurale con la nuova configurazione
+            TestML.Populate();
         }
 
     }

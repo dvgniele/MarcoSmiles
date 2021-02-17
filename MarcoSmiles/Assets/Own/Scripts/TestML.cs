@@ -134,14 +134,17 @@ public static class TestML
         }
 
          /*
-        foreach (double[] arr in W2)
+          //Per fare il debug delle matrici
+        foreach (var arr in W2)
         {
-            foreach (double e in arr)
+            foreach (var a in arr)
             {
-                Debug.Log(e);
+                Debug.Log(a);
             }
         }
+
         */
+        
     }
 
     /// <summary>
