@@ -27,9 +27,8 @@ public class _GM : MonoBehaviour
 
     public bool shouldPlay = false;                         //  decide se bisogna suonare IN BASE ALLA SCENA ATTIVA. true solo se è nella scena di testing
 
-    //public static bool isActive = false;                  //  se ci sono le mani, suona, altrimenti va a c'rac
 
-    public static bool isActive = false;                     //  se ci sono le mani, suona, altrimenti va a c'rac
+    public static bool isActive = false;                     // se ci sono le mani, suona, altrimenti no, lo script oscillator osserva questa variabile per deicdere se deve suonare 
     public static double[] current_Features;                //  attualmente le features sono floats, risolviamo sto problemo
     public static int indexPlayingNote;                     //  indice della nota da suonare che è letta da PCMOscillator
     public static int indexPreviousNote;                    //  indice della nota suonata nel fixed update precedente
@@ -116,6 +115,17 @@ public class _GM : MonoBehaviour
                 ChangeColor(indexPreviousNote, indexPlayingNote);
             }
 
+
+            if (!isActive)
+            {
+                //Se non ci sono le mani ristabilisci colore di default dell'ultima nota suonata
+                Button b_curr = listaPulsanti[indexPlayingNote];
+                ColorBlock cb_curr = b_curr.colors;
+                cb_curr.normalColor = cb_curr.disabledColor;
+                b_curr.colors = cb_curr;
+            }
+           
+
         }
         //Debug.Log("L'indice che rappresenta la nota da suonare è:  " + indexPlayingNote);
 
@@ -144,7 +154,8 @@ public class _GM : MonoBehaviour
     {
         if (id_prev == id_curr)
         {
-            return;
+            
+           // return;
         }
         else
         {
@@ -174,12 +185,18 @@ public class _GM : MonoBehaviour
 
     }
 
-    /// <summary>
-    /// Viene chiamato ogni volta che un pulsante della tastiera (del pianoforte) viene premuto, per far sì che venga cambiato l'id
-    /// della nota corrente
-    /// </summary>
-    /// <param name="sender"></param>
-    public void GetClickedKey(Button sender)
+
+    private void HighlightNote(int id_prev, int id_curr)
+    {
+    
+    }
+
+        /// <summary>
+        /// Viene chiamato ogni volta che un pulsante della tastiera (del pianoforte) viene premuto, per far sì che venga cambiato l'id
+        /// della nota corrente
+        /// </summary>
+        /// <param name="sender"></param>
+        public void GetClickedKey(Button sender)
     {
         var skrtino = listaPulsanti.IndexOf(listaPulsanti.FirstOrDefault(x => x.gameObject.Equals(sender.gameObject)));
         trainer.ChangeNoteId(skrtino);
