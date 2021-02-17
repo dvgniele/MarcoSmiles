@@ -192,12 +192,12 @@ public class _GM : MonoBehaviour
     
     }
 
-        /// <summary>
-        /// Viene chiamato ogni volta che un pulsante della tastiera (del pianoforte) viene premuto, per far sì che venga cambiato l'id
-        /// della nota corrente
-        /// </summary>
-        /// <param name="sender"></param>
-        public void GetClickedKey(Button sender)
+    /// <summary>
+    /// Viene chiamato ogni volta che un pulsante della tastiera (del pianoforte) viene premuto, per far sì che venga cambiato l'id
+    /// della nota corrente
+    /// </summary>
+    /// <param name="sender"></param>
+    public void GetClickedKey(Button sender)
     {
         var skrtino = listaPulsanti.IndexOf(listaPulsanti.FirstOrDefault(x => x.gameObject.Equals(sender.gameObject)));
         trainer.ChangeNoteId(skrtino);
