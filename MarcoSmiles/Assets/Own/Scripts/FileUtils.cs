@@ -29,6 +29,11 @@ public static class FileUtils
     public static string defaultFolder = "DefaultDataset";
 
     /// <summary>
+    /// Dataset selezionato
+    /// </summary>
+    public static string selectedDataset = defaultFolder;
+
+    /// <summary>
     /// Restituisce il nome della cartella del dataset
     /// </summary>
     /// <returns>Il nome della cartella del dataset</returns>
@@ -47,7 +52,7 @@ public static class FileUtils
     {
         //Debug.Log($"{path}/{folderName}/{_GM.selectedDataset}/{filename}");
 
-        return $"{path}/{folderName}/{_GM.selectedDataset}/{filename}";
+        return $"{path}/{folderName}/{selectedDataset}/{filename}";
     }
 
     /// <summary>
@@ -165,7 +170,7 @@ public static class FileUtils
     public static void UpdateTrainedNotesList(string filename)
     {
         var txt = LoadFile(filename);
-        var rows = txt.Split('\n');
+        var rows = txt.Split('\n'); 
 
         var id_list = new List<int>();
         foreach(var item in rows)
@@ -265,7 +270,7 @@ public static class FileUtils
         var tmp = dir.Split('/').ToList().Last();
 
         if(setDS)
-            _GM.selectedDataset = tmp;
+            selectedDataset = tmp;
     }
 
     /// <summary>

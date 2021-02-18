@@ -67,7 +67,7 @@ public class PanelUtils
             var newdirName = tmp_path + paths.Last().Split('\\').ToList().Last();
 
             FileUtils.Import(paths.Last(), newdirName);
-        }
+        } 
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ public class PanelUtils
 
         if (path.Length != 0)
         {
-            _GM.selectedDataset = paths.Last().Split('\\').ToList().Last();
+            FileUtils.selectedDataset = paths.Last().Split('\\').ToList().Last();
 
             //Popola matrici della rete neurale con la nuova configurazione
             TestML.Populate();

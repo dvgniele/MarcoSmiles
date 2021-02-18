@@ -42,7 +42,7 @@ public class _GM : MonoBehaviour
 
 
     //  inizializza la cariabile selectedDataset con la cartella FileUtils.defaultFolder (DefaultDataset)
-    public static string selectedDataset = "DefaultDataset";
+    //public static string selectedDataset = "DefaultDataset";
 
     /// <summary>
     /// Enum per le scene unity esistenti
@@ -143,6 +143,8 @@ public class _GM : MonoBehaviour
 
         if(currSceneEnum == SceneEnum.TrainingScene)
         {
+            Debug.Log(FileUtils.selectedDataset);
+
             foreach(var item in trainedNotes)
             {
                 Button btn = listaPulsanti[item];
@@ -246,7 +248,7 @@ public class _GM : MonoBehaviour
     /// </summary>
     public void NavigateToTestScene()
     {
-        if(selectedDataset == FileUtils.defaultFolder)
+        if(FileUtils.defaultFolder == FileUtils.defaultFolder)
             OpenPanel();
 
         SceneManager.LoadScene(1);
