@@ -31,7 +31,7 @@ public class MS_LeapListener : MonoBehaviour
         Frame frame = args.frame;
 
         //  ci sono delle mani rilevate
-        if(frame.Hands.Count > 0)
+        if(frame.Hands.Count > 1)
         {
             _GM.isActive = true;            //  deve suonare
             //  qui attivi

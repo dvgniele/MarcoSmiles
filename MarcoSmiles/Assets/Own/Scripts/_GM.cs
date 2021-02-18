@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 
 /*__________!Ci Converrebbe fare una classe contenente tutte le costanti,  contenente ad esempio il numero delle note etc....!___________*/
@@ -143,14 +144,22 @@ public class _GM : MonoBehaviour
 
         if(currSceneEnum == SceneEnum.TrainingScene)
         {
-            Debug.Log(FileUtils.selectedDataset);
+            //  Debug.Log(FileUtils.selectedDataset);
 
-            foreach(var item in trainedNotes)
+            try
             {
+                //  evidenzia in giallo tutte le note della tastiera che sono state già allenate (le note che sono presenti nel dataset selezionato)
+                foreach(var item in trainedNotes)
+                {
                 Button btn = listaPulsanti[item];
                 ColorBlock btn_color = btn.colors;
                 btn_color.normalColor = Color.yellow;
                 btn.colors = btn_color;
+                }
+
+            }catch(Exception e)
+            {
+                Debug.Log(e.Message);
             }
         }
     }
@@ -159,11 +168,19 @@ public class _GM : MonoBehaviour
 
 
     /// <summary>
-    /// Lanciato quando viene premuto il pulsante di training
+    /// Lanciato quando viene premuto il pulsante di training per la nota selezionata
     /// </summary>
     public void TrainButtonClick()
     {
         trainer.Trainer();
+    }
+
+    /// <summary>
+    /// Lanciato quando viene premuto il pulsante di rimozione nota da dataset per la nota selezionata
+    /// </summary>
+    public void RemoveButtonClick()
+    {
+        trainer.RemoveNote();
     }
 
 

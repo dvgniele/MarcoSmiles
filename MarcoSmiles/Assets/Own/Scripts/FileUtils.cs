@@ -147,6 +147,7 @@ public static class FileUtils
         }
     }
 
+
     /// <summary>
     /// Carica il contenuto del file
     /// </summary>
@@ -154,6 +155,7 @@ public static class FileUtils
     /// <returns></returns>
     public static string LoadFile(string name)
     {
+
         //  se il file è presente nel path, lo legge
         if (File.Exists(GeneratePath($"{name}")))
         {
@@ -166,9 +168,13 @@ public static class FileUtils
             return null;
         }
     }
-
+    /// <summary>
+    /// Aggiorna la variabile trainedNotes, contenente tute le note allenate (che sono presenti nel dataset)
+    /// </summary>
+    /// <param name="filename"></param>
     public static void UpdateTrainedNotesList(string filename)
     {
+
         var txt = LoadFile(filename);
         var rows = txt.Split('\n'); 
 
@@ -183,13 +189,76 @@ public static class FileUtils
 
         _GM.trainedNotes = id_list;
     }
+    
+    public static void DeleteRowsNote(int note)
+    {
+        
+                //  imposta il separatore dei numeri decimali a "." (nel caso si avesse il pc in lingua che usa "," come separatore si potrebbero avere problemi, quindi lo imposta manualmente)
+                System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+                customCulture.NumberFormat.NumberDecimalSeparator = ".";
+                System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
 
-    /// <summary>
-    /// Converte bytes in un file .py e lo scrive in GeneratePath [AppData/LocalLow]
-    /// </summary>
-    /// <param name="file">File da convertire</param>
-    /// <param name="name">Nome con cui salvare il file convertito</param>
-    public static void SavePy(byte[] file, string name)
+
+                var oldTxt = LoadFile(filename);
+                var rows = oldTxt.Split('\n').ToList();
+
+
+                //var id_list = new List<int>();
+                foreach (var item in rows.ToList())
+                {
+                    try
+                    {
+                        var tmp = int.Parse(item.Split(',').Last());        //  tmp = ultimo elemento della riga. sappiamo che l'ultimo elemento è l'ID
+                        if (tmp == note)
+                            rows.Remove(item);
+                    }
+                    catch(Exception ex)
+                    {
+                        Debug.Log(ex.Message);
+                    }
+
+                }
+
+                oldTxt = "";
+                foreach(var row in rows.ToList())
+                {
+                    oldTxt += row + "\n";
+                }
+
+                Debug.Log(oldTxt);
+
+                //SaveTxt(oldTxt);
+                //UpdateTrainedNotesList(filename);
+           
+    }
+
+
+
+    public static void SaveTxt(string txt)
+    {
+        var filePath = GeneratePath(filename);
+        Debug.Log("NOMEEEEEEEEEEEEEEEEEEEEE" + filePath);
+        try
+        {
+            //  se il file non è presente nel path, lo crea
+            
+                using (var fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                {
+                //Debug.Log(file);                  
+                File.AppendAllText(filePath, txt);
+                }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("Exception caught in process:" + ex.ToString());
+        }
+    }
+        /// <summary>
+        /// Converte bytes in un file .py e lo scrive in GeneratePath [AppData/LocalLow]
+        /// </summary>
+        /// <param name="file">File da convertire</param>
+        /// <param name="name">Nome con cui salvare il file convertito</param>
+        public static void SavePy(byte[] file, string name)
     {
         //  imposta nome ed estensione al file da salvare
         string filename = name + ".py";

@@ -127,6 +127,14 @@ public class TrainingScript : MonoBehaviour
         _GM.list_posizioni.Add(new Position(left_hand: left_hand, right_hand: right_hand, id: currentNoteId));
     }
 
+
+    public void RemoveNote()
+    {
+        FileUtils.DeleteRowsNote(currentNoteId);
+    }
+
+
+
     /// <summary>
     /// Inizia la coroutine per la registrazione delle posizioni
     /// </summary>
