@@ -174,6 +174,11 @@ public static class FileUtils
     /// <param name="filename"></param>
     public static void UpdateTrainedNotesList(string filename)
     {
+        //  imposta il separatore dei numeri decimali a "." (nel caso si avesse il pc in lingua che usa "," come separatore si potrebbero avere problemi, quindi lo imposta manualmente)
+        System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+        customCulture.NumberFormat.NumberDecimalSeparator = ".";
+        System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+
 
         var txt = LoadFile(filename);
         var rows = txt.Split('\n'); 
@@ -192,40 +197,24 @@ public static class FileUtils
     
     public static void DeleteRowsNote(int note)
     {
-        
-                //  imposta il separatore dei numeri decimali a "." (nel caso si avesse il pc in lingua che usa "," come separatore si potrebbero avere problemi, quindi lo imposta manualmente)
-                System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
-                customCulture.NumberFormat.NumberDecimalSeparator = ".";
-                System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+        var filePath = GeneratePath(filename);
+        var txt = LoadFile(filename);
+        var rows = txt.Split('\n').ToList();
+             
+       //toglie tutte le righe dal file del dataset
+       File.WriteAllText(filePath ,"");
+       
 
-
-                var oldTxt = LoadFile(filename);
-                var rows = oldTxt.Split('\n').ToList();
-
-
-                //var id_list = new List<int>();
-                foreach (var item in rows.ToList())
-                {
-                    try
-                    {
-                        var tmp = int.Parse(item.Split(',').Last());        //  tmp = ultimo elemento della riga. sappiamo che l'ultimo elemento è l'ID
-                        if (tmp == note)
-                            rows.Remove(item);
-                    }
-                    catch(Exception ex)
-                    {
-                        Debug.Log(ex.Message);
-                    }
-
-                }
-
-                oldTxt = "";
-                foreach(var row in rows.ToList())
-                {
-                    oldTxt += row + "\n";
-                }
-
-                Debug.Log(oldTxt);
+        foreach (var row in rows)
+        {
+            var tmp_id = int.Parse(row.Split(',').Last());
+            if (tmp_id != note)
+            {
+                var actualRow = row + Environment.NewLine;
+                File.AppendAllText(filePath, actualRow);
+                
+            }
+        }
 
                 //SaveTxt(oldTxt);
                 //UpdateTrainedNotesList(filename);
@@ -233,7 +222,10 @@ public static class FileUtils
     }
 
 
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="txt"></param>
     public static void SaveTxt(string txt)
     {
         var filePath = GeneratePath(filename);
