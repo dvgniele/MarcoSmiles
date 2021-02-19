@@ -128,9 +128,11 @@ public class TrainingScript : MonoBehaviour
     }
 
 
-    public void RemoveNote()
+    public bool RemoveNote()
     {
         FileUtils.DeleteRowsNote(currentNoteId);
+        return true;
+
     }
 
 

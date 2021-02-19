@@ -183,7 +183,7 @@ public static class FileUtils
         foreach(var item in rows)
         {
             var tmp = int.Parse(item.Split(',').Last());        //  tmp = ultimo elemento della riga. sappiamo che l'ultimo elemento è l'ID
-            Debug.Log(tmp);
+           
             if (!id_list.Any(x => id_list.Contains(tmp)))       //  se la lista degli ID non contiene tmp
                 id_list.Add(tmp);                               //  aggiungi tmp alla lista degli ID
         }
@@ -201,7 +201,6 @@ public static class FileUtils
         //  toglie tutte le righe dal file del dataset
         File.WriteAllText(filePath ,"");
 
-
         foreach (var row in rows)
         {
             int tmp_id = int.Parse(row.Split(',').Last());
@@ -213,7 +212,7 @@ public static class FileUtils
             }
 
             //SaveTxt(oldTxt);
-            //UpdateTrainedNotesList(filename);
+            UpdateTrainedNotesList(filename);
 
         }
     }

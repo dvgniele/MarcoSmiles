@@ -39,7 +39,7 @@ public class _GM : MonoBehaviour
 
     [SerializeField]
     public List<Button> listaPulsanti;
-    public static GameObject piano;
+    public GameObject piano;
     //private TestML testML;
 
 
@@ -70,14 +70,14 @@ public class _GM : MonoBehaviour
         var MLFile = Resources.Load<TextAsset>("Text/" + nameFile);     //carica lo script dalla cartella resources (file .txt)
         FileUtils.SavePy(MLFile.bytes, MLFile.name);                    //Converte il file .txt in script .py
 
-        if(FileUtils.CheckForDefaultFiles())
+        if (FileUtils.CheckForDefaultFiles())
         {
             try
             {
                 var playButton = GameObject.Find("TestButton").GetComponent<Button>();
                 playButton.interactable = false;
             }
-            catch(Exception)
+            catch (Exception ex)
             {
 
             }
@@ -89,7 +89,7 @@ public class _GM : MonoBehaviour
                 var playButton = GameObject.Find("TestButton").GetComponent<Button>();
                 playButton.interactable = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
             }
@@ -136,9 +136,9 @@ public class _GM : MonoBehaviour
             listaPulsanti.ElementAt(0).Select();
 
             FileUtils.UpdateTrainedNotesList(FileUtils.filename);
+            UpdateButtonsKeyboard();
 
 
-           
         }
         else if (currSceneEnum == SceneEnum.Mainpage)
         {
@@ -208,8 +208,8 @@ public class _GM : MonoBehaviour
     /// </summary>
     public void RemoveButtonClick()
     {
-        trainer.RemoveNote();
-        UpdateButtonsKeyboard();
+        if(trainer.RemoveNote())
+            UpdateButtonsKeyboard();
     }
 
 
@@ -276,24 +276,29 @@ public class _GM : MonoBehaviour
 
     public void UpdateButtonsKeyboard()
     {
-        try
-        {
-            //  evidenzia in giallo tutte le note della tastiera che sono state già allenate (le note che sono presenti nel dataset selezionato)
-            foreach (var item in trainedNotes)
-            {
-                Button btn = listaPulsanti[item];
-                ColorBlock btn_color = btn.colors;
-                btn_color.normalColor = Color.yellow;
-                btn.colors = btn_color;
-            }
+        resetColorNotes();
 
-        }
-        catch (Exception e)
+        //  evidenzia in giallo tutte le note della tastiera che sono state già allenate (le note che sono presenti nel dataset selezionato)
+        foreach (var item in trainedNotes)
         {
-            Debug.Log(e.Message);
+            Button btn = listaPulsanti[item];
+            ColorBlock btn_color = btn.colors;
+            btn_color.normalColor = Color.yellow;
+            btn.colors = btn_color;
         }
     }
 
+
+
+    public void resetColorNotes()
+    {
+        foreach (var button in listaPulsanti)
+        {
+            ColorBlock cb_curr = button.colors;
+            cb_curr.normalColor = cb_curr.disabledColor;
+            button.colors = cb_curr;
+        }
+    }
     #endregion
 
 
