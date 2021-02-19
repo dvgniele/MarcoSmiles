@@ -41,7 +41,6 @@ public class PanelUtils
 
             FileUtils.Export(path, finalPath);
         }
-
     }
 
 
@@ -67,7 +66,10 @@ public class PanelUtils
             var newdirName = tmp_path + paths.Last().Split('\\').ToList().Last();
 
             FileUtils.Import(paths.Last(), newdirName);
-        } 
+        }
+
+        FileUtils.CheckForDefaultFiles();
+
     }
 
     /// <summary>
@@ -95,6 +97,7 @@ public class PanelUtils
             TestML.Populate();
         }
 
+        FileUtils.CheckForDefaultFiles();
     }
 }
 

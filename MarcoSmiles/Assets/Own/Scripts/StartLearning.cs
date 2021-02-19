@@ -11,8 +11,8 @@ public class StartLearning : MonoBehaviour
     /// </summary>
     public void Learn()
     {
-        UnityEngine.Debug.Log("Python Starting");
-        UnityEngine.Debug.Log(FileUtils.GeneratePath());
+        Debug.Log("Python Starting");
+        Debug.Log(FileUtils.GeneratePath());
 
         // Provide arguments
         string path = FileUtils.GeneratePath();

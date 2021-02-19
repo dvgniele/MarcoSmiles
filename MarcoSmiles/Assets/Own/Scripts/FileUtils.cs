@@ -362,6 +362,10 @@ public static class FileUtils
         }
         else
         {
+            if(!File.Exists(GeneratePath("ML.py")))
+                File.Copy($"{path}/{folderName}/ML.py",GeneratePath("ML.py"));
+            
+
             if (!File.Exists(GeneratePath("bias_out")) || !File.Exists(GeneratePath("weights_out")))
                 return false;
         }
