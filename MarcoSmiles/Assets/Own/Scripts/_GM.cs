@@ -124,22 +124,7 @@ public class _GM : MonoBehaviour
             FileUtils.UpdateTrainedNotesList(FileUtils.filename);
 
 
-            try
-            {
-                //  evidenzia in giallo tutte le note della tastiera che sono state già allenate (le note che sono presenti nel dataset selezionato)
-                foreach (var item in trainedNotes)
-                {
-                    Button btn = listaPulsanti[item];
-                    ColorBlock btn_color = btn.colors;
-                    btn_color.normalColor = Color.yellow;
-                    btn.colors = btn_color;
-                }
-
-            }
-            catch (Exception e)
-            {
-                Debug.Log(e.Message);
-            }
+           
         }
         else if (currSceneEnum == SceneEnum.Mainpage)
         {
@@ -210,6 +195,7 @@ public class _GM : MonoBehaviour
     public void RemoveButtonClick()
     {
         trainer.RemoveNote();
+        UpdateButtonsKeyboard();
     }
 
 
@@ -272,6 +258,26 @@ public class _GM : MonoBehaviour
         trainer.ChangeNoteId(skrtino);
 
         //Debug.Log($"{listaPulsanti[skrtino].gameObject.name}, {skrtino}");
+    }
+
+    public void UpdateButtonsKeyboard()
+    {
+        try
+        {
+            //  evidenzia in giallo tutte le note della tastiera che sono state già allenate (le note che sono presenti nel dataset selezionato)
+            foreach (var item in trainedNotes)
+            {
+                Button btn = listaPulsanti[item];
+                ColorBlock btn_color = btn.colors;
+                btn_color.normalColor = Color.yellow;
+                btn.colors = btn_color;
+            }
+
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+        }
     }
 
     #endregion
