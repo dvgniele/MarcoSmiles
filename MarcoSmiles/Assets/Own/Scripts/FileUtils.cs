@@ -195,11 +195,8 @@ public static class FileUtils
     {
         var filePath = GeneratePath(filename);
         var txt = LoadFile(filename);
-        Debug.Log(txt);
-        var rows = txt.Split('\n').Select(tag => tag.Trim()).Where(tag => !string.IsNullOrEmpty(tag));      //trim elimina le entrate vuote ;
 
-        foreach (var row in rows)
-            Debug.Log("righe DATAAWSETTTT:::   " + row);
+        var rows = txt.Split('\n').Select(tag => tag.Trim()).Where(tag => !string.IsNullOrEmpty(tag));      //trim elimina le entrate vuote ;
 
         //  toglie tutte le righe dal file del dataset
         File.WriteAllText(filePath ,"");
@@ -208,12 +205,10 @@ public static class FileUtils
         foreach (var row in rows)
         {
             int tmp_id = int.Parse(row.Split(',').Last());
-            Debug.Log("INDICE RIGAAAAA   " + tmp_id);
             if (tmp_id != note)
             {
                     var actualRow = "";
                     actualRow = row+"\n";
-                    Debug.Log("righa nuovo dataset   " + actualRow);
                     File.AppendAllText(filePath, actualRow);
             }
 
@@ -358,4 +353,19 @@ public static class FileUtils
 
     #endregion
 
+    public static bool CheckForDefaultFiles()
+    {
+        if (!Directory.Exists(GeneratePath()))
+        {
+            Directory.CreateDirectory(GeneratePath());
+            return false;
+        }
+        else
+        {
+            if (!File.Exists(GeneratePath("bias_out")) || !File.Exists(GeneratePath("weights_out")))
+                return false;
+        }
+
+        return true;
+    }
 }

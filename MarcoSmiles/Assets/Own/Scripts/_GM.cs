@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using System.IO;
 
 
 /*__________!Ci Converrebbe fare una classe contenente tutte le costanti,  contenente ad esempio il numero delle note etc....!___________*/
@@ -65,6 +66,21 @@ public class _GM : MonoBehaviour
     private void Awake()
     {
         //selectedDataset = FileUtils.defaultFolder;
+        string nameFile = "ML";           //Nome del file python. 
+        var MLFile = Resources.Load<TextAsset>("Text/" + nameFile);     //carica lo script dalla cartella resources (file .txt)
+        FileUtils.SavePy(MLFile.bytes, MLFile.name);                    //Converte il file .txt in script .py
+
+        if(FileUtils.CheckForDefaultFiles())
+        {
+            var playButton = GameObject.Find("TestButton").GetComponent<Button>();
+            playButton.interactable = false;
+        }
+        else
+        {
+            var playButton = GameObject.Find("TestButton").GetComponent<Button>();
+            playButton.interactable = true;
+        }
+
 
         currentScene = SceneManager.GetActiveScene();
 
@@ -97,10 +113,6 @@ public class _GM : MonoBehaviour
          * Dunque, leggiamo il file .txt dalla cartella Resources, e usaando il metodo SavePy, salviamo lo script letto dal file .txt
          * in un file ad estensione .py. Questo file potrà poi essere lanciato su linea di comando.    
          */
-
-        string nameFile = "ML";           //Nome del file python. 
-        var MLFile = Resources.Load<TextAsset>("Text/" + nameFile);     //carica lo script dalla cartella resources (file .txt)
-        FileUtils.SavePy(MLFile.bytes, MLFile.name);                    //Converte il file .txt in script .py
 
         list_posizioni = new List<Position>();
 
@@ -280,13 +292,7 @@ public class _GM : MonoBehaviour
     /// <summary>
     /// Effettua la navigazione alla scena di test
     /// </summary>
-    public void NavigateToTestScene()
-    {
-        if(FileUtils.defaultFolder == FileUtils.defaultFolder)
-            OpenPanel();
-
-        SceneManager.LoadScene(1);
-    }
+    public void NavigateToTestScene() => SceneManager.LoadScene(1);
 
     /// <summary>
     /// Effettua la navigazione alla scena di training
