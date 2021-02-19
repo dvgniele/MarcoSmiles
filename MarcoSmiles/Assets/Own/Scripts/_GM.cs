@@ -166,11 +166,7 @@ public class _GM : MonoBehaviour
 
             if (!isActive)
             {
-                //Se non ci sono le mani ristabilisci colore di default dell'ultima nota suonata
-                Button b_curr = listaPulsanti[indexPlayingNote];
-                ColorBlock cb_curr = b_curr.colors;
-                cb_curr.normalColor = cb_curr.disabledColor;
-                b_curr.colors = cb_curr;
+                ResetColorNotes();
             }
            
 
@@ -276,7 +272,7 @@ public class _GM : MonoBehaviour
 
     public void UpdateButtonsKeyboard()
     {
-        resetColorNotes();
+        ResetColorNotes();
 
         //  evidenzia in giallo tutte le note della tastiera che sono state già allenate (le note che sono presenti nel dataset selezionato)
         foreach (var item in trainedNotes)
@@ -290,7 +286,7 @@ public class _GM : MonoBehaviour
 
 
 
-    public void resetColorNotes()
+    public void ResetColorNotes()
     {
         foreach (var button in listaPulsanti)
         {
