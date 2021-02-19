@@ -59,31 +59,6 @@ public class _GM : MonoBehaviour
 
     #region UNITY METH
 
-    void Start()
-    {
-        /*
-         * In unity, possono essere caricati nella build solo determinati tipi di file. File .txt vengono copiati all'interno della cartella 
-         * della build.
-         * In questo modo riusciamo ad avere lo script .py (che in questo momento è un file .txt) all'interno della build.
-         * Dunque, leggiamo il file .txt dalla cartella Resources, e usaando il metodo SavePy, salviamo lo script letto dal file .txt
-         * in un file ad estensione .py. Questo file potrà poi essere lanciato su linea di comando.    
-         */
-
-        string nameFile = "ML";           //Nome del file python. 
-        var MLFile = Resources.Load<TextAsset>("Text/" + nameFile);     //carica lo script dalla cartella resources (file .txt)
-        FileUtils.SavePy(MLFile.bytes, MLFile.name);                    //Converte il file .txt in script .py
-
-        list_posizioni = new List<Position>();
-
-        if(currSceneEnum == SceneEnum.TrainingScene)
-        {
-            //  il programma parte con la prima nota della tastiera selezionata
-            listaPulsanti.ElementAt(0).Select();
-
-            FileUtils.UpdateTrainedNotesList(FileUtils.filename);
-        }
-    }
-
     /// <summary>
     /// Chiamato quando viene inizializzato un oggetto con lo script _GM.cs
     /// </summary>
@@ -112,6 +87,49 @@ public class _GM : MonoBehaviour
         }
     }
 
+
+    void Start()
+    {
+        /*
+         * In unity, possono essere caricati nella build solo determinati tipi di file. File .txt vengono copiati all'interno della cartella 
+         * della build.
+         * In questo modo riusciamo ad avere lo script .py (che in questo momento è un file .txt) all'interno della build.
+         * Dunque, leggiamo il file .txt dalla cartella Resources, e usaando il metodo SavePy, salviamo lo script letto dal file .txt
+         * in un file ad estensione .py. Questo file potrà poi essere lanciato su linea di comando.    
+         */
+
+        string nameFile = "ML";           //Nome del file python. 
+        var MLFile = Resources.Load<TextAsset>("Text/" + nameFile);     //carica lo script dalla cartella resources (file .txt)
+        FileUtils.SavePy(MLFile.bytes, MLFile.name);                    //Converte il file .txt in script .py
+
+        list_posizioni = new List<Position>();
+
+        if(currSceneEnum == SceneEnum.TrainingScene)
+        {
+            //  il programma parte con la prima nota della tastiera selezionata
+            listaPulsanti.ElementAt(0).Select();
+
+            FileUtils.UpdateTrainedNotesList(FileUtils.filename);
+
+
+            try
+            {
+                //  evidenzia in giallo tutte le note della tastiera che sono state già allenate (le note che sono presenti nel dataset selezionato)
+                foreach (var item in trainedNotes)
+                {
+                    Button btn = listaPulsanti[item];
+                    ColorBlock btn_color = btn.colors;
+                    btn_color.normalColor = Color.yellow;
+                    btn.colors = btn_color;
+                }
+
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e.Message);
+            }
+        }
+    }
     void FixedUpdate()
     {
         if (currSceneEnum == SceneEnum.Suonah)
@@ -146,21 +164,7 @@ public class _GM : MonoBehaviour
         {
             //  Debug.Log(FileUtils.selectedDataset);
 
-            try
-            {
-                //  evidenzia in giallo tutte le note della tastiera che sono state già allenate (le note che sono presenti nel dataset selezionato)
-                foreach(var item in trainedNotes)
-                {
-                Button btn = listaPulsanti[item];
-                ColorBlock btn_color = btn.colors;
-                btn_color.normalColor = Color.yellow;
-                btn.colors = btn_color;
-                }
-
-            }catch(Exception e)
-            {
-                Debug.Log(e.Message);
-            }
+            
         }
     }
 

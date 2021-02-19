@@ -174,51 +174,53 @@ public static class FileUtils
     /// <param name="filename"></param>
     public static void UpdateTrainedNotesList(string filename)
     {
-        //  imposta il separatore dei numeri decimali a "." (nel caso si avesse il pc in lingua che usa "," come separatore si potrebbero avere problemi, quindi lo imposta manualmente)
-        System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
-        customCulture.NumberFormat.NumberDecimalSeparator = ".";
-        System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
 
 
         var txt = LoadFile(filename);
-        var rows = txt.Split('\n'); 
+        var rows = txt.Split('\n').Select(tag => tag.Trim()).Where(tag => !string.IsNullOrEmpty(tag));          //trim elimina le entrate vuote
 
         var id_list = new List<int>();
         foreach(var item in rows)
         {
             var tmp = int.Parse(item.Split(',').Last());        //  tmp = ultimo elemento della riga. sappiamo che l'ultimo elemento è l'ID
-
+            Debug.Log(tmp);
             if (!id_list.Any(x => id_list.Contains(tmp)))       //  se la lista degli ID non contiene tmp
                 id_list.Add(tmp);                               //  aggiungi tmp alla lista degli ID
         }
 
         _GM.trainedNotes = id_list;
     }
-    
+
     public static void DeleteRowsNote(int note)
     {
         var filePath = GeneratePath(filename);
         var txt = LoadFile(filename);
-        var rows = txt.Split('\n').ToList();
-             
-       //toglie tutte le righe dal file del dataset
-       File.WriteAllText(filePath ,"");
-       
+        Debug.Log(txt);
+        var rows = txt.Split('\n').Select(tag => tag.Trim()).Where(tag => !string.IsNullOrEmpty(tag));      //trim elimina le entrate vuote ;
+
+        foreach (var row in rows)
+            Debug.Log("righe DATAAWSETTTT:::   " + row);
+
+        //  toglie tutte le righe dal file del dataset
+        File.WriteAllText(filePath ,"");
+
 
         foreach (var row in rows)
         {
-            var tmp_id = int.Parse(row.Split(',').Last());
+            int tmp_id = int.Parse(row.Split(',').Last());
+            Debug.Log("INDICE RIGAAAAA   " + tmp_id);
             if (tmp_id != note)
             {
-                var actualRow = row + Environment.NewLine;
-                File.AppendAllText(filePath, actualRow);
-                
+                    var actualRow = "";
+                    actualRow = row+"\n";
+                    Debug.Log("righa nuovo dataset   " + actualRow);
+                    File.AppendAllText(filePath, actualRow);
             }
-        }
 
-                //SaveTxt(oldTxt);
-                //UpdateTrainedNotesList(filename);
-           
+            //SaveTxt(oldTxt);
+            //UpdateTrainedNotesList(filename);
+
+        }
     }
 
 
