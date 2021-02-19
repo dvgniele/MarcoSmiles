@@ -38,7 +38,7 @@ public class _GM : MonoBehaviour
 
     [SerializeField]
     public List<Button> listaPulsanti;
-    public GameObject piano;
+    public static GameObject piano;
     //private TestML testML;
 
 
@@ -104,7 +104,7 @@ public class _GM : MonoBehaviour
 
         list_posizioni = new List<Position>();
 
-        if(currSceneEnum == SceneEnum.TrainingScene)
+        if (currSceneEnum == SceneEnum.TrainingScene)
         {
             //  il programma parte con la prima nota della tastiera selezionata
             listaPulsanti.ElementAt(0).Select();
@@ -129,6 +129,12 @@ public class _GM : MonoBehaviour
                 Debug.Log(e.Message);
             }
         }
+        else if (currSceneEnum == SceneEnum.Mainpage)
+        {
+            UpdateSelectedDatasetText();
+        }
+
+
     }
     void FixedUpdate()
     {
@@ -167,6 +173,13 @@ public class _GM : MonoBehaviour
             
         }
     }
+
+    public static void UpdateSelectedDatasetText()
+    {
+        var selectedDatasetText = GameObject.Find("SelectedDatasetText").GetComponent<Text>();
+        selectedDatasetText.text = "Configurazione Selezionata: " + FileUtils.selectedDataset;
+    }
+
 
     #endregion
 
@@ -287,6 +300,9 @@ public class _GM : MonoBehaviour
     public void OpenPanel()
     {
         PanelUtils.OpenPanel();
+
+        if(currSceneEnum == SceneEnum.Mainpage)
+            UpdateSelectedDatasetText();
     }
 
     /// <summary>
@@ -295,6 +311,9 @@ public class _GM : MonoBehaviour
     public void OpenImportPanel()
     {
         PanelUtils.OpenImportPanel();
+
+        if (currSceneEnum == SceneEnum.Mainpage)
+            UpdateSelectedDatasetText();
     }
 
     /// <summary>
