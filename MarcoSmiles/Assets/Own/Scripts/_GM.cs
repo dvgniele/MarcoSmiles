@@ -77,7 +77,7 @@ public class _GM : MonoBehaviour
                 var playButton = GameObject.Find("TestButton").GetComponent<Button>();
                 playButton.interactable = false;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
 
             }
@@ -89,7 +89,7 @@ public class _GM : MonoBehaviour
                 var playButton = GameObject.Find("TestButton").GetComponent<Button>();
                 playButton.interactable = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
