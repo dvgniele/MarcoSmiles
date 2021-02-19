@@ -72,13 +72,27 @@ public class _GM : MonoBehaviour
 
         if(FileUtils.CheckForDefaultFiles())
         {
-            var playButton = GameObject.Find("TestButton").GetComponent<Button>();
-            playButton.interactable = false;
+            try
+            {
+                var playButton = GameObject.Find("TestButton").GetComponent<Button>();
+                playButton.interactable = false;
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
         else
         {
-            var playButton = GameObject.Find("TestButton").GetComponent<Button>();
-            playButton.interactable = true;
+            try
+            {
+                var playButton = GameObject.Find("TestButton").GetComponent<Button>();
+                playButton.interactable = true;
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
 
