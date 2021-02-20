@@ -2399,7 +2399,7 @@ GameObject:
   - component: {fileID: 994649374}
   - component: {fileID: 994649375}
   m_Layer: 0
-  m_Name: rlnd
+  m_Name: Stripes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
