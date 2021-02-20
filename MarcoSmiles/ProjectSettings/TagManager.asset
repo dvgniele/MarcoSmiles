@@ -38,6 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2451544379
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Dinanzi
+    uniqueID: 3492866097
     locked: 0
