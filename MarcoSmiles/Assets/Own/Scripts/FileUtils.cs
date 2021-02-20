@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 
 using UnityEngine;
 
@@ -16,7 +15,7 @@ public static class FileUtils
     /// <summary>
     /// Nome del dataset da utilizzare
     /// </summary>
-    static string filename = "marcosmiles_dataset.csv";
+    public static string filename = "marcosmiles_dataset.csv";
     //static string ext = "csv";
 
     /// <summary>
@@ -28,6 +27,11 @@ public static class FileUtils
     /// Nome Dataset
     /// </summary>
     public static string defaultFolder = "DefaultDataset";
+
+    /// <summary>
+    /// Dataset selezionato
+    /// </summary>
+    public static string selectedDataset = defaultFolder;
 
     /// <summary>
     /// Restituisce il nome della cartella del dataset
@@ -48,7 +52,7 @@ public static class FileUtils
     {
         //Debug.Log($"{path}/{folderName}/{_GM.selectedDataset}/{filename}");
 
-        return $"{path}/{folderName}/{_GM.selectedDataset}/{filename}";
+        return $"{path}/{folderName}/{selectedDataset}/{filename}";
     }
 
     /// <summary>
@@ -71,7 +75,7 @@ public static class FileUtils
     /// Prende il path per il datasaet. Versione public di generatepath. [(è davvero necessaria???? o basta mettere generate path a public?)]
     /// </summary>
     /// <returns>Ritorna il path per il dataset</returns>
-    public static string PrintPath()
+    public static string GeneratePath()
     {
         return $"{GeneratePath("")}";
     }
@@ -143,6 +147,7 @@ public static class FileUtils
         }
     }
 
+
     /// <summary>
     /// Carica il contenuto del file
     /// </summary>
@@ -150,6 +155,7 @@ public static class FileUtils
     /// <returns></returns>
     public static string LoadFile(string name)
     {
+
         //  se il file è presente nel path, lo legge
         if (File.Exists(GeneratePath($"{name}")))
         {
@@ -162,23 +168,97 @@ public static class FileUtils
             return null;
         }
     }
+    /// <summary>
+    /// Aggiorna la variabile trainedNotes, contenente tute le note allenate (che sono presenti nel dataset)
+    /// </summary>
+    /// <param name="filename"></param>
+    public static void UpdateTrainedNotesList(string filename)
+    {
+
+
+        var txt = LoadFile(filename);
+        var rows = txt.Split('\n').Select(tag => tag.Trim()).Where(tag => !string.IsNullOrEmpty(tag));          //trim elimina le entrate vuote
+
+        var id_list = new List<int>();
+        foreach(var item in rows)
+        {
+            var tmp = int.Parse(item.Split(',').Last());        //  tmp = ultimo elemento della riga. sappiamo che l'ultimo elemento è l'ID
+           
+            if (!id_list.Any(x => id_list.Contains(tmp)))       //  se la lista degli ID non contiene tmp
+                id_list.Add(tmp);                               //  aggiungi tmp alla lista degli ID
+        }
+
+        _GM.trainedNotes = id_list;
+    }
+
+    public static void DeleteRowsNote(int note)
+    {
+        var filePath = GeneratePath(filename);
+        var txt = LoadFile(filename);
+
+        var rows = txt.Split('\n').Select(tag => tag.Trim()).Where(tag => !string.IsNullOrEmpty(tag));      //trim elimina le entrate vuote ;
+
+        //  toglie tutte le righe dal file del dataset
+        File.WriteAllText(filePath ,"");
+
+        foreach (var row in rows)
+        {
+            int tmp_id = int.Parse(row.Split(',').Last());
+            if (tmp_id != note)
+            {
+                    var actualRow = "";
+                    actualRow = row+"\n";
+                    File.AppendAllText(filePath, actualRow);
+            }
+
+            //SaveTxt(oldTxt);
+            UpdateTrainedNotesList(filename);
+
+        }
+    }
+
 
     /// <summary>
-    /// Converte bytes in un file .py e lo scrive in GeneratePath [AppData/LocalLow]
+    /// 
     /// </summary>
-    /// <param name="file">File da convertire</param>
-    /// <param name="name">Nome con cui salvare il file convertito</param>
-    public static void SavePy(byte[] file, string name)
+    /// <param name="txt"></param>
+    public static void SaveTxt(string txt)
+    {
+        var filePath = GeneratePath(filename);
+        Debug.Log("NOMEEEEEEEEEEEEEEEEEEEEE" + filePath);
+        try
+        {
+            //  se il file non è presente nel path, lo crea
+            
+                using (var fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                {
+                //Debug.Log(file);                  
+                File.AppendAllText(filePath, txt);
+                }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("Exception caught in process:" + ex.ToString());
+        }
+    }
+        /// <summary>
+        /// Converte bytes in un file .py e lo scrive in GeneratePath [AppData/LocalLow]
+        /// </summary>
+        /// <param name="file">File da convertire</param>
+        /// <param name="name">Nome con cui salvare il file convertito</param>
+        public static void SavePy(byte[] file, string name)
     {
         //  imposta nome ed estensione al file da salvare
         string filename = name + ".py";
+
+        string filePath = $"{path}/{filename}";
         //Debug.Log(file);
         try
         {
             //  se il file non è presente nel path, lo crea
-            if (!File.Exists(GeneratePath(filename)))
+            if (!File.Exists(filePath))
             {
-                using (var fs = new FileStream(GeneratePath(filename), FileMode.Create, FileAccess.Write))
+                using (var fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
                 {
                     //Debug.Log(file);                  
                     fs.Write(file, 0, file.Length);
@@ -196,6 +276,7 @@ public static class FileUtils
         }
     }
 
+    #region Import/Export
 
     /// <summary>
     /// Importa il dataset
@@ -217,6 +298,10 @@ public static class FileUtils
         ProcessDirectory(path, destination);
     }
 
+    #endregion
+
+    #region Dataset Folder/Files
+
     /// <summary>
     /// Processa una cartella, salvando tutto il contenuto in un'altra destinazione
     /// </summary>
@@ -225,9 +310,12 @@ public static class FileUtils
     /// <param name="setDS">True se deve essere selezionato il dataset passato in input, False altrimenti</param>
     private static void ProcessDirectory(string dir, string destination, bool setDS = false)
     {
+        Debug.Log(dir);
+
         Directory.CreateDirectory(destination);
 
         string[] files = Directory.GetFiles(dir);
+        //Debug.Log(dir);
 
         foreach (var item in files)
             ProcessFile(item, destination);
@@ -239,7 +327,7 @@ public static class FileUtils
         var tmp = dir.Split('/').ToList().Last();
 
         if(setDS)
-            _GM.selectedDataset = tmp;
+            selectedDataset = tmp;
     }
 
     /// <summary>
@@ -260,5 +348,27 @@ public static class FileUtils
         {
             File.Copy(file, str);
         }
+    }
+
+    #endregion
+
+    public static bool CheckForDefaultFiles()
+    {
+        if (!Directory.Exists(GeneratePath()))
+        {
+            Directory.CreateDirectory(GeneratePath());
+            return false;
+        }
+        else
+        {
+            if(!File.Exists(GeneratePath("ML.py")))
+                File.Copy($"{path}/{folderName}/ML.py",GeneratePath("ML.py"));
+            
+
+            if (!File.Exists(GeneratePath("bias_out")) || !File.Exists(GeneratePath("weights_out")))
+                return false;
+        }
+
+        return true;
     }
 }

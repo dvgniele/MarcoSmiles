@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +25,11 @@ public class TrainingScript : MonoBehaviour
     public int currentNoteId;
 
     public int aumenta;
+
+    private void Start()
+    {
+        recording_Text.text = RECORD_COUNT_DEF.ToString();
+    }
 
     /// <summary>
     /// Chiamato per ogni frame 
@@ -125,6 +127,16 @@ public class TrainingScript : MonoBehaviour
         _GM.list_posizioni.Add(new Position(left_hand: left_hand, right_hand: right_hand, id: currentNoteId));
     }
 
+
+    public bool RemoveNote()
+    {
+        FileUtils.DeleteRowsNote(currentNoteId);
+        return true;
+
+    }
+
+
+
     /// <summary>
     /// Inizia la coroutine per la registrazione delle posizioni
     /// </summary>
@@ -152,6 +164,8 @@ public class TrainingScript : MonoBehaviour
             count--;
             countDown_Text.text = count.ToString();
             position_Text.text = text1;
+            Debug.Log($"COUNTDOWN: {count.ToString()}");
+
 
             //  effettua una pausa di 1 secondo
             yield return new WaitForSeconds(1);

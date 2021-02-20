@@ -1,11 +1,10 @@
 ﻿using Leap;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEditor;
+using System;
 using System.IO;
 
 
@@ -28,11 +27,12 @@ public class _GM : MonoBehaviour
 
     public static List<Position> list_posizioni;            // viene usata solo nella scena di training per salvare nel dataset
 
+    public static List<int> trainedNotes;
+
     public bool shouldPlay = false;                         //  decide se bisogna suonare IN BASE ALLA SCENA ATTIVA. true solo se è nella scena di testing
 
-    //public static bool isActive = false;                  //  se ci sono le mani, suona, altrimenti va a c'rac
 
-    public static bool isActive = false;                     //  se ci sono le mani, suona, altrimenti va a c'rac
+    public static bool isActive = false;                     // se ci sono le mani, suona, altrimenti no, lo script oscillator osserva questa variabile per deicdere se deve suonare 
     public static double[] current_Features;                //  attualmente le features sono floats, risolviamo sto problemo
     public static int indexPlayingNote;                     //  indice della nota da suonare che è letta da PCMOscillator
     public static int indexPreviousNote;                    //  indice della nota suonata nel fixed update precedente
@@ -43,8 +43,8 @@ public class _GM : MonoBehaviour
     //private TestML testML;
 
 
-    //inizializza la cariabile selectedDataset con la cartella FileUtils.defaultFolder (DefaultDataset)
-    public static string selectedDataset = "DefaultDataset";
+    //  inizializza la cariabile selectedDataset con la cartella FileUtils.defaultFolder (DefaultDataset)
+    //public static string selectedDataset = "DefaultDataset";
 
     /// <summary>
     /// Enum per le scene unity esistenti
@@ -57,16 +57,48 @@ public class _GM : MonoBehaviour
     }
     private SceneEnum currSceneEnum;
 
+
+    #region UNITY METH
+
     /// <summary>
     /// Chiamato quando viene inizializzato un oggetto con lo script _GM.cs
     /// </summary>
     private void Awake()
     {
-        selectedDataset = FileUtils.defaultFolder;
+        //selectedDataset = FileUtils.defaultFolder;
+        string nameFile = "ML";           //Nome del file python. 
+        var MLFile = Resources.Load<TextAsset>("Text/" + nameFile);     //carica lo script dalla cartella resources (file .txt)
+        FileUtils.SavePy(MLFile.bytes, MLFile.name);                    //Converte il file .txt in script .py
+
+        if (FileUtils.CheckForDefaultFiles())
+        {
+            try
+            {
+                var playButton = GameObject.Find("TestButton").GetComponent<Button>();
+                playButton.interactable = false;
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        else
+        {
+            try
+            {
+                var playButton = GameObject.Find("TestButton").GetComponent<Button>();
+                playButton.interactable = true;
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
 
         currentScene = SceneManager.GetActiveScene();
 
-        switch(currentScene.buildIndex)
+        switch (currentScene.buildIndex)
         {
             case (0):
                 currSceneEnum = SceneEnum.Mainpage;
@@ -85,6 +117,7 @@ public class _GM : MonoBehaviour
         }
     }
 
+
     void Start()
     {
         /*
@@ -95,43 +128,88 @@ public class _GM : MonoBehaviour
          * in un file ad estensione .py. Questo file potrà poi essere lanciato su linea di comando.    
          */
 
-        string nameFile = "ML";           //Nome del file python. 
-        var MLFile = Resources.Load<TextAsset>("Text/" + nameFile);     //carica lo script dalla cartella resources (file .txt)
-        FileUtils.SavePy(MLFile.bytes, MLFile.name);                    //Converte il file .txt in script .py
-
         list_posizioni = new List<Position>();
 
-    }
+        if (currSceneEnum == SceneEnum.TrainingScene)
+        {
+            //  il programma parte con la prima nota della tastiera selezionata
+            listaPulsanti.ElementAt(0).Select();
 
+            FileUtils.UpdateTrainedNotesList(FileUtils.filename);
+            UpdateButtonsKeyboard();
+
+
+        }
+        else if (currSceneEnum == SceneEnum.Mainpage)
+        {
+            UpdateSelectedDatasetText();
+        }
+
+
+    }
     void FixedUpdate()
     {
         if (currSceneEnum == SceneEnum.Suonah)
         {
-            // Aggiorna array delle features currentFeatures in modo tale che venga calcolata la nota giusta ad ogni update 
-            current_Features = TestingScript.GetCurrentFeatures();
+            if(isActive)
+            {
+                // Aggiorna array delle features currentFeatures in modo tale che venga calcolata la nota giusta ad ogni update 
+                current_Features = TestingScript.GetCurrentFeatures();
 
-            //salva la nota che si stava suonando nell'update precedente prima di calcolare la nuova nota
-            indexPreviousNote = indexPlayingNote;
-            indexPlayingNote = TestML.ReteNeurale(current_Features);                    //rappresenta la nota che deve essere suonata
+                //salva la nota che si stava suonando nell'update precedente prima di calcolare la nuova nota
+                indexPreviousNote = indexPlayingNote;
+                indexPlayingNote = TestML.ReteNeurale(current_Features);                    //rappresenta la nota che deve essere suonata
 
-            ChangeColor(indexPreviousNote, indexPlayingNote);
+                ChangeColor(indexPreviousNote, indexPlayingNote);
+            }
+
+
+            if (!isActive)
+            {
+                ResetColorNotes();
+            }
+           
+
         }
         //Debug.Log("L'indice che rappresenta la nota da suonare è:  " + indexPlayingNote);
 
         if(currSceneEnum == SceneEnum.TrainingScene)
         {
+            //  Debug.Log(FileUtils.selectedDataset);
 
+            
         }
     }
 
+    public static void UpdateSelectedDatasetText()
+    {
+        var selectedDatasetText = GameObject.Find("SelectedDatasetText").GetComponent<Text>();
+        selectedDatasetText.text = "Configurazione Selezionata: " + FileUtils.selectedDataset;
+    }
+
+
+    #endregion
+
 
     /// <summary>
-    /// Lanciato quando viene premuto il pulsante di training
+    /// Lanciato quando viene premuto il pulsante di training per la nota selezionata
     /// </summary>
     public void TrainButtonClick()
     {
         trainer.Trainer();
     }
+
+    /// <summary>
+    /// Lanciato quando viene premuto il pulsante di rimozione nota da dataset per la nota selezionata
+    /// </summary>
+    public void RemoveButtonClick()
+    {
+        if(trainer.RemoveNote())
+            UpdateButtonsKeyboard();
+    }
+
+
+    #region Keyboard Buttons
 
     /// <summary>
     /// Cambia il colore della nota da suonare, ripristinando al colore di dafault la nota precedentemente premuta (se necessario)
@@ -143,7 +221,8 @@ public class _GM : MonoBehaviour
     {
         if (id_prev == id_curr)
         {
-            return;
+            
+           // return;
         }
         else
         {
@@ -166,7 +245,8 @@ public class _GM : MonoBehaviour
             if(currSceneEnum == SceneEnum.TrainingScene)
             {
                 //  cambia l'id della nota nel trainer
-                trainer.ChangeNoteId(id_curr);
+                //trainer.ChangeNoteId(id_curr);
+                return;
             }
             
         }
@@ -180,11 +260,43 @@ public class _GM : MonoBehaviour
     /// <param name="sender"></param>
     public void GetClickedKey(Button sender)
     {
+       // var previousIndexTrainNote = trainer.currentNoteId;
+        //Debug.Log(previousIndexTrainNote);
+        
         var skrtino = listaPulsanti.IndexOf(listaPulsanti.FirstOrDefault(x => x.gameObject.Equals(sender.gameObject)));
+        //Debug.Log(skrtino);
         trainer.ChangeNoteId(skrtino);
 
         //Debug.Log($"{listaPulsanti[skrtino].gameObject.name}, {skrtino}");
     }
+
+    public void UpdateButtonsKeyboard()
+    {
+        ResetColorNotes();
+
+        //  evidenzia in giallo tutte le note della tastiera che sono state già allenate (le note che sono presenti nel dataset selezionato)
+        foreach (var item in trainedNotes)
+        {
+            Button btn = listaPulsanti[item];
+            ColorBlock btn_color = btn.colors;
+            btn_color.normalColor = Color.yellow;
+            btn.colors = btn_color;
+        }
+    }
+
+
+
+    public void ResetColorNotes()
+    {
+        foreach (var button in listaPulsanti)
+        {
+            ColorBlock cb_curr = button.colors;
+            cb_curr.normalColor = cb_curr.disabledColor;
+            button.colors = cb_curr;
+        }
+    }
+    #endregion
+
 
     #region NAVIGATION
 
@@ -201,13 +313,7 @@ public class _GM : MonoBehaviour
     /// <summary>
     /// Effettua la navigazione alla scena di test
     /// </summary>
-    public void NavigateToTestScene()
-    {
-        if(selectedDataset == FileUtils.defaultFolder)
-            OpenPanel();
-
-        SceneManager.LoadScene(1);
-    }
+    public void NavigateToTestScene() => SceneManager.LoadScene(1);
 
     /// <summary>
     /// Effettua la navigazione alla scena di training
@@ -216,77 +322,36 @@ public class _GM : MonoBehaviour
 
     #endregion
 
+    #region Panels
 
-    /// <summary>
-    /// Apre un pannello per selezionare il dataset da utilizzare nella cartella MyDataset
-    /// </summary>
-    [MenuItem("Select Dataset")]
     public void OpenPanel()
     {
-        //EditorUtility.DisplayDialog("Select Dataset Folder", "Select the Dataset folder you prefer.", "OK.");
-        
-        string path = EditorUtility.OpenFolderPanel("Select Dataset", $"{FileUtils.PrintPath()}", "");
-        if (path.Length != 0)
-        {
-            selectedDataset = path.Split('/').Last();
-        }
+        PanelUtils.OpenPanel();
+
+        if(currSceneEnum == SceneEnum.Mainpage)
+            UpdateSelectedDatasetText();
     }
 
     /// <summary>
     /// Apre un pannello per selezionare un dataset da importare nella cartella MyDataset
     /// </summary>
-    [MenuItem("Import Dataset")]
     public void OpenImportPanel()
     {
-        var tmp = FileUtils.PrintPath().Split('/').ToList();
-        tmp.Remove(tmp.Last());
-        tmp.Remove(tmp.Last());
+        PanelUtils.OpenImportPanel();
 
-        var tmp_path = "";
-        foreach (var item in tmp)
-            tmp_path += item + '/';
-
-        var path = EditorUtility.OpenFolderPanel("Import Dataset", tmp_path, FileUtils.PrintPath());
-
-        if(Directory.Exists(path))
-        {
-            var newdirName = tmp_path + path.Split('/').ToList().Last();
-
-            FileUtils.Import(path, newdirName);
-        }
-
+        if (currSceneEnum == SceneEnum.Mainpage)
+            UpdateSelectedDatasetText();
     }
 
     /// <summary>
     /// Apre un pannello per selezionare un dataset da esportare in una qualsiasi directory sul pc
     /// </summary>
-    [MenuItem("Export Dataset")]
     public void OpenExportPanel()
     {
-        var tmp = FileUtils.PrintPath().Split('/').ToList();
-        tmp.Remove(tmp.Last());
-        tmp.Remove(tmp.Last());
-
-        var tmp_path = "";
-        foreach (var item in tmp)
-            tmp_path += item + '/';
-
-        var path = EditorUtility.OpenFolderPanel("Export Dataset", tmp_path, FileUtils.PrintPath());
-
-        if (Directory.Exists(path))
-        {
-            var expPath = EditorUtility.OpenFolderPanel("Choose the location to export to", tmp_path, "");
-            expPath += "/" + path.Split('/').ToList().Last();
-
-            Debug.Log(expPath);
-
-            if(!Directory.Exists(expPath))
-                Directory.CreateDirectory(expPath);
-
-            FileUtils.Export(path, expPath);
-        }
+        PanelUtils.OpenExportPanel();
     }
 
+    #endregion
 
 
 }

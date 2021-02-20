@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -7,13 +6,14 @@ using UnityEngine;
 
 public static class TestML
 {
-    private static double[][] W1;
+    private static List<List<double>> W1 = new List<List<double>>();
 
-    private static double[][] B1;
+    private static List<double> B1 = new List<double>();
 
-    private static double[][] W2;
+    private static List<List<double>> W2 = new List<List<double>>();
 
-    private static double[][] B2;
+    private static List<double> B2 = new List<double>();
+
 
 
 
@@ -39,7 +39,7 @@ public static class TestML
     /// <returns>
     /// Una lista di double contenente i numeri letti da file. La lista e formattato logicamente in modo tale da poter costrutire gli eventuali array contenuti nel file.
     /// </returns>
-    private static List<double[]> ReadArraysFromFormattedFile(string name)
+    private static List< List<double> > ReadArraysFromFormattedFile(string name)
     {
         //stringa
         var text = FileUtils.LoadFile(name);
@@ -49,8 +49,8 @@ public static class TestML
 
         string[] vettori = text.Split(']');       // StringSplitOptions.RemoveEmptyEntries toglie le entrate vuote (potrebbe servire lasciarle) 
 
-
-        List<string[]> temp = new List<string[]>();
+        //lista degli array letti, i valori degli array sono strighe
+        List< List <string> > temp = new List< List<string> >();
 
         foreach (string vettore in vettori)
         {
@@ -58,20 +58,22 @@ public static class TestML
 
             temp.Add(vettore.Split(' ')                                       //divide per ' ' e mette l'array di stringhe all'interno della lista temp
                 .Select(tag => tag.Trim())                                    //elimina le entrate vuote
-                .Where(tag => !string.IsNullOrEmpty(tag)).ToArray());
+                .Where(tag => !string.IsNullOrEmpty(tag)).ToList());
         }
 
+        //lista degli array letti che verrà restituita
+        List<List<double>> listOfReadArrays = new List< List<double> >();
 
-        List<double[]> listOfReadArrays = new List<double[]>();
 
-        foreach (string[] arr in temp)
+        //Converte tutti i valori degli array letti, da string a double.
+        foreach ( var arr in temp)
         {
-            double[] t = new double[arr.Length];
-            for (int i = 0; i < arr.Length; i++)
+            double[] t = new double[arr.Count];
+            for (int i = 0; i < arr.Count; i++)
             {
                 t[i] = double.Parse(arr[i], CultureInfo.InvariantCulture);
             }
-            listOfReadArrays.Add(t);
+            listOfReadArrays.Add(t.ToList());
             // listOfReadArrays.Add( arr.ToList().ConvertAll(x => Convert.ToDouble(x)).ToArray() );       
         }
         return listOfReadArrays;
@@ -88,57 +90,61 @@ public static class TestML
     /// </summary>
     public static void Populate()
     {
-        
-        List<double[]> biasArrays = ReadArraysFromFormattedFile("bias_out.txt");
 
-        B1 = new double[biasArrays.ElementAt(0).Length][];
-        B2 = new double[biasArrays.ElementAt(1).Length][];
+        B1.Clear(); B2.Clear(); W1.Clear(); W2.Clear();
+        List<List<double>> biasArrays = ReadArraysFromFormattedFile("bias_out.txt");
+        /*
+        B1 = new double[biasArrays.ElementAt(0).Count][];
+        B2 = new double[biasArrays.ElementAt(1).Count][];
+        */
+        B1 = biasArrays.ElementAt(0);
+        B2 = biasArrays.ElementAt(1);
 
-        B1[0] = (double[]) biasArrays.ElementAt(0).Clone();
-        B2[0] = (double[]) biasArrays.ElementAt(1).Clone();
-
-        List<double[]> weightsArrays = ReadArraysFromFormattedFile("weights_out.txt");
+        List<List<double>> weightsArrays = ReadArraysFromFormattedFile("weights_out.txt");
 
         //finchè non arrivo ad un array uguale a {} sono array che rappresentano W1
         int j = 0; 
-        while (Enumerable.SequenceEqual(weightsArrays.ElementAt(j), new double[] { } ) == false)
+        while (Enumerable.SequenceEqual(weightsArrays.ElementAt(j), new List<double> { } ) == false)
         {
             j++;
         }
 
         //Debug.Log(j.ToString());
 
-        W1 = new double[j][];
+        //W1 = new double[j][];
 
         for(int i = 0; i < j ; i++)
         {
-            W1[i] = (double[]) weightsArrays.ElementAt(i).Clone();     
-
+            W1.Add(weightsArrays.ElementAt(i));     
         }
 
         //da j+1 alla fine sono array che rappresentano W2
         int k = j+1;
-        while (Enumerable.SequenceEqual(weightsArrays.ElementAt(k), new double[] { }) == false)
+        while (Enumerable.SequenceEqual(weightsArrays.ElementAt(k), new List<double> { } ) == false)
         {
             k++;
         }
 
-        W2 = new double[k - (j + 1)][];
+      // W2 = new double[k - (j + 1)][];
 
         for (int i = 0 ; i < k - (j + 1) ; i++)
         {
-            W2[i] = (double[]) weightsArrays.ElementAt(j + 1 + i).Clone();
+            W2.Add(weightsArrays.ElementAt(j + 1 + i));
 
         }
+
          /*
-        foreach (double[] arr in W2)
+          //Per fare il debug delle matrici
+        foreach (var arr in W2)
         {
-            foreach (double e in arr)
+            foreach (var a in arr)
             {
-                Debug.Log(e);
+                Debug.Log(a);
             }
         }
+
         */
+        
     }
 
     /// <summary>
@@ -153,19 +159,25 @@ public static class TestML
     /// <returns>Id nota trovata</returns>
     public static int ReteNeurale(double[] features)
     {
+      
+        
         //double[] scaledFeatures = ScaleValues(features);         //Sostituire dove sta features con scaledFeatures
 
 
         // output_hidden1 ha lo stesso numero di elementi di B1
-        var output_hidden1 = new double[B1.Length];
+        var output_hidden1 = new double[B1.Count];
         // output_hidden2 ha lo stesso numero di elementi di B2
-        var output_hidden2 = new double[B2.Length];
+        var output_hidden2 = new double[B2.Count];
+
+        
+
+
         
         double x, w, r;
 
         for (int i = 0; i < output_hidden1.Length; i++)
         {
-            output_hidden1[i] += B1[0][i];
+            output_hidden1[i] += B1.ElementAt(i);
             for (int j = 0; j < features.Length; j++)
             {
                 x = features[j];
@@ -181,7 +193,7 @@ public static class TestML
 
         for (int i = 0; i < output_hidden2.Length; i++)
         {
-            output_hidden2[i] += B2[0][i];
+            output_hidden2[i] += B2.ElementAt(i);
             for (int j = 0; j < output_hidden1.Length; j++)
             {
                 x = output_hidden1[j];
