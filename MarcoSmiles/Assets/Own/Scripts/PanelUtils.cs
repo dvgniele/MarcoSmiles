@@ -87,15 +87,19 @@ public class PanelUtils
             tmp_path += item + '/';
 
         var paths = StandaloneFileBrowser.OpenFolderPanel("Export Dataset", tmp_path, false);
-        var path = paths.Last().Split('\\').ToList().Last();
+        if ( paths.Length > 0 ) {
+            var path = paths.Last().Split('\\').ToList().Last();
 
-        if (path.Length != 0)
-        {
-            FileUtils.selectedDataset = paths.Last().Split('\\').ToList().Last();
+            if (path.Length != 0)
+            {
+                FileUtils.selectedDataset = paths.Last().Split('\\').ToList().Last();
 
-            //Popola matrici della rete neurale con la nuova configurazione
-            TestML.Populate();
+                //Popola matrici della rete neurale con la nuova configurazione
+                TestML.Populate();
+            }
         }
+       
+        
 
         FileUtils.CheckForDefaultFiles();
     }
