@@ -59,10 +59,7 @@ public class Oscillator : MonoBehaviour
 
     void Start()
     {
-        for(int i = 0; i < frequencies.Length; i++)
-        {
-            frequencies[i] /= 2;
-        }
+      
 
 
         sinWeight = 0.75;
@@ -121,76 +118,76 @@ public class Oscillator : MonoBehaviour
         switch (noteIndex)                  //sostituire con qualche design pattern?
         {
             case 0:     //C4
-                frequency = frequencies[0] * octave;
+                frequency = frequencies[0];
                 break;
             case 1:     //C#4
-                frequency = frequencies[1] * octave;
+                frequency = frequencies[1];
                 break;
             case 2:     //D4
-                frequency = frequencies[2] * octave;
+                frequency = frequencies[2];
                 break;
             case 3:     //D#4
-                frequency = frequencies[3] * octave;
+                frequency = frequencies[3];
                 break;
             case 4:     //E3
-                frequency = frequencies[4] * octave;
+                frequency = frequencies[4];
                 break;
             case 5:     //F4
-                frequency = frequencies[5] * octave;
+                frequency = frequencies[5];
                 break;
             case 6:     //F#4
-                frequency = frequencies[6] * octave;
+                frequency = frequencies[6];
                 break;
             case 7:     //G4
-                frequency = frequencies[7] * octave;
+                frequency = frequencies[7];
                 break;
             case 8:     //G#4
-                frequency = frequencies[8] * octave;
+                frequency = frequencies[8];
                 break;
             case 9:     //A4
-                frequency = frequencies[9] * octave;
+                frequency = frequencies[9];
                 break;
             case 10:     //A#4
-                frequency = frequencies[10] * octave;
+                frequency = frequencies[10];
                 break;
             case 11:     //B4
-                frequency = frequencies[11] * octave;
+                frequency = frequencies[11];
                 break;
             case 12:     //C5
-                frequency = frequencies[0] * octave * 2;
+                frequency = frequencies[0] * 2;
                 break;
             case 13:     //C#5
-                frequency = frequencies[1] * octave * 2;
+                frequency = frequencies[1] * 2;
                 break;
             case 14:     //D5
-                frequency = frequencies[2] * octave * 2;
+                frequency = frequencies[2] * 2;
                 break;
             case 15:     //D#5
-                frequency = frequencies[3] * octave * 2;
+                frequency = frequencies[3] * 2;
                 break;
             case 16:     //E5
-                frequency = frequencies[4] * octave * 2;
+                frequency = frequencies[4] * 2;
                 break;
             case 17:     //F5
-                frequency = frequencies[5] * octave * 2;
+                frequency = frequencies[5] * 2;
                 break;
             case 18:     //F#5
-                frequency = frequencies[6] * octave * 2;
+                frequency = frequencies[6] * 2;
                 break;
             case 19:     //G5
-                frequency = frequencies[7] * octave * 2;
+                frequency = frequencies[7] * 2;
                 break;
             case 20:     //G#5
-                frequency = frequencies[8] * octave * 2;
+                frequency = frequencies[8] * 2;
                 break;
             case 21:     //A5
-                frequency = frequencies[9] * octave * 2;
+                frequency = frequencies[9] * 2;
                 break;
             case 22:     //A#5
-                frequency = frequencies[10] * octave * 2;
+                frequency = frequencies[10] * 2;
                 break;
             case 23:     //B5
-                frequency = frequencies[11] * octave * 2;
+                frequency = frequencies[11] * 2;
                 break;
             default:
                 Debug.Log("Default case");
@@ -395,12 +392,20 @@ public class Oscillator : MonoBehaviour
 
     public void OctaveUp()
     {
-        octave = octave * 2; 
+
+
+        for (int i = 0; i < frequencies.Length; i++)
+        {
+            frequencies[i] *= 2;
+        }
     }
 
     public void OctaveDown()
     {
-        octave = octave * 0.5f;
+        for (int i = 0; i < frequencies.Length; i++)
+        {
+            frequencies[i] /= 2;
+        }
     }
 }
 
