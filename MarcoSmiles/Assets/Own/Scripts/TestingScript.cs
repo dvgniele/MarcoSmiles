@@ -1,15 +1,15 @@
 ﻿public class TestingScript
 {
 
-   //private static double[] current_features = new double[18];
+    //private static float[] current_features = new float[18];
 
     /// <summary>
     /// Seleziona la feature corrente
     /// </summary>
     /// <returns>ritorna i valori della feature corrente</returns>
-    public static double[] GetCurrentFeatures()
+    public static float[] GetCurrentFeatures()
     {
-        double[] current_features = new double[18];
+        float[] current_features = new float[18];
 
         var left_hand = new DataToStore(
             _GM.hand_L,

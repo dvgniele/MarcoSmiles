@@ -7,24 +7,24 @@ using UnityEngine;
 public class ReadMLFromFile : MonoBehaviour
 {
 
-    private static double[][] W1 = new double[][]
+    private static float[][] W1 = new float[][]
     {
 
     };
 
 
-    private static double[][] B1 = new double[][]
+    private static float[][] B1 = new float[][]
     {
     };
 
 
-    private static double[][] W2 = new double[][]
+    private static float[][] W2 = new float[][]
     {
            
     };
 
 
-    private double[][] B2 = new double[][]
+    private float[][] B2 = new float[][]
     {
     };
     // Start is called before the first frame update
