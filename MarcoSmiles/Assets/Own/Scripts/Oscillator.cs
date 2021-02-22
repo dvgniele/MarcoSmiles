@@ -31,8 +31,9 @@ public class Oscillator : MonoBehaviour
     private float[] frequencies = new float[] {
                         261.630f , 277.180f , 293.660f , 311.130f , 329.630f , 349.990f ,
                         369.990f , 392.000f , 415.300f , 440.000f , 466.160f , 493.880f };
+    private float octave = 1f;
+
     public int thisFreq;
-    public double octave = 1;
 
     // Waveshape weights
     [Range(0f, 1f)]
@@ -64,7 +65,7 @@ public class Oscillator : MonoBehaviour
         }
 
 
-            sinWeight = 0.75;
+        sinWeight = 0.75;
         sqrWeight = 0.25;
         sawWeight = 0.25;
 
@@ -120,76 +121,76 @@ public class Oscillator : MonoBehaviour
         switch (noteIndex)                  //sostituire con qualche design pattern?
         {
             case 0:     //C4
-                frequency = frequencies[0];
+                frequency = frequencies[0] * octave;
                 break;
             case 1:     //C#4
-                frequency = frequencies[1];
+                frequency = frequencies[1] * octave;
                 break;
             case 2:     //D4
-                frequency = frequencies[2];
+                frequency = frequencies[2] * octave;
                 break;
             case 3:     //D#4
-                frequency = frequencies[3];
+                frequency = frequencies[3] * octave;
                 break;
             case 4:     //E3
-                frequency = frequencies[4];
+                frequency = frequencies[4] * octave;
                 break;
             case 5:     //F4
-                frequency = frequencies[5];
+                frequency = frequencies[5] * octave;
                 break;
             case 6:     //F#4
-                frequency = frequencies[6];
+                frequency = frequencies[6] * octave;
                 break;
             case 7:     //G4
-                frequency = frequencies[7];
+                frequency = frequencies[7] * octave;
                 break;
             case 8:     //G#4
-                frequency = frequencies[8];
+                frequency = frequencies[8] * octave;
                 break;
             case 9:     //A4
-                frequency = frequencies[9];
+                frequency = frequencies[9] * octave;
                 break;
             case 10:     //A#4
-                frequency = frequencies[10];
+                frequency = frequencies[10] * octave;
                 break;
             case 11:     //B4
-                frequency = frequencies[11];
+                frequency = frequencies[11] * octave;
                 break;
             case 12:     //C5
-                frequency = frequencies[0] * 2;
+                frequency = frequencies[0] * octave * 2;
                 break;
             case 13:     //C#5
-                frequency = frequencies[1] * 2;
+                frequency = frequencies[1] * octave * 2;
                 break;
             case 14:     //D5
-                frequency = frequencies[2] * 2;
+                frequency = frequencies[2] * octave * 2;
                 break;
             case 15:     //D#5
-                frequency = frequencies[3] * 2;
+                frequency = frequencies[3] * octave * 2;
                 break;
             case 16:     //E5
-                frequency = frequencies[4] * 2;
+                frequency = frequencies[4] * octave * 2;
                 break;
             case 17:     //F5
-                frequency = frequencies[5] * 2;
+                frequency = frequencies[5] * octave * 2;
                 break;
             case 18:     //F#5
-                frequency = frequencies[6] * 2;
+                frequency = frequencies[6] * octave * 2;
                 break;
             case 19:     //G5
-                frequency = frequencies[7] * 2;
+                frequency = frequencies[7] * octave * 2;
                 break;
             case 20:     //G#5
-                frequency = frequencies[8] * 2;
+                frequency = frequencies[8] * octave * 2;
                 break;
             case 21:     //A5
-                frequency = frequencies[9] * 2;
+                frequency = frequencies[9] * octave * 2;
                 break;
             case 22:     //A#5
-                frequency = frequencies[10] * 2;
+                frequency = frequencies[10] * octave * 2;
                 break;
             case 23:     //B5
-                frequency = frequencies[11] * 2;
+                frequency = frequencies[11] * octave * 2;
                 break;
             default:
                 Debug.Log("Default case");
@@ -239,7 +240,7 @@ public class Oscillator : MonoBehaviour
              * it so we don't have an ever-increasing variable that will cause
              * an overflow error.
              */
-            phaseIncrement = frequency * 2.0 * Mathf.PI / _FS;
+            phaseIncrement = (frequency * octave) * 2.0 * Mathf.PI / _FS;
             phase += phaseIncrement;
             if (phase > (Mathf.PI * 2))
             {
@@ -391,5 +392,15 @@ public class Oscillator : MonoBehaviour
 
     }
 
+
+    public void OctaveUp()
+    {
+        octave = octave * 2; 
+    }
+
+    public void OctaveDown()
+    {
+        octave = octave * 0.5f;
+    }
 }
 
