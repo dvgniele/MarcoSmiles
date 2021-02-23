@@ -355,7 +355,7 @@ public class Oscillator : MonoBehaviour
     // High percision sine approximation
     public class SineHP
     {
-        private static float sin = 0;
+        private static float sin = 0; 
 
         public static float Sin(float x)
         {

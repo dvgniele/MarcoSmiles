@@ -6,19 +6,19 @@ using UnityEngine;
 
 public static class TestML
 {
-    private static List<List<double>> W1 = new List<List<double>>();
+    private static List<List<float>> W1 = new List<List<float>>();
 
-    private static List<double> B1 = new List<double>();
+    private static List<float> B1 = new List<float>();
 
-    private static List<List<double>> W2 = new List<List<double>>();
+    private static List<List<float>> W2 = new List<List<float>>();
 
-    private static List<double> B2 = new List<double>();
+    private static List<float> B2 = new List<float>();
 
 
 
 
     /// <summary>
-    ///  ReadArraysFromFormattedFile Restituisce una lista di array double. Gli array sono inseriti nella lista nell'ordine in cui vengono letti dal file.
+    ///  ReadArraysFromFormattedFile Restituisce una lista di array float. Gli array sono inseriti nella lista nell'ordine in cui vengono letti dal file.
     ///  La lista è formattata nel seguente modo:
     /// Finchè leggendo il file vengono letti vettori, allora questi vettori vengono aggiunti alla lista e restituiti.
     /// Nel momento in cui la funzione capisce di aver letto una matrice, inserisce nella lista un array vuoto [].
@@ -37,9 +37,9 @@ public static class TestML
     /// </summary>
     /// <param name="name">Nome del file da aprire</param>
     /// <returns>
-    /// Una lista di double contenente i numeri letti da file. La lista e formattato logicamente in modo tale da poter costrutire gli eventuali array contenuti nel file.
+    /// Una lista di float contenente i numeri letti da file. La lista e formattato logicamente in modo tale da poter costrutire gli eventuali array contenuti nel file.
     /// </returns>
-    private static List< List<double> > ReadArraysFromFormattedFile(string name)
+    private static List< List<float> > ReadArraysFromFormattedFile(string name)
     {
         //stringa
         var text = FileUtils.LoadFile(name);
@@ -62,19 +62,19 @@ public static class TestML
         }
 
         //lista degli array letti che verrà restituita
-        List<List<double>> listOfReadArrays = new List< List<double> >();
+        List<List<float>> listOfReadArrays = new List< List<float> >();
 
 
-        //Converte tutti i valori degli array letti, da string a double.
+        //Converte tutti i valori degli array letti, da string a float.
         foreach ( var arr in temp)
         {
-            double[] t = new double[arr.Count];
+            float[] t = new float[arr.Count];
             for (int i = 0; i < arr.Count; i++)
             {
-                t[i] = double.Parse(arr[i], CultureInfo.InvariantCulture);
+                t[i] = float.Parse(arr[i], CultureInfo.InvariantCulture);
             }
             listOfReadArrays.Add(t.ToList());
-            // listOfReadArrays.Add( arr.ToList().ConvertAll(x => Convert.ToDouble(x)).ToArray() );       
+            // listOfReadArrays.Add( arr.ToList().ConvertAll(x => Convert.Tofloat(x)).ToArray() );       
         }
         return listOfReadArrays;
     }
@@ -85,33 +85,33 @@ public static class TestML
 
     /// <summary>
     /// Riempe le Matrici W1 ; B1 ; W2; B2. 
-    /// Usa il metodo ReadArraysFromFormattedFile, per leggere da un file una lista di arrays di tipo double. 
+    /// Usa il metodo ReadArraysFromFormattedFile, per leggere da un file una lista di arrays di tipo float. 
     /// Questa lista restituita è formattata logicamente.
     /// </summary>
     public static void Populate()
     {
 
         B1.Clear(); B2.Clear(); W1.Clear(); W2.Clear();
-        List<List<double>> biasArrays = ReadArraysFromFormattedFile("bias_out.txt");
+        List<List<float>> biasArrays = ReadArraysFromFormattedFile("bias_out.txt");
         /*
-        B1 = new double[biasArrays.ElementAt(0).Count][];
-        B2 = new double[biasArrays.ElementAt(1).Count][];
+        B1 = new float[biasArrays.ElementAt(0).Count][];
+        B2 = new float[biasArrays.ElementAt(1).Count][];
         */
         B1 = biasArrays.ElementAt(0);
         B2 = biasArrays.ElementAt(1);
 
-        List<List<double>> weightsArrays = ReadArraysFromFormattedFile("weights_out.txt");
+        List<List<float>> weightsArrays = ReadArraysFromFormattedFile("weights_out.txt");
 
         //finchè non arrivo ad un array uguale a {} sono array che rappresentano W1
         int j = 0; 
-        while (Enumerable.SequenceEqual(weightsArrays.ElementAt(j), new List<double> { } ) == false)
+        while (Enumerable.SequenceEqual(weightsArrays.ElementAt(j), new List<float> { } ) == false)
         {
             j++;
         }
 
         //Debug.Log(j.ToString());
 
-        //W1 = new double[j][];
+        //W1 = new float[j][];
 
         for(int i = 0; i < j ; i++)
         {
@@ -120,12 +120,12 @@ public static class TestML
 
         //da j+1 alla fine sono array che rappresentano W2
         int k = j+1;
-        while (Enumerable.SequenceEqual(weightsArrays.ElementAt(k), new List<double> { } ) == false)
+        while (Enumerable.SequenceEqual(weightsArrays.ElementAt(k), new List<float> { } ) == false)
         {
             k++;
         }
 
-      // W2 = new double[k - (j + 1)][];
+      // W2 = new float[k - (j + 1)][];
 
         for (int i = 0 ; i < k - (j + 1) ; i++)
         {
@@ -157,23 +157,23 @@ public static class TestML
     /// </summary>
     /// <param name="features">nota da trovare</param>
     /// <returns>Id nota trovata</returns>
-    public static int ReteNeurale(double[] features)
+    public static int ReteNeurale(float[] features)
     {
       
         
-        //double[] scaledFeatures = ScaleValues(features);         //Sostituire dove sta features con scaledFeatures
+        //float[] scaledFeatures = ScaleValues(features);         //Sostituire dove sta features con scaledFeatures
 
 
         // output_hidden1 ha lo stesso numero di elementi di B1
-        var output_hidden1 = new double[B1.Count];
+        var output_hidden1 = new float[B1.Count];
         // output_hidden2 ha lo stesso numero di elementi di B2
-        var output_hidden2 = new double[B2.Count];
-
-        
+        var output_hidden2 = new float[B2.Count];
 
 
-        
-        double x, w, r;
+
+
+
+        float x, w, r;
 
         for (int i = 0; i < output_hidden1.Length; i++)
         {
@@ -204,13 +204,13 @@ public static class TestML
             }
         }
 
-        double sum = 0;
+        float sum = 0;
         foreach (var item in output_hidden2)
         {
             sum += Mathf.Exp((float)item);
         }
 
-        var toRet = new double[output_hidden2.Length];
+        var toRet = new float[output_hidden2.Length];
         for (int i = 0; i < output_hidden2.Length; i++)
         {
             toRet[i] = Mathf.Exp((float)output_hidden2[i]) / sum;
@@ -223,11 +223,11 @@ public static class TestML
 
     //Funzione per scalare i valori: converte le features in valori da 0 a 1
 
-    private static double[] ScaleValues(double[] unscaledFeatures)
+    private static float[] ScaleValues(float[] unscaledFeatures)
     {
-        var scaledFeatures = new double[unscaledFeatures.Length];
-        var minValues = new double[unscaledFeatures.Length];
-        var maxValues = new double[unscaledFeatures.Length];
+        var scaledFeatures = new float[unscaledFeatures.Length];
+        var minValues = new float[unscaledFeatures.Length];
+        var maxValues = new float[unscaledFeatures.Length];
 
         string[] readText = File.ReadAllLines("Assets/Own/Datasets/min&max_values_dataset_out.txt");        //primo elemento contiene riga contenente valori min
                                                                                                             //secondo elemento contiene riga contenente valori max
@@ -236,8 +236,8 @@ public static class TestML
 
         for (int i = 0; i < unscaledFeatures.Length; i++)
         {
-            minValues[i] = double.Parse(min[i], CultureInfo.InvariantCulture);
-            maxValues[i] = double.Parse(max[i], CultureInfo.InvariantCulture);
+            minValues[i] = float.Parse(min[i], CultureInfo.InvariantCulture);
+            maxValues[i] = float.Parse(max[i], CultureInfo.InvariantCulture);
         }
 
         for (int i = 0; i < minValues.Length; i++)
@@ -255,7 +255,7 @@ public static class TestML
             scaledFeatures[i] = (unscaledFeatures[i] - minValues[i]) / (maxValues[i] - minValues[i]);
         }
 
-        //foreach (double e in scaledFeatures){
+        //foreach (float e in scaledFeatures){
         //     Debug.Log("features scalate  : " + e);
         // }
 
