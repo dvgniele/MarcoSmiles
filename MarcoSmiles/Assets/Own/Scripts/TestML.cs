@@ -161,7 +161,12 @@ public static class TestML
     {
       
         
-        //float[] scaledFeatures = ScaleValues(features);         //Sostituire dove sta features con scaledFeatures
+        float[] scaledFeatures = ScaleValues(features);         //Sostituire dove sta features con scaledFeatures
+        for (int i = 0; i < scaledFeatures.Length; i++)
+        {
+            Debug.Log(scaledFeatures[i]);
+            features[i] = scaledFeatures[i];
+        }
 
 
         // output_hidden1 ha lo stesso numero di elementi di B1
@@ -229,7 +234,7 @@ public static class TestML
         var minValues = new float[unscaledFeatures.Length];
         var maxValues = new float[unscaledFeatures.Length];
 
-        string[] readText = File.ReadAllLines("Assets/Own/Datasets/min&max_values_dataset_out.txt");        //primo elemento contiene riga contenente valori min
+        string[] readText = File.ReadAllLines(FileUtils.GeneratePath("min&max_values_dataset_out.txt"));        //primo elemento contiene riga contenente valori min
                                                                                                             //secondo elemento contiene riga contenente valori max
         string[] min = readText[0].Split(' ');
         string[] max = readText[1].Split(' ');
