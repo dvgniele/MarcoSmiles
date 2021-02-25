@@ -5373,11 +5373,11 @@ GameObject:
   - component: {fileID: 1466587856}
   m_Layer: 5
   m_Name: PopupPanel
-  m_TagString: Untagged
+  m_TagString: PopupPanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1466587856
 RectTransform:
   m_ObjectHideFlags: 0

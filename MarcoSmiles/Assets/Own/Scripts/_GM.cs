@@ -41,7 +41,7 @@ public class _GM : MonoBehaviour
     public List<Button> listaPulsanti;
     public GameObject piano;
     //private TestML testML;
-
+    public GameObject PopupPanel;
 
     //  inizializza la cariabile selectedDataset con la cartella FileUtils.defaultFolder (DefaultDataset)
     //public static string selectedDataset = "DefaultDataset";
@@ -132,6 +132,9 @@ public class _GM : MonoBehaviour
 
         if (currSceneEnum == SceneEnum.TrainingScene)
         {
+            PopupPanel = GameObject.FindGameObjectWithTag("PopupPanel");
+            ClosePopUp();
+
             //  il programma parte con la prima nota della tastiera selezionata
             listaPulsanti.ElementAt(0).Select();
 
@@ -355,21 +358,31 @@ public class _GM : MonoBehaviour
     //Apre il PopUp dopo aver cliccato il bottone info
     public void OpenPopUp()
     {
-        var popup = GameObject.Find("PopupPanel").GetComponent<GameObject>();
-        
+        PopupPanel.SetActive(true);
+
+        /*
+        var popup = GameObject.FindGameObjectsWithTag("PopupPanel");
+        Debug.Log(popup.Length);
+        /*
+        popup.SetActive(true);
+
+
         if (popup != null)
             popup.SetActive(true);
-        
+        */
+
     }
 
     public void ClosePopUp()
     {
-        
-        var popup = GameObject.Find("PopupPanel").GetComponent<GameObject>();
+        PopupPanel.SetActive(false);
+
+        /*
+        var popup = GameObject.FindGameObjectWithTag("PopupPanel");
 
         if (popup != null)
             popup.SetActive(false);
-
+        */
     }
     #endregion
 
