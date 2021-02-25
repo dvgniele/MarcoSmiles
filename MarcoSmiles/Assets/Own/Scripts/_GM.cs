@@ -351,6 +351,26 @@ public class _GM : MonoBehaviour
         PanelUtils.OpenExportPanel();
     }
 
+
+    //Apre il PopUp dopo aver cliccato il bottone info
+    public void OpenPopUp()
+    {
+        var popup = GameObject.Find("PopupPanel").GetComponent<GameObject>();
+        
+        if (popup != null)
+            popup.SetActive(true);
+        
+    }
+
+    public void ClosePopUp()
+    {
+        
+        var popup = GameObject.Find("PopupPanel").GetComponent<GameObject>();
+
+        if (popup != null)
+            popup.SetActive(false);
+
+    }
     #endregion
 
 

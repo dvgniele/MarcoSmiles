@@ -21,7 +21,8 @@ public class MS_LeapController : MonoBehaviour
         //  assegna il device quando un sensore leap motion è connesso
         controller.Device += MS_LeapListener.OnLeapConnect;
         //  ascolta ogni frame del leap motion
-        controller.FrameReady += MS_LeapListener.OnFrame;
+        if(controller.Devices.Count > 0)
+            controller.FrameReady += MS_LeapListener.OnFrame;
     }
 
     // Update is called once per frame
