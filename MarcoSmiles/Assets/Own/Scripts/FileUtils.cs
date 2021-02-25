@@ -48,7 +48,7 @@ public static class FileUtils
     /// </summary>
     /// <param name="filename">Nome del file</param>
     /// <returns></returns>
-    private static string GeneratePath(string filename)
+    public static string GeneratePath(string filename)
     {
         //Debug.Log($"{path}/{folderName}/{_GM.selectedDataset}/{filename}");
 
