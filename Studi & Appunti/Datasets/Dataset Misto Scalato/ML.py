@@ -1,7 +1,7 @@
 import os
 import numpy as np
 from sklearn.metrics import precision_recall_fscore_support as score
-from sklearn.preprocessing import RobustScaler, StandardScaler
+from sklearn.preprocessing import RobustScaler, StandardScaler, MinMaxScaler
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import GridSearchCV
 from numpy import mean
@@ -13,18 +13,17 @@ from sklearn.ensemble import ExtraTreesClassifier
 import matplotlib.pyplot as plt
 
 import pandas as pd
-from datetime import datetime
+from _datetime import datetime
 
 
-
-with open('learning_time.txt','w') as lt:     
+with open('learning_time.txt', 'w') as lt:
     now = datetime.now()
     # dd/mm/YY H:M:S
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-    lt.write(str("Data Inizio Learning: " + dt_string + "\n" ))
+    lt.write(str("Data Inizio Learning: " + dt_string + "\n"))
 
 
-def feature_importance(X,y):
+def feature_importance(X, y):
     '''mostra a video il grafico con le feature pi� importanti.
     Ogni feature � identificata con l'indice che occupa nell'array sample
     per salvare de-commentare una delle ultime righe
@@ -44,7 +43,8 @@ def feature_importance(X,y):
     print("Feature ranking:")
 
     for f in range(X.shape[1]):
-        print("%d. feature %d (%f)" % (f + 1, indices[f], importances[indices[f]]))
+        print("%d. feature %d (%f)" %
+              (f + 1, indices[f], importances[indices[f]]))
 
     # Plot the impurity-based feature importances of the forest
     plt.figure()
@@ -53,26 +53,29 @@ def feature_importance(X,y):
             color="r", yerr=std[indices], align="center")
     plt.xticks(range(X.shape[1]), indices)
     plt.xlim([-1, X.shape[1]])
-    #plt.show()
-    #salvare figura, cambiare path
-    #plt.savefig('foo.png')
+    # plt.show()
+    # salvare figura, cambiare path
+    # plt.savefig('foo.png')
     plt.savefig('foo.pdf')
-    #plt.savefig('foo.png', bbox_inches='tight') #salva senza mettere bordi bianchi troppo spessi
+    # plt.savefig('foo.png', bbox_inches='tight') #salva senza mettere bordi bianchi troppo spessi
 
-def grid(cl,classifier,param_grid,n_folds,t_s_D,tLab_downsampled):
-    with open(cl+".out.txt","w") as f: # cambiare il percorso dove si salvano i vari esperimenti di validation con k-fold cross-validation
 
-        #####   CAMBIARE NUMERO DI JOBS A SECONDA DELLA PROPRIA CPU ALTRIMENTI SKRT, ORA STA MESSO 20 SOLO PERCHE' VOGLIO FLEXARE 
-        estimator = GridSearchCV(classifier, cv=n_folds, param_grid=param_grid, n_jobs=5, verbose=1,scoring='f1_weighted')     
+def grid(cl, classifier, param_grid, n_folds, t_s_D, tLab_downsampled):
+    # cambiare il percorso dove si salvano i vari esperimenti di validation con k-fold cross-validation
+    with open(cl+".out.txt", "w") as f:
+
+        # CAMBIARE NUMERO DI JOBS A SECONDA DELLA PROPRIA CPU ALTRIMENTI SKRT, ORA STA MESSO 20 SOLO PERCHE' VOGLIO FLEXARE
+        estimator = GridSearchCV(
+            classifier, cv=n_folds, param_grid=param_grid, n_jobs=20, verbose=1, scoring='f1_weighted')
         estimator.fit(t_s_D, tLab_downsampled)
         means = estimator.cv_results_['mean_test_score']
         stds = estimator.cv_results_['std_test_score']
-        best=[]
-        max=0
+        best = []
+        max = 0
         for meana, std, params in zip(means, stds, estimator.cv_results_['params']):
-            if meana>max:
-                max=meana
-                best=params
+            if meana > max:
+                max = meana
+                best = params
             print("%0.3f (+/-%0.03f) for %r" % (meana, std * 2, params))
             f.write("%0.3f (+/-%0.03f) for %r" % (meana, std * 2, params))
             f.write("\n")
@@ -80,12 +83,10 @@ def grid(cl,classifier,param_grid,n_folds,t_s_D,tLab_downsampled):
     return best
 
 
+# carico il dataset
 
-#carico il dataset
-
-#x = pickle.load(open("/path","rb")) #path da cambiare
-#y = pickle.load(open("/path","rb")) #path da cambiare
-
+# x = pickle.load(open("/path","rb")) #path da cambiare
+# y = pickle.load(open("/path","rb")) #path da cambiare
 '''
 Il dataset deve avere questa forma. Preferibilmente un np.array
 Ricordare che np.array non si pu� dichiarare vuoto e riempire mano mano,
@@ -122,15 +123,12 @@ x = dataset_array.copy()
 y = dataset_array.copy()
 
 xcols = [18]
-ycols = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
+ycols = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
 x.drop(x.columns[xcols], axis=1, inplace=True)
 y.drop(y.columns[ycols], axis=1, inplace=True)
 
 
-
-
-
-#print(y)
+# print(y)
 '''
 #se le label sono stringhe o non sono numerate da 0
 label_encoder = LabelEncoder()
@@ -141,43 +139,75 @@ print(y)
 '''
 
 
-#1 divido il dataset in modo stratificato in una parte per il training (80%) ed una parte per il testing (20%)
-training_set_data,test_set_data,training_set_labels,test_set_labels = train_test_split(x,y,test_size=0.2,stratify=y)
+# 1 divido il dataset in modo stratificato in una parte per il training (80%) ed una parte per il testing (20%)
+training_set_data, test_set_data, training_set_labels, test_set_labels = train_test_split(
+    x, y, test_size=0.2, stratify=y)
 
-#4 Scaling dei dati se non sono normalizzati. Vedere se � meglio Robust o Standard
-scaler = StandardScaler()
+# 4 Scaling dei dati se non sono normalizzati. Vedere se � meglio Robust o Standard
+scaler = MinMaxScaler()
 train_scaled_D = scaler.fit_transform(training_set_data)
 test_scaled_D = scaler.transform(test_set_data)
 
 
-#feature importance
-feature_importance(train_scaled_D ,training_set_labels)
+ycols = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+
+min_values = []
+max_values = []
+
+for col in ycols:
+    min_values.append(min(train_scaled_D[col]))
+    max_values.append(max(train_scaled_D[col]))
+
+with open('min&max_values_dataset_out_SCALED.txt', 'w') as f:
+    for item_min in min_values:
+        f.write(str(item_min) + " ")
+    f.write("\n")
+    for item_max in max_values:
+        f.write(str(item_max) + " ")
+
+min_values = []
+max_values = []
+
+for col in ycols:
+    min_values.append(min(training_set_data[col]))
+    max_values.append(max(training_set_data[col]))
+
+with open('min&max_values_dataset_out.txt', 'w') as f:
+    for item_min in min_values:
+        f.write(str(item_min) + " ")
+    f.write("\n")
+    for item_max in max_values:
+        f.write(str(item_max) + " ")
+
+# feature importance
+feature_importance(train_scaled_D, training_set_labels)
 
 
-#5 validation con k-fold cross-validation
-n_folds=10
+# 5 validation con k-fold cross-validation
+n_folds = 10
 
 
-#classificatore
-classificatore=MLPClassifier()
-#parametri da testare, sostituire numero hidden layer in base a grandezza input, sostituire max_iter in base a grandezza dataset
-pg = {'activation' : ['tanh', 'relu'],'learning_rate' : ['invscaling','adaptive','constant'],
-'solver' : ['adam','lbfgs','sgd'],
-              'learning_rate_init':[0.01, 0.05, 0.1, 0.15, 0.2], 'hidden_layer_sizes':[3, 5, 10, 15, 17],
-      'max_iter':[50, 100, 500]}
-bestMLPparam=grid("marcosmiles_dataset.csv",classificatore,pg,n_folds,train_scaled_D ,training_set_labels.values.ravel())
+# classificatore
+classificatore = MLPClassifier()
+# parametri da testare, sostituire numero hidden layer in base a grandezza input, sostituire max_iter in base a grandezza dataset
+#                   ['tanh', 'relu']
+pg = {'activation': ['relu'], 'learning_rate': ['invscaling', 'adaptive', 'constant'],
+      'solver': ['adam', 'lbfgs', 'sgd'],
+      'learning_rate_init': [0.01, 0.05, 0.1, 0.15, 0.2], 'hidden_layer_sizes': [3, 5, 10, 15, 17],
+      'max_iter': [2500, 5000, 10000]}
+bestMLPparam = grid("marcosmiles_dataset.csv", classificatore,
+                    pg, n_folds, train_scaled_D, training_set_labels.values.ravel())
 print("I migliori parametri per MLP sono:")
 print(bestMLPparam)
 
 
-
-classificatore= MLPClassifier(activation=bestMLPparam['activation'],learning_rate=bestMLPparam['learning_rate'],solver=bestMLPparam['solver'],
-                             learning_rate_init=bestMLPparam['learning_rate_init'],max_iter=bestMLPparam['max_iter'],
-                             hidden_layer_sizes=bestMLPparam['hidden_layer_sizes'])
-classificatore.fit(train_scaled_D ,training_set_labels.values.ravel())
-y_pred=classificatore.predict(test_scaled_D)
-precision,recall,fscore,support=score(test_set_labels,y_pred)
-accuracy=accuracy_score(test_set_labels,y_pred)
+classificatore = MLPClassifier(activation=bestMLPparam['activation'], learning_rate=bestMLPparam['learning_rate'], solver=bestMLPparam['solver'],
+                               learning_rate_init=bestMLPparam['learning_rate_init'], max_iter=bestMLPparam['max_iter'],
+                               hidden_layer_sizes=bestMLPparam['hidden_layer_sizes'])
+classificatore.fit(train_scaled_D, training_set_labels.values.ravel())
+y_pred = classificatore.predict(test_scaled_D)
+precision, recall, fscore, support = score(test_set_labels, y_pred)
+accuracy = accuracy_score(test_set_labels, y_pred)
 print("MLP")
 print("Accuracy")
 print(accuracy)
@@ -185,10 +215,12 @@ print('precision: {}'.format(precision))
 print('recall: {}'.format(recall))
 print('fscore: {}'.format(fscore))
 print("Weight e Bias")
-print(classificatore.coefs_) #The ith element in the list represents the weight W matrix corresponding to layer i.
-print(classificatore.intercepts_) #The ith element in the list represents the bias B vector corresponding to layer i + 1.
+# The ith element in the list represents the weight W matrix corresponding to layer i.
+print(classificatore.coefs_)
+# The ith element in the list represents the bias B vector corresponding to layer i + 1.
+print(classificatore.intercepts_)
 
-with open('precision_out.txt','w') as aw:       
+with open('precision_out.txt', 'w') as aw:
     aw.write("Accuracy: ")
     aw.write(str(accuracy))
     aw.write("\n")
@@ -201,26 +233,22 @@ with open('precision_out.txt','w') as aw:
     aw.write("fscore: ")
     aw.write(str(fscore))
     aw.write("\n")
-    
-    
 
 
-
-with open('weights_out.txt','w') as fw:       # new line \n identifica l'inizio di un nuovo layer
+with open('weights_out.txt', 'w') as fw:       # new line \n identifica l'inizio di un nuovo layer
     for w_layer in classificatore.coefs_:
         fw.write(str(w_layer))
         fw.write("\n")
-        
-with open('bias_out.txt','w') as fb:       # new line \n identifica l'inizio di un nuovo layer, inizia dal layer i + 1
+
+# new line \n identifica l'inizio di un nuovo layer, inizia dal layer i + 1
+with open('bias_out.txt', 'w') as fb:
     for b_layer in classificatore.intercepts_:
         fb.write(str(b_layer))
         fb.write("\n")
-        
 
-with open('learning_time.txt','a+') as lt:     
+
+with open('learning_time.txt', 'a+') as lt:
     now = datetime.now()
     # dd/mm/YY H:M:S
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
     lt.write(str("Data Fine Learning: " + dt_string + "\n"))
-
-input("Press Enter to Close this Window...")
