@@ -164,7 +164,7 @@ public static class TestML
         float[] scaledFeatures = ScaleValues(features);         //Sostituire dove sta features con scaledFeatures
         for (int i = 0; i < scaledFeatures.Length; i++)
         {
-            Debug.Log(scaledFeatures[i]);
+            //Debug.Log(scaledFeatures[i]);
             features[i] = scaledFeatures[i];
         }
 
