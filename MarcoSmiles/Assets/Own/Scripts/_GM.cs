@@ -282,7 +282,7 @@ public class _GM : MonoBehaviour
         {
             Button btn = listaPulsanti[item];
             ColorBlock btn_color = btn.colors;
-            btn_color.normalColor = Color.yellow;
+            btn_color.normalColor = new Color(0.13f, 1f, 0.1f, 0.3f) ;
             btn.colors = btn_color;
         }
     }

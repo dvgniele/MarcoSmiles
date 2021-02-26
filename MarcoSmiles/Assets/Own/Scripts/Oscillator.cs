@@ -255,7 +255,8 @@ public class Oscillator : MonoBehaviour
             // nextOutput += (float)(sinWeight * Mathf.Sin((float)phase));
 
             // Adds sawtooth wave to the next output sample
-            sawOutput = (float)(sawWeight * ((phase) / (2 * Mathf.PI)));
+            sawOutput = (float)sawWeight - (float)(sawWeight / Mathf.PI * phase);
+
             // nextOutput += (float)(sawWeight * ((phase) / (2 * Mathf.PI)));
 
 
