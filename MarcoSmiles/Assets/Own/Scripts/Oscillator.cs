@@ -32,6 +32,7 @@ public class Oscillator : MonoBehaviour
                         261.630f , 277.180f , 293.660f , 311.130f , 329.630f , 349.990f ,
                         369.990f , 392.000f , 415.300f , 440.000f , 466.160f , 493.880f };
     private float octave = 1f;
+    public int octaveNumber = 3;
 
     public int thisFreq;
 
@@ -393,7 +394,8 @@ public class Oscillator : MonoBehaviour
 
     public void OctaveUp()
     {
-
+        octaveNumber += 1;
+        UpdateOctaveNumber();
 
         for (int i = 0; i < frequencies.Length; i++)
         {
@@ -401,12 +403,22 @@ public class Oscillator : MonoBehaviour
         }
     }
 
-    public void OctaveDown()
+    public void OctaveDown()   
     {
+        octaveNumber -= 1;
+        UpdateOctaveNumber();
+
         for (int i = 0; i < frequencies.Length; i++)
         {
             frequencies[i] /= 2;
         }
+    }
+
+    public void UpdateOctaveNumber()
+    {
+        var text = GameObject.FindGameObjectWithTag("NumeroOttava").GetComponent<UnityEngine.UI.Text>();
+        text.text = "C" + (octaveNumber) + " - C" + (octaveNumber + 1);
+
     }
 }
 
