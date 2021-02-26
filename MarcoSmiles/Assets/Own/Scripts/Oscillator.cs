@@ -416,7 +416,7 @@ public class Oscillator : MonoBehaviour
 
     public void UpdateOctaveNumber()
     {
-        var text = GameObject.FindGameObjectWithTag("NumeroOttava").GetComponent<UnityEngine.UI.Text>();
+        var text = GameObject.Find("NumeroOttava").GetComponent<UnityEngine.UI.Text>();
         text.text = "C" + (octaveNumber) + " - C" + (octaveNumber + 1);
 
     }
