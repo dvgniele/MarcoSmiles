@@ -14,7 +14,7 @@ public static class TestML
 
     private static List<float> B2 = new List<float>();
 
-
+    public static System.DateTime DateLatestLearning;
 
 
     /// <summary>
@@ -46,7 +46,9 @@ public static class TestML
 
         if (text == null)
             return null;
-       
+
+        DateLatestLearning = File.GetLastWriteTime(FileUtils.GeneratePath(name));
+
         text = text.Replace("[", "");
         text = text.Replace("\n", "");
 
@@ -101,9 +103,9 @@ public static class TestML
 
         List<List<float>> weightsArrays = ReadArraysFromFormattedFile("weights_out.txt");
         if (weightsArrays == null)
-            return false; 
+            return false;
 
-
+        
         //finchè non arrivo ad un array uguale a {} sono array che rappresentano W1
         int j = 0; 
         while (Enumerable.SequenceEqual(weightsArrays.ElementAt(j), new List<float> { } ) == false)

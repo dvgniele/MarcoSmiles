@@ -47,6 +47,7 @@ public class _GM : MonoBehaviour
 
     public GameObject ConfLearn;
     public GameObject ConfNotLearn;
+    public GameObject DateLatestLearning;
 
     public Text SelectedDatasetText;
 
@@ -116,8 +117,10 @@ public class _GM : MonoBehaviour
 
         if (currSceneEnum == SceneEnum.TrainingScene)
         {
-            if (TestML.Populate())
+            if (TestML.Populate()) { 
                 SetLearnStatus(true);
+                UpdateLatestLearningDate();
+            }
             else
                 SetLearnStatus(false);
 
@@ -212,9 +215,14 @@ public class _GM : MonoBehaviour
 
     public void UpdateSelectedDatasetText()
     {
-        SelectedDatasetText.text = "Configurazione Selezionata: " + FileUtils.selectedDataset;
+        SelectedDatasetText.text = "Selected Configuration: " + FileUtils.selectedDataset;
     }
 
+
+    public void UpdateLatestLearningDate()
+    {
+        DateLatestLearning.GetComponent<Text>().text = "Latest Learning: \n " + TestML.DateLatestLearning.ToString();
+    }
 
     #endregion
 
@@ -411,6 +419,7 @@ public class _GM : MonoBehaviour
     public void SetLearnStatus(bool state)
     {
         ConfLearn.SetActive(state);
+        DateLatestLearning.SetActive(state);
         ConfNotLearn.SetActive(!state);
     }
 

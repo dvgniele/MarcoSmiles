@@ -7,6 +7,7 @@ using UnityEngine;
 
 public static class FileUtils
 {
+
     /// <summary>
     /// Path per AppData
     /// </summary>
