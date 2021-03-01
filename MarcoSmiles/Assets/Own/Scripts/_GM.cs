@@ -46,6 +46,8 @@ public class _GM : MonoBehaviour
     public GameObject ConfLearn;
     public GameObject ConfNotLearn;
 
+    public Text SelectedDatasetText;
+
     //  inizializza la cariabile selectedDataset con la cartella FileUtils.defaultFolder (DefaultDataset)
     //public static string selectedDataset = "DefaultDataset";
 
@@ -73,11 +75,6 @@ public class _GM : MonoBehaviour
         var MLFile = Resources.Load<TextAsset>("Text/" + nameFile);     //carica lo script dalla cartella resources (file .txt)
         FileUtils.SavePy(MLFile.bytes, MLFile.name);                    //Converte il file .txt in script .py
 
-        var playButton = GameObject.Find("PlayButton").GetComponent<Button>();
-
-        //Controlla se ci sono i file necessari per passare alla scena "Play"
-        playButton.interactable = FileUtils.CheckForDefaultFiles();
-
         currentScene = SceneManager.GetActiveScene();
 
         switch (currentScene.buildIndex)
@@ -93,23 +90,25 @@ public class _GM : MonoBehaviour
                 break;
         }
 
-        if (currSceneEnum == SceneEnum.Suonah )
+
+
+        if (currSceneEnum == SceneEnum.Mainpage)
+        {
+
+        }
+
+        if (currSceneEnum == SceneEnum.Suonah)
         {
             TestML.Populate();
         }
 
-
-        if ( currSceneEnum == SceneEnum.TrainingScene)
+        if (currSceneEnum == SceneEnum.TrainingScene)
         {
             if (TestML.Populate())
-            {
                 SetLearnStatus(true);
-            }
             else
-            {
                 SetLearnStatus(false);
-            }
-                   
+
         }
     }
 
@@ -126,9 +125,33 @@ public class _GM : MonoBehaviour
 
         list_posizioni = new List<Position>();
 
+        if (currSceneEnum == SceneEnum.Mainpage)
+        {
+            var playButton = GameObject.Find("PlayButton").GetComponent<Button>();
+
+            //Controlla se ci sono i file necessari per passare alla scena "Play"
+            try
+            {
+                playButton.interactable = FileUtils.CheckForDefaultFiles();
+            }
+            catch(Exception ex)
+            {
+                Debug.Log(ex.Message);
+            }
+
+
+            UpdateSelectedDatasetText();
+
+        }
+
+        if (currSceneEnum == SceneEnum.Suonah)
+        {
+
+        }
+
         if (currSceneEnum == SceneEnum.TrainingScene)
         {
-            PopupPanel = GameObject.FindGameObjectWithTag("PopupPanel");
+            //PopupPanel = GameObject.FindGameObjectWithTag("PopupPanel");
             ClosePopUp();
 
             //  il programma parte con la prima nota della tastiera selezionata
@@ -139,18 +162,13 @@ public class _GM : MonoBehaviour
 
 
         }
-        else if (currSceneEnum == SceneEnum.Mainpage)
-        {
-            UpdateSelectedDatasetText();
-        }
-
 
     }
     void FixedUpdate()
     {
         if (currSceneEnum == SceneEnum.Suonah)
         {
-            if(isActive)
+            if (isActive)
             {
                 // Aggiorna array delle features currentFeatures in modo tale che venga calcolata la nota giusta ad ogni update 
                 current_Features = TestingScript.GetCurrentFeatures();
@@ -167,12 +185,12 @@ public class _GM : MonoBehaviour
             {
                 ResetColorNotes();
             }
-           
+
 
         }
         //Debug.Log("L'indice che rappresenta la nota da suonare è:  " + indexPlayingNote);
 
-        if(currSceneEnum == SceneEnum.TrainingScene)
+        if (currSceneEnum == SceneEnum.TrainingScene)
         {
             //  Debug.Log(FileUtils.selectedDataset);
 
@@ -180,10 +198,9 @@ public class _GM : MonoBehaviour
         }
     }
 
-    public static void UpdateSelectedDatasetText()
+    public void UpdateSelectedDatasetText()
     {
-        var selectedDatasetText = GameObject.Find("SelectedDatasetText").GetComponent<Text>();
-        selectedDatasetText.text = "Configurazione Selezionata: " + FileUtils.selectedDataset;
+        SelectedDatasetText.text = "Configurazione Selezionata: " + FileUtils.selectedDataset;
     }
 
 
@@ -203,7 +220,7 @@ public class _GM : MonoBehaviour
     /// </summary>
     public void RemoveButtonClick()
     {
-        if(trainer.RemoveNote())
+        if (trainer.RemoveNote())
             UpdateButtonsKeyboard();
     }
 
@@ -229,8 +246,8 @@ public class _GM : MonoBehaviour
     {
         if (id_prev == id_curr)
         {
-            
-           // return;
+
+            // return;
         }
         else
         {
@@ -250,13 +267,13 @@ public class _GM : MonoBehaviour
 
 
             //  se è la scena di training
-            if(currSceneEnum == SceneEnum.TrainingScene)
+            if (currSceneEnum == SceneEnum.TrainingScene)
             {
                 //  cambia l'id della nota nel trainer
                 //trainer.ChangeNoteId(id_curr);
                 return;
             }
-            
+
         }
 
     }
@@ -268,9 +285,9 @@ public class _GM : MonoBehaviour
     /// <param name="sender"></param>
     public void GetClickedKey(Button sender)
     {
-       // var previousIndexTrainNote = trainer.currentNoteId;
+        // var previousIndexTrainNote = trainer.currentNoteId;
         //Debug.Log(previousIndexTrainNote);
-        
+
         var skrtino = listaPulsanti.IndexOf(listaPulsanti.FirstOrDefault(x => x.gameObject.Equals(sender.gameObject)));
         //Debug.Log(skrtino);
         trainer.ChangeNoteId(skrtino);
@@ -287,7 +304,7 @@ public class _GM : MonoBehaviour
         {
             Button btn = listaPulsanti[item];
             ColorBlock btn_color = btn.colors;
-            btn_color.normalColor = new Color(0.13f, 1f, 0.1f, 0.3f) ;
+            btn_color.normalColor = new Color(0.13f, 1f, 0.1f, 0.3f);
             btn.colors = btn_color;
 
         }
@@ -319,7 +336,10 @@ public class _GM : MonoBehaviour
     /// <summary>
     /// Effettua la navigazione alla scena principale
     /// </summary>
-    public void NavigateToMainScene() => SceneManager.LoadScene(0);
+    public void NavigateToMainScene()
+    {
+        SceneManager.LoadScene(0);
+    }
 
     /// <summary>
     /// Effettua la navigazione alla scena di test
@@ -339,7 +359,7 @@ public class _GM : MonoBehaviour
     {
         PanelUtils.OpenPanel();
 
-        if(currSceneEnum == SceneEnum.Mainpage)
+        if (currSceneEnum == SceneEnum.Mainpage)
             UpdateSelectedDatasetText();
     }
 
