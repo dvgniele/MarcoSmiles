@@ -14,6 +14,8 @@ using System.IO;
 
 public class _GM : MonoBehaviour
 {
+    public static bool IsLeapConnected = false;             //  PIU' IMPORTANTE DI QUEL CHE SEMBRA
+
     private Scene currentScene;
 
     public TrainingScript trainer;                          // viene usata solo nella scena di training per salvare nel dataset
@@ -61,6 +63,16 @@ public class _GM : MonoBehaviour
         TrainingScene
     }
     private SceneEnum currSceneEnum;
+
+    public static void ShowConnectLeapPopup()
+    {
+
+    }
+
+    public static void HideConnectLeapPopup()
+    {
+
+    }
 
 
     #region UNITY METH

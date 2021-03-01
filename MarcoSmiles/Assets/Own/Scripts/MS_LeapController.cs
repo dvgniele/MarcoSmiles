@@ -13,6 +13,7 @@ public class MS_LeapController : MonoBehaviour
     MS_LeapListener listener;
 
     bool connected = false;
+    bool notified = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +23,9 @@ public class MS_LeapController : MonoBehaviour
 
         //  assegna il device quando un sensore leap motion è connesso
         controller.Device += MS_LeapListener.OnLeapConnect;
-        
+
+
+        _GM.ShowConnectLeapPopup();
     }
 
     // Update is called once per frame
@@ -33,6 +36,12 @@ public class MS_LeapController : MonoBehaviour
         {
             controller.FrameReady += MS_LeapListener.OnFrame;
             connected = true;
+        }
+
+        if (MS_LeapListener.Connected && !notified)
+        {
+            notified = true;
+            _GM.HideConnectLeapPopup();
         }
     }
 

@@ -8,6 +8,8 @@ using Leap;
 /// </summary>
 public class MS_LeapListener : MonoBehaviour
 {
+    public static bool Connected = false;
+
     /// <summary>
     /// Evento attivato all'esecuzione, se il leap rileva le mani.
     /// </summary>
@@ -17,6 +19,7 @@ public class MS_LeapListener : MonoBehaviour
     {
         //  stampa un messaggio di log
         Debug.Log("Connesso");
+        Connected = true;
     }
 
     /// <summary>
