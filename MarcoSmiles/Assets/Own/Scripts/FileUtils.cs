@@ -251,7 +251,7 @@ public static class FileUtils
         //  imposta nome ed estensione al file da salvare
         string filename = name + ".py";
 
-        string filePath = $"{path}/{filename}";
+        string filePath = $"{path}/{folderName}/{filename}";
         //Debug.Log(file);
         try
         {
@@ -370,5 +370,28 @@ public static class FileUtils
         }
 
         return true;
+    }
+
+    public static void ClearDefaultDatasetDirectory()
+    {
+        if(Directory.Exists(GeneratePath()))
+        {
+            var dir = new DirectoryInfo(GeneratePath());
+
+            foreach(var file in dir.EnumerateFiles())
+            {
+                file.Delete();
+            }
+
+            foreach(var folder in dir.EnumerateDirectories())
+            {
+                folder.Delete(true);
+            }
+        }
+
+        string nameFile = "ML";           //Nome del file python. 
+        var MLFile = Resources.Load<TextAsset>("Text/" + nameFile);     //carica lo script dalla cartella resources (file .txt)
+        SavePy(MLFile.bytes, MLFile.name);                    //Converte il file .txt in script .py
+
     }
 }

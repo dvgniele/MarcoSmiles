@@ -211,6 +211,10 @@ public class _GM : MonoBehaviour
             UpdateButtonsKeyboard();
     }
 
+    public void ClearDefaultDatasetDirectory()
+    {
+        FileUtils.ClearDefaultDatasetDirectory();
+    }
 
     #region Keyboard Buttons
 
