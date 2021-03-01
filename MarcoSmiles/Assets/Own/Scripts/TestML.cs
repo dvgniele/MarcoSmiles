@@ -44,6 +44,9 @@ public static class TestML
         //stringa
         var text = FileUtils.LoadFile(name);
 
+        if (text == null)
+            return null;
+       
         text = text.Replace("[", "");
         text = text.Replace("\n", "");
 
@@ -80,27 +83,26 @@ public static class TestML
     }
 
 
-
-
-
     /// <summary>
     /// Riempe le Matrici W1 ; B1 ; W2; B2. 
     /// Usa il metodo ReadArraysFromFormattedFile, per leggere da un file una lista di arrays di tipo float. 
     /// Questa lista restituita è formattata logicamente.
     /// </summary>
-    public static void Populate()
-    {
-
+    public static bool Populate()
+    { 
         B1.Clear(); B2.Clear(); W1.Clear(); W2.Clear();
+        
         List<List<float>> biasArrays = ReadArraysFromFormattedFile("bias_out.txt");
-        /*
-        B1 = new float[biasArrays.ElementAt(0).Count][];
-        B2 = new float[biasArrays.ElementAt(1).Count][];
-        */
+        if (biasArrays == null)
+            return false;
+
         B1 = biasArrays.ElementAt(0);
         B2 = biasArrays.ElementAt(1);
 
         List<List<float>> weightsArrays = ReadArraysFromFormattedFile("weights_out.txt");
+        if (weightsArrays == null)
+            return false; 
+
 
         //finchè non arrivo ad un array uguale a {} sono array che rappresentano W1
         int j = 0; 
@@ -108,10 +110,6 @@ public static class TestML
         {
             j++;
         }
-
-        //Debug.Log(j.ToString());
-
-        //W1 = new float[j][];
 
         for(int i = 0; i < j ; i++)
         {
@@ -125,25 +123,14 @@ public static class TestML
             k++;
         }
 
-      // W2 = new float[k - (j + 1)][];
-
         for (int i = 0 ; i < k - (j + 1) ; i++)
         {
             W2.Add(weightsArrays.ElementAt(j + 1 + i));
 
         }
 
-         /*
-          //Per fare il debug delle matrici
-        foreach (var arr in W2)
-        {
-            foreach (var a in arr)
-            {
-                Debug.Log(a);
-            }
-        }
 
-        */
+        return true;
         
     }
 
