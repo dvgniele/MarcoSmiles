@@ -45,6 +45,8 @@ public class _GM : MonoBehaviour
     //private TestML testML;
     public GameObject PopupPanel;
 
+    public static GameObject ConnectLeapPanel;
+
     public GameObject ConfLearn;
     public GameObject ConfNotLearn;
     public GameObject DateLatestLearning;
@@ -67,12 +69,12 @@ public class _GM : MonoBehaviour
 
     public static void ShowConnectLeapPopup()
     {
-
+        ConnectLeapPanel.SetActive(true);
     }
 
     public static void HideConnectLeapPopup()
     {
-
+        ConnectLeapPanel.SetActive(false);
     }
 
 
@@ -161,11 +163,13 @@ public class _GM : MonoBehaviour
 
         if (currSceneEnum == SceneEnum.Suonah)
         {
-
+            ConnectLeapPanel = GameObject.Find("ConnectLeapPanel");
         }
 
         if (currSceneEnum == SceneEnum.TrainingScene)
         {
+            ConnectLeapPanel = GameObject.Find("ConnectLeapPanel");
+
             //PopupPanel = GameObject.FindGameObjectWithTag("PopupPanel");
             ClosePopUp();
 
@@ -174,8 +178,6 @@ public class _GM : MonoBehaviour
 
             FileUtils.UpdateTrainedNotesList(FileUtils.filename);
             UpdateButtonsKeyboard();
-
-
         }
 
     }

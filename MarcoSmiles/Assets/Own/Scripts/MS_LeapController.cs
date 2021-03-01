@@ -24,7 +24,6 @@ public class MS_LeapController : MonoBehaviour
         //  assegna il device quando un sensore leap motion è connesso
         controller.Device += MS_LeapListener.OnLeapConnect;
 
-
         _GM.ShowConnectLeapPopup();
     }
 
