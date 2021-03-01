@@ -44,6 +44,12 @@ public class _GM : MonoBehaviour
     public GameObject PopupPanel;
     public GameObject LoadingCircle;
 
+    //variabili LoadingCircle
+    public RectTransform mainIcon;
+    public float timeStep;
+    public float oneStepAngle;
+    float startTime;
+
     //  inizializza la cariabile selectedDataset con la cartella FileUtils.defaultFolder (DefaultDataset)
     //public static string selectedDataset = "DefaultDataset";
 
@@ -413,5 +419,9 @@ public class _GM : MonoBehaviour
 
     #endregion
 
+    public void StartCircleAnimation()
+    {
+        startTime = Time.time;
 
+    }
 }
