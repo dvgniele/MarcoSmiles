@@ -43,6 +43,9 @@ public class _GM : MonoBehaviour
     //private TestML testML;
     public GameObject PopupPanel;
 
+    public GameObject ConfLearn;
+    public GameObject ConfNotLearn;
+
     //  inizializza la cariabile selectedDataset con la cartella FileUtils.defaultFolder (DefaultDataset)
     //public static string selectedDataset = "DefaultDataset";
 
@@ -70,32 +73,10 @@ public class _GM : MonoBehaviour
         var MLFile = Resources.Load<TextAsset>("Text/" + nameFile);     //carica lo script dalla cartella resources (file .txt)
         FileUtils.SavePy(MLFile.bytes, MLFile.name);                    //Converte il file .txt in script .py
 
-        if (FileUtils.CheckForDefaultFiles())
-        {
-            try
-            {
-                var playButton = GameObject.Find("TestButton").GetComponent<Button>();
-                playButton.interactable = false;
-            }
-            catch (Exception ex)
-            {
+        var playButton = GameObject.Find("PlayButton").GetComponent<Button>();
 
-            }
-        }
-        else
-        {
-            try
-            {
-                var playButton = GameObject.Find("TestButton").GetComponent<Button>();
-                playButton.interactable = true;
-            }
-            catch (Exception ex)
-            {
-
-
-            }
-        }
-
+        //Controlla se ci sono i file necessari per passare alla scena "Play"
+        playButton.interactable = FileUtils.CheckForDefaultFiles();
 
         currentScene = SceneManager.GetActiveScene();
 
@@ -112,9 +93,23 @@ public class _GM : MonoBehaviour
                 break;
         }
 
-        if (currSceneEnum == SceneEnum.Suonah)
+        if (currSceneEnum == SceneEnum.Suonah )
         {
             TestML.Populate();
+        }
+
+
+        if ( currSceneEnum == SceneEnum.TrainingScene)
+        {
+            if (TestML.Populate())
+            {
+                SetLearnStatus(true);
+            }
+            else
+            {
+                SetLearnStatus(false);
+            }
+                   
         }
     }
 
@@ -373,30 +368,20 @@ public class _GM : MonoBehaviour
     {
         PopupPanel.SetActive(true);
 
-        /*
-        var popup = GameObject.FindGameObjectsWithTag("PopupPanel");
-        Debug.Log(popup.Length);
-        /*
-        popup.SetActive(true);
-
-
-        if (popup != null)
-            popup.SetActive(true);
-        */
-
     }
 
     public void ClosePopUp()
     {
         PopupPanel.SetActive(false);
-
-        /*
-        var popup = GameObject.FindGameObjectWithTag("PopupPanel");
-
-        if (popup != null)
-            popup.SetActive(false);
-        */
     }
+
+    //visualizza spunta vicino tasto "learn" per comunicare che per la configurazione selezionata è stato fatto precedentemente il learning
+    public void SetLearnStatus(bool state)
+    {
+        ConfLearn.SetActive(state);
+        ConfNotLearn.SetActive(!state);
+    }
+
 
 
     #endregion
