@@ -21,6 +21,13 @@ public class MS_LeapListener : MonoBehaviour
         Debug.Log("Connesso");
         Connected = true;
     }
+    
+    public static void OnLeapDisconnect(object sender, DeviceEventArgs args)
+    {
+        //  stampa un messaggio di log
+        Debug.Log("DISCONNESSO");
+        Connected = false;
+    }
 
     /// <summary>
     /// rileva frame

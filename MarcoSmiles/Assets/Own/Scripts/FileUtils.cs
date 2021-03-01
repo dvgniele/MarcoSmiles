@@ -164,8 +164,8 @@ public static class FileUtils
         }
         else
         {
-            //  se il file non è presente nel path stampa un errore
-            Debug.LogError("File non trovato");
+            //se il file non è presente nel path stampa un errore
+            //Debug.LogError("File non trovato");
             return null;
         }
     }
