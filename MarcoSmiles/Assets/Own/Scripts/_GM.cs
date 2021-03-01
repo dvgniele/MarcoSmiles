@@ -132,8 +132,6 @@ public class _GM : MonoBehaviour
 
     void Start()
     {
-        ConnectLeapPanel = GameObject.Find("ConnectLeapPanel");
-
         /*
          * In unity, possono essere caricati nella build solo determinati tipi di file. File .txt vengono copiati all'interno della cartella 
          * della build.
@@ -165,11 +163,13 @@ public class _GM : MonoBehaviour
 
         if (currSceneEnum == SceneEnum.Suonah)
         {
-
+            ConnectLeapPanel = GameObject.Find("ConnectLeapPanel");
         }
 
         if (currSceneEnum == SceneEnum.TrainingScene)
         {
+            ConnectLeapPanel = GameObject.Find("ConnectLeapPanel");
+
             //PopupPanel = GameObject.FindGameObjectWithTag("PopupPanel");
             ClosePopUp();
 
@@ -178,8 +178,6 @@ public class _GM : MonoBehaviour
 
             FileUtils.UpdateTrainedNotesList(FileUtils.filename);
             UpdateButtonsKeyboard();
-
-
         }
 
     }
