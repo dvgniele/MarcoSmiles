@@ -14,6 +14,8 @@ using System.IO;
 
 public class _GM : MonoBehaviour
 {
+    public static bool IsLeapConnected = false;             //  PIU' IMPORTANTE DI QUEL CHE SEMBRA
+
     private Scene currentScene;
 
     public TrainingScript trainer;                          // viene usata solo nella scena di training per salvare nel dataset
@@ -45,6 +47,7 @@ public class _GM : MonoBehaviour
 
     public GameObject ConfLearn;
     public GameObject ConfNotLearn;
+    public GameObject DateLatestLearning;
 
     public Text SelectedDatasetText;
 
@@ -61,6 +64,16 @@ public class _GM : MonoBehaviour
         TrainingScene
     }
     private SceneEnum currSceneEnum;
+
+    public static void ShowConnectLeapPopup()
+    {
+
+    }
+
+    public static void HideConnectLeapPopup()
+    {
+
+    }
 
 
     #region UNITY METH
@@ -104,8 +117,10 @@ public class _GM : MonoBehaviour
 
         if (currSceneEnum == SceneEnum.TrainingScene)
         {
-            if (TestML.Populate())
+            if (TestML.Populate()) { 
                 SetLearnStatus(true);
+                UpdateLatestLearningDate();
+            }
             else
                 SetLearnStatus(false);
 
@@ -200,9 +215,14 @@ public class _GM : MonoBehaviour
 
     public void UpdateSelectedDatasetText()
     {
-        SelectedDatasetText.text = "Configurazione Selezionata: " + FileUtils.selectedDataset;
+        SelectedDatasetText.text = "Selected Configuration: " + FileUtils.selectedDataset;
     }
 
+
+    public void UpdateLatestLearningDate()
+    {
+        DateLatestLearning.GetComponent<Text>().text = "Latest Learning: \n " + TestML.DateLatestLearning.ToString();
+    }
 
     #endregion
 
@@ -399,6 +419,7 @@ public class _GM : MonoBehaviour
     public void SetLearnStatus(bool state)
     {
         ConfLearn.SetActive(state);
+        DateLatestLearning.SetActive(state);
         ConfNotLearn.SetActive(!state);
     }
 
