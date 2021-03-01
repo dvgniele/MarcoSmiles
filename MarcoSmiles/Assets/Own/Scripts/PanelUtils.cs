@@ -73,7 +73,7 @@ public class PanelUtils
     }
 
     /// <summary>
-    /// Apre un pannello per selezionare il dataset da utilizzare nella cartella MyDataset
+    /// Apre un pannello per selezionare la configurazione (ed il dataset) da utilizzare nella cartella MyDataset
     /// </summary>
     //[MenuItem("Select Dataset")]
     public static void OpenPanel()

@@ -369,7 +369,7 @@ public static class FileUtils
     {
         if (!Directory.Exists(GeneratePath()))
         {
-            Directory.CreateDirectory(GeneratePath());
+            Directory.CreateDirectory(GeneratePath());     
             return false;
         }
         else
@@ -378,8 +378,10 @@ public static class FileUtils
                 File.Copy($"{path}/{folderName}/ML.py",GeneratePath("ML.py"));
             
 
-            if (!File.Exists(GeneratePath("bias_out")) || !File.Exists(GeneratePath("weights_out")))
+            if (!File.Exists(GeneratePath("bias_out.txt")) || !File.Exists(GeneratePath("weights_out.txt"))) { 
                 return false;
+            }
+
         }
 
         return true;

@@ -17,6 +17,7 @@ public class _GM : MonoBehaviour
     public static bool IsLeapConnected = false;             //  PIU' IMPORTANTE DI QUEL CHE SEMBRA
 
     private Scene currentScene;
+    private Button playButton;
 
     public TrainingScript trainer;                          // viene usata solo nella scena di training per salvare nel dataset
     public static Hand hand_R;
@@ -42,9 +43,8 @@ public class _GM : MonoBehaviour
     [SerializeField]
     public List<Button> listaPulsanti;
     public GameObject piano;
-    //private TestML testML;
-    public GameObject PopupPanel;
 
+    public GameObject PopupPanel;
     public static GameObject ConnectLeapPanel;
 
     public GameObject ConfLearn;
@@ -144,7 +144,7 @@ public class _GM : MonoBehaviour
 
         if (currSceneEnum == SceneEnum.Mainpage)
         {
-            var playButton = GameObject.Find("PlayButton").GetComponent<Button>();
+            playButton = GameObject.Find("PlayButton").GetComponent<Button>();
 
             //Controlla se ci sono i file necessari per passare alla scena "Play"
             try
@@ -375,14 +375,18 @@ public class _GM : MonoBehaviour
 
     #endregion
 
-    #region Panels
+    #region Panels (Managing Configurations)
 
     public void OpenPanel()
     {
         PanelUtils.OpenPanel();
 
+        Debug.Log(FileUtils.selectedDataset);
         if (currSceneEnum == SceneEnum.Mainpage)
+        {
             UpdateSelectedDatasetText();
+            playButton.interactable = FileUtils.CheckForDefaultFiles();
+        }
     }
 
     /// <summary>
