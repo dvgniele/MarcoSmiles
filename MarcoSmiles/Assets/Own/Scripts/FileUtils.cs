@@ -97,8 +97,6 @@ public static class FileUtils
     /// <param name="data">Lista di posizioni da salvare</param>
     public static void Save(List<Position> data)
     {
-        _GM.HasSavedNote = false;
-
         //  imposta il separatore dei numeri decimali a "." (nel caso si avesse il pc in lingua che usa "," come separatore si potrebbero avere problemi, quindi lo imposta manualmente)
         System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
         customCulture.NumberFormat.NumberDecimalSeparator = ".";
@@ -148,8 +146,6 @@ public static class FileUtils
             //  stampa il messaggio nella console di debug
             Debug.Log("FILE CREATO");
         }
-
-        _GM.HasSavedNote = true;
     }
 
 
@@ -179,27 +175,37 @@ public static class FileUtils
     /// <param name="filename"></param>
     public static void UpdateTrainedNotesList(string filename)
     {
-        var txt = LoadFile(filename);
-        var rows = txt.Split('\n').Select(tag => tag.Trim()).Where(tag => !string.IsNullOrEmpty(tag));          //trim elimina le entrate vuote
-
         var id_list = new List<int>();
-        foreach(var item in rows)
+
+        var txt = LoadFile(filename);
+
+        if(txt != null)
         {
-            var tmp = int.Parse(item.Split(',').Last());        //  tmp = ultimo elemento della riga. sappiamo che l'ultimo elemento è l'ID
-           
-            if (!id_list.Any(x => id_list.Contains(tmp)))       //  se la lista degli ID non contiene tmp
-                id_list.Add(tmp);                               //  aggiungi tmp alla lista degli ID
+            var rows = txt.Split('\n').Select(tag => tag.Trim()).Where(tag => !string.IsNullOrEmpty(tag));          //trim elimina le entrate vuote
+
+            foreach (var item in rows)
+            {
+                var tmp = int.Parse(item.Split(',').Last());        //  tmp = ultimo elemento della riga. sappiamo che l'ultimo elemento è l'ID
+
+                if (!id_list.Any(x => id_list.Contains(tmp)))       //  se la lista degli ID non contiene tmp
+                    id_list.Add(tmp);                               //  aggiungi tmp alla lista degli ID
+            }
         }
 
         _GM.trainedNotes = id_list;
     }
 
+    /// <summary>
+    /// Cancella la nota dal dataset
+    /// </summary>
+    /// <param name="note"></param>
     public static void DeleteRowsNote(int note)
     {
         var filePath = GeneratePath(filename);
         var txt = LoadFile(filename);
 
         var rows = txt.Split('\n').Select(tag => tag.Trim()).Where(tag => !string.IsNullOrEmpty(tag));      //trim elimina le entrate vuote ;
+        Debug.Log(rows.Count());
 
         //  toglie tutte le righe dal file del dataset
         File.WriteAllText(filePath ,"");
@@ -209,47 +215,46 @@ public static class FileUtils
             int tmp_id = int.Parse(row.Split(',').Last());
             if (tmp_id != note)
             {
-                    var actualRow = "";
-                    actualRow = row+"\n";
-                    File.AppendAllText(filePath, actualRow);
+                var actualRow = "";
+                actualRow = row + "\n";
+                File.AppendAllText(filePath, actualRow);
             }
-
-            //SaveTxt(oldTxt);
-            UpdateTrainedNotesList(filename);
-
         }
+
+        UpdateTrainedNotesList(filename);
     }
 
 
     /// <summary>
-    /// 
+    /// Salva file di testo
     /// </summary>
     /// <param name="txt"></param>
     public static void SaveTxt(string txt)
     {
         var filePath = GeneratePath(filename);
-        Debug.Log("NOMEEEEEEEEEEEEEEEEEEEEE" + filePath);
         try
         {
             //  se il file non è presente nel path, lo crea
-            
-                using (var fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-                {
+
+            using (var fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+            {
                 //Debug.Log(file);                  
                 File.AppendAllText(filePath, txt);
-                }
+            }
         }
         catch (Exception ex)
         {
             Debug.Log("Exception caught in process:" + ex.ToString());
         }
     }
-        /// <summary>
-        /// Converte bytes in un file .py e lo scrive in GeneratePath [AppData/LocalLow]
-        /// </summary>
-        /// <param name="file">File da convertire</param>
-        /// <param name="name">Nome con cui salvare il file convertito</param>
-        public static void SavePy(byte[] file, string name)
+
+
+    /// <summary>
+    /// Converte bytes in un file .py e lo scrive in GeneratePath [AppData/LocalLow]
+    /// </summary>
+    /// <param name="file">File da convertire</param>
+    /// <param name="name">Nome con cui salvare il file convertito</param>
+    public static void SavePy(byte[] file, string name)
     {
         //  imposta nome ed estensione al file da salvare
         string filename = name + ".py";
@@ -355,6 +360,11 @@ public static class FileUtils
 
     #endregion
 
+
+    /// <summary>
+    /// Controlla che ci siano tutti i file necessari per entrare nella sessione di play
+    /// </summary>
+    /// <returns>true se può suonare, false altrimenti</returns>
     public static bool CheckForDefaultFiles()
     {
         if (!Directory.Exists(GeneratePath()))
@@ -375,6 +385,9 @@ public static class FileUtils
         return true;
     }
 
+    /// <summary>
+    /// Elimina tutti i file nel Dataset selezionato
+    /// </summary>
     public static void ClearDefaultDatasetDirectory()
     {
         if(Directory.Exists(GeneratePath()))
@@ -396,5 +409,6 @@ public static class FileUtils
         var MLFile = Resources.Load<TextAsset>("Text/" + nameFile);     //carica lo script dalla cartella resources (file .txt)
         SavePy(MLFile.bytes, MLFile.name);                    //Converte il file .txt in script .py
 
+        UpdateTrainedNotesList(filename);
     }
 }

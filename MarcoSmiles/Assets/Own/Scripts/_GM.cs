@@ -44,8 +44,6 @@ public class _GM : MonoBehaviour
     public GameObject PopupPanel;
     public GameObject LoadingCircle;
 
-    public static bool HasSavedNote = false;
-
     //  inizializza la cariabile selectedDataset con la cartella FileUtils.defaultFolder (DefaultDataset)
     //public static string selectedDataset = "DefaultDataset";
 
@@ -94,6 +92,7 @@ public class _GM : MonoBehaviour
             }
             catch (Exception ex)
             {
+
 
             }
         }
@@ -187,13 +186,6 @@ public class _GM : MonoBehaviour
         {
             //  Debug.Log(FileUtils.selectedDataset);
 
-            if (HasSavedNote)
-            {
-                FileUtils.UpdateTrainedNotesList(FileUtils.filename);
-                UpdateButtonsKeyboard();
-
-                HasSavedNote = false;
-            }
 
         }
     }
@@ -227,9 +219,14 @@ public class _GM : MonoBehaviour
         //fine
     }
 
+
+    /// <summary>
+    /// Elimina tutti i file nel Dataset selezionato
+    /// </summary>
     public void ClearDefaultDatasetDirectory()
     {
         FileUtils.ClearDefaultDatasetDirectory();
+        ResetColorNotes();
     }
 
     #region Keyboard Buttons
@@ -309,7 +306,9 @@ public class _GM : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// Resetta il colore dei tasti
+    /// </summary>
     public void ResetColorNotes()
     {
         foreach (var button in listaPulsanti)

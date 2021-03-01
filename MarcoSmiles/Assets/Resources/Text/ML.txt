@@ -65,8 +65,11 @@ def grid(cl, classifier, param_grid, n_folds, t_s_D, tLab_downsampled):
     with open(cl+".out.txt", "w") as f:
 
         # CAMBIARE NUMERO DI JOBS A SECONDA DELLA PROPRIA CPU ALTRIMENTI SKRT, ORA STA MESSO 20 SOLO PERCHE' VOGLIO FLEXARE
+        quotient = 5/6
+        n_core = int(quotient * os.cpu_count())
+        
         estimator = GridSearchCV(
-            classifier, cv=n_folds, param_grid=param_grid, n_jobs=20, verbose=1, scoring='f1_weighted')
+            classifier, cv=n_folds, param_grid=param_grid, n_jobs = n_core, verbose=1, scoring='f1_weighted')
         estimator.fit(t_s_D, tLab_downsampled)
         means = estimator.cv_results_['mean_test_score']
         stds = estimator.cv_results_['std_test_score']
