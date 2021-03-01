@@ -45,6 +45,8 @@ public class _GM : MonoBehaviour
     //private TestML testML;
     public GameObject PopupPanel;
 
+    public static GameObject ConnectLeapPanel;
+
     public GameObject ConfLearn;
     public GameObject ConfNotLearn;
     public GameObject DateLatestLearning;
@@ -67,12 +69,12 @@ public class _GM : MonoBehaviour
 
     public static void ShowConnectLeapPopup()
     {
-
+        ConnectLeapPanel.SetActive(true);
     }
 
     public static void HideConnectLeapPopup()
     {
-
+        ConnectLeapPanel.SetActive(false);
     }
 
 
@@ -130,6 +132,8 @@ public class _GM : MonoBehaviour
 
     void Start()
     {
+        ConnectLeapPanel = GameObject.Find("ConnectLeapPanel");
+
         /*
          * In unity, possono essere caricati nella build solo determinati tipi di file. File .txt vengono copiati all'interno della cartella 
          * della build.
