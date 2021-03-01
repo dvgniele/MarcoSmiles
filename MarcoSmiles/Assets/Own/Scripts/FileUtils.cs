@@ -96,6 +96,8 @@ public static class FileUtils
     /// <param name="data">Lista di posizioni da salvare</param>
     public static void Save(List<Position> data)
     {
+        _GM.HasSavedNote = false;
+
         //  imposta il separatore dei numeri decimali a "." (nel caso si avesse il pc in lingua che usa "," come separatore si potrebbero avere problemi, quindi lo imposta manualmente)
         System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
         customCulture.NumberFormat.NumberDecimalSeparator = ".";
@@ -145,6 +147,8 @@ public static class FileUtils
             //  stampa il messaggio nella console di debug
             Debug.Log("FILE CREATO");
         }
+
+        _GM.HasSavedNote = true;
     }
 
 
@@ -174,8 +178,6 @@ public static class FileUtils
     /// <param name="filename"></param>
     public static void UpdateTrainedNotesList(string filename)
     {
-
-
         var txt = LoadFile(filename);
         var rows = txt.Split('\n').Select(tag => tag.Trim()).Where(tag => !string.IsNullOrEmpty(tag));          //trim elimina le entrate vuote
 

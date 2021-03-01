@@ -43,6 +43,8 @@ public class _GM : MonoBehaviour
     //private TestML testML;
     public GameObject PopupPanel;
 
+    public static bool HasSavedNote = false;
+
     //  inizializza la cariabile selectedDataset con la cartella FileUtils.defaultFolder (DefaultDataset)
     //public static string selectedDataset = "DefaultDataset";
 
@@ -111,7 +113,7 @@ public class _GM : MonoBehaviour
                 break;
         }
 
-        if (currentScene.buildIndex == 1)
+        if (currSceneEnum == SceneEnum.Suonah)
         {
             TestML.Populate();
         }
@@ -180,7 +182,14 @@ public class _GM : MonoBehaviour
         {
             //  Debug.Log(FileUtils.selectedDataset);
 
-            
+            if (HasSavedNote)
+            {
+                FileUtils.UpdateTrainedNotesList(FileUtils.filename);
+                UpdateButtonsKeyboard();
+
+                HasSavedNote = false;
+            }
+
         }
     }
 
@@ -288,6 +297,7 @@ public class _GM : MonoBehaviour
             ColorBlock btn_color = btn.colors;
             btn_color.normalColor = new Color(0.13f, 1f, 0.1f, 0.3f) ;
             btn.colors = btn_color;
+
         }
     }
 
