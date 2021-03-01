@@ -266,7 +266,6 @@ public class _GM : MonoBehaviour
     {
         if (id_prev == id_curr)
         {
-
             // return;
         }
         else
@@ -315,11 +314,12 @@ public class _GM : MonoBehaviour
         //Debug.Log($"{listaPulsanti[skrtino].gameObject.name}, {skrtino}");
     }
 
+    /// <summary>
+    /// Evidenzia tutte le note della tastiera che sono state già allenate (le note che sono presenti nel dataset selezionato e dunque nella lista trainedNotes)
+    /// </summary>
     public void UpdateButtonsKeyboard()
     {
         ResetColorNotes();
-
-        //  evidenzia in giallo tutte le note della tastiera che sono state già allenate (le note che sono presenti nel dataset selezionato)
         foreach (var item in trainedNotes)
         {
             Button btn = listaPulsanti[item];
