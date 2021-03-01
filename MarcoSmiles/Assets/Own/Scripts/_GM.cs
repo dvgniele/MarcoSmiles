@@ -42,6 +42,7 @@ public class _GM : MonoBehaviour
     public GameObject piano;
     //private TestML testML;
     public GameObject PopupPanel;
+    public GameObject LoadingCircle;
 
     public static bool HasSavedNote = false;
 
@@ -135,7 +136,11 @@ public class _GM : MonoBehaviour
         if (currSceneEnum == SceneEnum.TrainingScene)
         {
             PopupPanel = GameObject.FindGameObjectWithTag("PopupPanel");
+            LoadingCircle = GameObject.FindGameObjectWithTag("Circle");
+
             ClosePopUp();
+            DeactivateCircle();
+
 
             //  il programma parte con la prima nota della tastiera selezionata
             listaPulsanti.ElementAt(0).Select();
@@ -216,8 +221,10 @@ public class _GM : MonoBehaviour
     /// </summary>
     public void RemoveButtonClick()
     {
+        //start animazione
         if(trainer.RemoveNote())
             UpdateButtonsKeyboard();
+        //fine
     }
 
     public void ClearDefaultDatasetDirectory()
@@ -397,6 +404,11 @@ public class _GM : MonoBehaviour
         if (popup != null)
             popup.SetActive(false);
         */
+    }
+
+    public void DeactivateCircle()
+    {
+        LoadingCircle.SetActive(false);
     }
 
 
