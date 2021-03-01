@@ -538,7 +538,7 @@ GameObject:
   m_Component:
   - component: {fileID: 263371508}
   - component: {fileID: 263371509}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TastierA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1317,10 +1317,10 @@ RectTransform:
   m_Father: {fileID: 1662408758}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 721.5355, y: 190.03772}
-  m_SizeDelta: {x: 1180, y: 860}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.000029114, y: -3.5}
+  m_SizeDelta: {x: 1829.7227, y: 1663.9502}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &667556138
 MonoBehaviour:
@@ -4947,6 +4947,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.066884
       objectReference: {fileID: 0}
+    - target: {fileID: 1534757205627282114, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1793891110198325325, guid: d5654cbcb365e164d99139e08352abbe,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -5317,6 +5322,66 @@ PrefabInstance:
       propertyPath: m_Colors.m_SelectedColor.b
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5526034246276180789, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526034246276180789, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526034246276180789, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526034246276180789, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526034246276180789, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526034246276180789, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526034246276180789, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526034246276180789, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526034246276180789, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526034246276180789, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526034246276180789, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526034246276180789, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5894821149923980030, guid: d5654cbcb365e164d99139e08352abbe,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -5676,6 +5741,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Colors.m_SelectedColor.b
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463641659285848382, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463641659285848382, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: m_PixelPerfect
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8510688304592820851, guid: d5654cbcb365e164d99139e08352abbe,
         type: 3}
@@ -6304,8 +6379,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -302.7, y: -318.89996}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 2.5989, y: 0.00013733}
+  m_SizeDelta: {x: 3038.7014, y: 572.07983}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1709279466
 GameObject:

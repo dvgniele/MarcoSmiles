@@ -528,11 +528,7 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.12f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="LeapCSharp.NET3.5">
-<<<<<<< HEAD
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Assets/LeapMotion/Core/Plugins/LeapCSharp.NET3.5.dll</HintPath>
-=======
       <HintPath>E:/DEV/C# UNITY/Projects/MarcoSmiles/MarcoSmiles/Assets/LeapMotion/Core/Plugins/LeapCSharp.NET3.5.dll</HintPath>
->>>>>>> 50d6de25f1aad3c7079a49906ad34ba781daa939
     </Reference>
     <Reference Include="InteractionEngineUtility">
       <HintPath>E:/DEV/C# UNITY/Projects/MarcoSmiles/MarcoSmiles/Assets/LeapMotion/Modules/InteractionEngine/Plugins/InteractionEngineUtility.dll</HintPath>
@@ -559,11 +555,7 @@
       <HintPath>E:/DEV/C# UNITY/Projects/MarcoSmiles/MarcoSmiles/Library/PackageCache/com.unity.ml-agents@1.0.4/Plugins/ProtoBuffer/Grpc.Core.dll</HintPath>
     </Reference>
     <Reference Include="System.Interactive.Async">
-<<<<<<< HEAD
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/PackageCache/com.unity.ml-agents@1.0.4/Plugins/ProtoBuffer/System.Interactive.Async.dll</HintPath>
-=======
       <HintPath>E:/DEV/C# UNITY/Projects/MarcoSmiles/MarcoSmiles/Library/PackageCache/com.unity.ml-agents@1.0.4/Plugins/ProtoBuffer/System.Interactive.Async.dll</HintPath>
->>>>>>> 50d6de25f1aad3c7079a49906ad34ba781daa939
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.12f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -920,69 +912,6 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.12f1/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-<<<<<<< HEAD
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Barracuda.MacBLAS">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.Barracuda.MacBLAS.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VSCode.Editor">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Barracuda.Editor">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.Barracuda.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Editor">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Timeline">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Barracuda">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.Barracuda.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Barracuda.iOSBLAS">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.Barracuda.iOSBLAS.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ML-Agents.CommunicatorObjects">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.ML-Agents.CommunicatorObjects.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Rider.Editor">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Barracuda.BurstBLAS">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.Barracuda.BurstBLAS.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Mathematics">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Mathematics.Editor">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ML-Agents.Editor">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.ML-Agents.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ML-Agents">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.ML-Agents.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>C:/Users/Gianluca Mannini/Desktop/MarcoSmiles/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
-=======
       <HintPath>E:/DEV/C# UNITY/Projects/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Barracuda.MacBLAS">
@@ -1044,7 +973,6 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>E:/DEV/C# UNITY/Projects/MarcoSmiles/MarcoSmiles/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
->>>>>>> 50d6de25f1aad3c7079a49906ad34ba781daa939
     </Reference>
   </ItemGroup>
   <ItemGroup></ItemGroup>
