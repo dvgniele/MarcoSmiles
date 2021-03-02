@@ -210,10 +210,6 @@ public class _GM : MonoBehaviour
     }
     void FixedUpdate()
     {
-        StartCircleAnimation();
-
-
-
         if (currSceneEnum == SceneEnum.Suonah)
         {
             if (isActive)
@@ -242,11 +238,9 @@ public class _GM : MonoBehaviour
         {
             //  Debug.Log(FileUtils.selectedDataset);
 
-
-            /*
             if (LoadingCircle.activeSelf)
                 StartCircleAnimation();
-            */
+            
             
         }
     }

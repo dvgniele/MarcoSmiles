@@ -131,21 +131,6 @@ public class TrainingScript : MonoBehaviour
 
     public async Task<bool> RemoveNote()
     {
-        /*
-        Task delete = Task.Run(() =>
-        {
-            try
-            {
-                Task.WaitAny(FileUtils.DeleteRowsNote(currentNoteId));
-
-                return true;
-            }
-            catch { return false; }
-        });
-
-        return await Task.FromResult(true);
-        */
-
         await FileUtils.DeleteRowsNote(currentNoteId);
         return true;
     }
