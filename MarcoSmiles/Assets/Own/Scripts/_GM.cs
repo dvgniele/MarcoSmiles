@@ -51,6 +51,13 @@ public class _GM : MonoBehaviour
     public GameObject ConfNotLearn;
     public GameObject DateLatestLearning;
 
+    //Variabili animazione loading circle
+    public GameObject LoadingCircle;
+    public RectTransform mainIcon;
+    public float timeStep;
+    public float oneStepAngle;
+    float startTime;
+
     public Text SelectedDatasetText;
 
     //  inizializza la cariabile selectedDataset con la cartella FileUtils.defaultFolder (DefaultDataset)
@@ -75,6 +82,19 @@ public class _GM : MonoBehaviour
     public static void HideConnectLeapPopup()
     {
         ConnectLeapPanel.SetActive(false);
+    }
+
+    public void StartCircleAnimation()
+    {
+        if (Time.time - startTime >= timeStep)
+        {
+            Vector3 iconAngle = mainIcon.localEulerAngles;
+            iconAngle.z += oneStepAngle;
+
+            mainIcon.localEulerAngles = iconAngle;
+
+            startTime = Time.time;
+        }
     }
 
 
@@ -178,6 +198,9 @@ public class _GM : MonoBehaviour
 
             FileUtils.UpdateTrainedNotesList(FileUtils.filename);
             UpdateButtonsKeyboard();
+
+            LoadingCircle = GameObject.Find("LoadingCircle");
+            mainIcon = GameObject.Find("LoadingCircle").GetComponent<RectTransform>();
         }
 
     }
@@ -203,7 +226,7 @@ public class _GM : MonoBehaviour
                 ResetColorNotes();
             }
 
-
+       
         }
         //Debug.Log("L'indice che rappresenta la nota da suonare è:  " + indexPlayingNote);
 
@@ -211,7 +234,10 @@ public class _GM : MonoBehaviour
         {
             //  Debug.Log(FileUtils.selectedDataset);
 
-
+            if (LoadingCircle.activeSelf)
+            {
+                StartCircleAnimation();
+            }
         }
     }
 
@@ -242,8 +268,12 @@ public class _GM : MonoBehaviour
     /// </summary>
     public void RemoveButtonClick()
     {
+        LoadingCircle.SetActive(true);
+
         if (trainer.RemoveNote())
             UpdateButtonsKeyboard();
+
+        LoadingCircle.SetActive(false);
     }
 
 
