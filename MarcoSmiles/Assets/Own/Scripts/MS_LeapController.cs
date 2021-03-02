@@ -15,6 +15,8 @@ public class MS_LeapController : MonoBehaviour
     bool connected = false;
     bool notified = false;
 
+    bool prevState = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +32,7 @@ public class MS_LeapController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         //  ascolta ogni frame del leap motion
         if (controller.Devices.Count > 0 && !connected)
         {

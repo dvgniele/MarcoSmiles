@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 using System.IO;
+using System.Collections;
 
 
 /*__________!Ci Converrebbe fare una classe contenente tutte le costanti,  contenente ad esempio il numero delle note etc....!___________*/
@@ -54,8 +55,8 @@ public class _GM : MonoBehaviour
     //Variabili animazione loading circle
     public GameObject LoadingCircle;
     public RectTransform mainIcon;
-    public float timeStep;
-    public float oneStepAngle;
+    public static float timeStep = 0.1f;
+    public static float oneStepAngle = -36;
     float startTime;
 
     public Text SelectedDatasetText;
@@ -86,6 +87,7 @@ public class _GM : MonoBehaviour
 
     public void StartCircleAnimation()
     {
+        
         if (Time.time - startTime >= timeStep)
         {
             Vector3 iconAngle = mainIcon.localEulerAngles;
@@ -95,6 +97,8 @@ public class _GM : MonoBehaviour
 
             startTime = Time.time;
         }
+
+        //mainIcon.transform.Rotate(new Vector3(0f, 0f, oneStepAngle));
     }
 
 
@@ -199,13 +203,17 @@ public class _GM : MonoBehaviour
             FileUtils.UpdateTrainedNotesList(FileUtils.filename);
             UpdateButtonsKeyboard();
 
-            LoadingCircle = GameObject.Find("LoadingCircle");
-            mainIcon = GameObject.Find("LoadingCircle").GetComponent<RectTransform>();
+            startTime = Time.time;
+            LoadingCircle.SetActive(false);
         }
 
     }
     void FixedUpdate()
     {
+        StartCircleAnimation();
+
+
+
         if (currSceneEnum == SceneEnum.Suonah)
         {
             if (isActive)
@@ -234,10 +242,12 @@ public class _GM : MonoBehaviour
         {
             //  Debug.Log(FileUtils.selectedDataset);
 
+
+            /*
             if (LoadingCircle.activeSelf)
-            {
                 StartCircleAnimation();
-            }
+            */
+            
         }
     }
 
@@ -266,14 +276,15 @@ public class _GM : MonoBehaviour
     /// <summary>
     /// Lanciato quando viene premuto il pulsante di rimozione nota da dataset per la nota selezionata
     /// </summary>
-    public void RemoveButtonClick()
+    public async void RemoveButtonClick()
     {
         LoadingCircle.SetActive(true);
-
-        if (trainer.RemoveNote())
+        
+        if (await trainer.RemoveNote())
+        {
             UpdateButtonsKeyboard();
-
-        LoadingCircle.SetActive(false);
+            LoadingCircle.SetActive(false);
+        }
     }
 
 

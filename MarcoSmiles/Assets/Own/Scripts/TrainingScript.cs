@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -128,11 +129,25 @@ public class TrainingScript : MonoBehaviour
     }
 
 
-    public bool RemoveNote()
+    public async Task<bool> RemoveNote()
     {
-        FileUtils.DeleteRowsNote(currentNoteId);
-        return true;
+        /*
+        Task delete = Task.Run(() =>
+        {
+            try
+            {
+                Task.WaitAny(FileUtils.DeleteRowsNote(currentNoteId));
 
+                return true;
+            }
+            catch { return false; }
+        });
+
+        return await Task.FromResult(true);
+        */
+
+        await FileUtils.DeleteRowsNote(currentNoteId);
+        return true;
     }
 
 
