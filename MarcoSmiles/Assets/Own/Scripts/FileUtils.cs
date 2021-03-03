@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
+using System.Threading.Tasks;
 using UnityEngine;
 
 public static class FileUtils
@@ -199,29 +199,35 @@ public static class FileUtils
     /// Cancella la nota dal dataset
     /// </summary>
     /// <param name="note"></param>
-    public static void DeleteRowsNote(int note)
+    public static Task DeleteRowsNote(int note)
     {
-        var filePath = GeneratePath(filename);
-        var txt = LoadFile(filename);
-
-        var rows = txt.Split('\n').Select(tag => tag.Trim()).Where(tag => !string.IsNullOrEmpty(tag));      //trim elimina le entrate vuote ;
-        Debug.Log(rows.Count());
-
-        //  toglie tutte le righe dal file del dataset
-        File.WriteAllText(filePath ,"");
-
-        foreach (var row in rows)
+        return Task.Run(() =>
         {
-            int tmp_id = int.Parse(row.Split(',').Last());
-            if (tmp_id != note)
-            {
-                var actualRow = "";
-                actualRow = row + "\n";
-                File.AppendAllText(filePath, actualRow);
-            }
-        }
+            var filePath = GeneratePath(filename);
+            var txt = LoadFile(filename);
 
-        UpdateTrainedNotesList(filename);
+            var rows = txt.Split('\n').Select(tag => tag.Trim()).Where(tag => !string.IsNullOrEmpty(tag));      //trim elimina le entrate vuote ;
+
+            //Debug.Log(rows.Count());
+
+            //  toglie tutte le righe dal file del dataset
+
+            File.WriteAllText(filePath, "");
+
+            foreach (var row in rows)
+            {
+                int tmp_id = int.Parse(row.Split(',').Last());
+                if (tmp_id != note)
+                {
+                    var actualRow = "";
+                    actualRow = row + "\n";
+                    File.AppendAllText(filePath, actualRow);
+                }
+            }
+
+            UpdateTrainedNotesList(filename);
+        }
+        );
     }
 
 

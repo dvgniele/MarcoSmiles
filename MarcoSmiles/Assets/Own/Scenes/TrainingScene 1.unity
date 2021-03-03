@@ -4922,6 +4922,16 @@ PrefabInstance:
       propertyPath: DateLatestLearning
       value: 
       objectReference: {fileID: 911336777}
+    - target: {fileID: 1286340361220716033, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: LoadingCircle
+      value: 
+      objectReference: {fileID: 1709279466}
+    - target: {fileID: 1286340361220716033, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: mainIcon
+      value: 
+      objectReference: {fileID: 1709279467}
     - target: {fileID: 1534757205627282114, guid: d5654cbcb365e164d99139e08352abbe,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -6361,7 +6371,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1662408758
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6394,7 +6404,7 @@ GameObject:
   - component: {fileID: 1709279469}
   - component: {fileID: 1709279468}
   m_Layer: 5
-  m_Name: Circle
+  m_Name: LoadingCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
