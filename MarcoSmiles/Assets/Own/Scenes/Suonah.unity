@@ -268,6 +268,16 @@ PrefabInstance:
       propertyPath: shouldPlay
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1286340361220716033, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: SelectedDatasetText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1286340361220716033, guid: d5654cbcb365e164d99139e08352abbe,
+        type: 3}
+      propertyPath: DateLatestLearning
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1534757205627282114, guid: d5654cbcb365e164d99139e08352abbe,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -325,7 +335,7 @@ GameObject:
   - component: {fileID: 146113585}
   - component: {fileID: 146113584}
   m_Layer: 5
-  m_Name: OpenExportPanelButton
+  m_Name: OpenPanelButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -394,8 +404,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: OpenExportPanel
+      - m_Target: {fileID: 1286340361220716033, guid: d5654cbcb365e164d99139e08352abbe,
+          type: 3}
+        m_MethodName: OpenPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -756,25 +767,25 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.86666673, g: 0.07058824, b: 0.003921569, a: 1}
-      key1: {r: 0.9568628, g: 0.47450984, b: 0, a: 1}
-      key2: {r: 0.89019614, g: 0.87843144, b: 0.027450982, a: 1}
-      key3: {r: 1, g: 1, b: 1, a: 0}
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 0.89019614, g: 0.87843144, b: 0.027450982, a: 1}
+      key2: {r: 0.9568628, g: 0.47450984, b: 0, a: 1}
+      key3: {r: 0.86666673, g: 0.07058824, b: 0.003921569, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 24672
-      ctime2: 41441
-      ctime3: 54548
+      ctime1: 18311
+      ctime2: 45875
+      ctime3: 65535
       ctime4: 0
       ctime5: 0
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 23901
-      atime2: 41056
+      atime1: 18119
+      atime2: 45875
       atime3: 0
       atime4: 0
       atime5: 0
@@ -2284,7 +2295,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Export Configuration
+  m_Text: 'Change Configuration
 
 '
 --- !u!222 &1207766686
@@ -6411,7 +6422,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1286340361220716033, guid: d5654cbcb365e164d99139e08352abbe,
+          type: 3}
         m_MethodName: OpenImportPanel
         m_Mode: 1
         m_Arguments:

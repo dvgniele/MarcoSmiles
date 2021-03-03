@@ -91,7 +91,7 @@ public class Oscillator : MonoBehaviour
 
 
 
-    void Update()
+    void FixedUpdate()
     {
 
         if (_GM.isActive)
