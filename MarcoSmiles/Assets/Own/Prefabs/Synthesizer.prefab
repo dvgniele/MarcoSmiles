@@ -1301,9 +1301,8 @@ MonoBehaviour:
   frequency: 440
   gain: 0
   volume: 0.4
-  frequencies: []
+  octaveNumber: 3
   thisFreq: 0
-  octave: 1
   sinWeight: 0
   sqrWeight: 0.75
   sawWeight: 0
@@ -2181,7 +2180,7 @@ GameObject:
   - component: {fileID: 7355766779339267888}
   - component: {fileID: 3190693051552802363}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Synthesizer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3346,7 +3345,7 @@ PrefabInstance:
     - target: {fileID: 4239142674229545619, guid: 076a90c6b08a9f348b7a22e210e1faf1,
         type: 3}
       propertyPath: _onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeDecayTime
+      value: ChangeDecay
       objectReference: {fileID: 0}
     - target: {fileID: 4239142674229545619, guid: 076a90c6b08a9f348b7a22e210e1faf1,
         type: 3}
