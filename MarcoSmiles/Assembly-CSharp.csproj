@@ -307,6 +307,10 @@
     <Compile Include="Assets\Own\Scripts\AudioEffects\ModeSelectable.cs" />
     <Compile Include="Assets\Own\Scripts\AudioEffects\NReverb.cs" />
     <Compile Include="Assets\Own\Scripts\AudioEffects\Oscilloscope.cs" />
+    <Compile Include="Assets\Own\Scripts\AudioEffects\ProceduralAudioOscillator.cs" />
+    <Compile Include="Assets\Own\Scripts\AudioEffects\Waves Classes\SawWave.cs" />
+    <Compile Include="Assets\Own\Scripts\AudioEffects\Waves Classes\SinusWave.cs" />
+    <Compile Include="Assets\Own\Scripts\AudioEffects\Waves Classes\SquareWave.cs" />
     <Compile Include="Assets\Own\Scripts\DataToStore.cs" />
     <Compile Include="Assets\Own\Scripts\DatasetHandler.cs" />
     <Compile Include="Assets\Own\Scripts\FileUtils.cs" />

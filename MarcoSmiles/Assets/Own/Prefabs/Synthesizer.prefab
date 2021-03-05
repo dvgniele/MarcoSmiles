@@ -1166,6 +1166,7 @@ GameObject:
   - component: {fileID: 2033671098404998990}
   - component: {fileID: 2033671098404998988}
   - component: {fileID: 2033671098404998989}
+  - component: {fileID: 3031951219521083522}
   - component: {fileID: 2033671098404998995}
   - component: {fileID: 2033671098404998993}
   - component: {fileID: 2033671098404998994}
@@ -1293,7 +1294,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2033671098404998991}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a4090c7bd1734592a7067c3cab0d4fd, type: 3}
   m_Name: 
@@ -1310,7 +1311,7 @@ MonoBehaviour:
   lowPass: 1
   filterFreq: 0
   resonance: 0
---- !u!114 &2033671098404998995
+--- !u!114 &3031951219521083522
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1318,6 +1319,37 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2033671098404998991}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbd65c740b5a57e45a8cb0dac8a75066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 440
+  sinWeight: 0
+  sqrWeight: 0
+  sawWeight: 0
+  noiseWeight: 0
+  useAmplitudeModulation: 0
+  amplitudeModulationOscillatorFrequency: 1
+  useFrequencyModulation: 0
+  frequencyModulationOscillatorFrequency: 1
+  frequencyModulationOscillatorIntensity: 10
+  amplitudeModulationRangeOut: 0
+  frequencyModulationRangeOut: 0
+  gain: 0
+  volume: 0.522
+  volumeValue: 0.1
+  octaveNumber: 3
+  thisFreq: 0
+  lowPass: 0
+  filterFreq: 0
+--- !u!114 &2033671098404998995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033671098404998991}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0af70b67e1a7c8248b9142affd116a93, type: 3}
   m_Name: 
@@ -1331,7 +1363,7 @@ AudioChorusFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2033671098404998991}
-  m_Enabled: 1
+  m_Enabled: 0
   m_DryMix: 0.4
   m_WetMix1: 0.5
   m_WetMix2: 0.5
@@ -1346,7 +1378,7 @@ AudioLowPassFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2033671098404998991}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_LowpassResonanceQ: 1
   lowpassLevelCustomCurve:
