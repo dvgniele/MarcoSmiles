@@ -1398,18 +1398,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: OctaveUp
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1796637046}
+      - m_Target: {fileID: 1796637043}
         m_MethodName: OctaveUp
         m_Mode: 1
         m_Arguments:
@@ -3365,18 +3354,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: OctaveDown
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1796637046}
+      - m_Target: {fileID: 1796637043}
         m_MethodName: OctaveDown
         m_Mode: 1
         m_Arguments:
@@ -3723,6 +3701,12 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2033671098404998988, guid: 5187148bbecb3cb4daa924391134415f,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: f58e5c6e3d914c54097c7d8e12bf6e56,
+        type: 2}
     - target: {fileID: 2033671098404998989, guid: 5187148bbecb3cb4daa924391134415f,
         type: 3}
       propertyPath: m_Enabled
@@ -3737,6 +3721,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 336
+      objectReference: {fileID: 0}
+    - target: {fileID: 2033671098404998993, guid: 5187148bbecb3cb4daa924391134415f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2033671098404998994, guid: 5187148bbecb3cb4daa924391134415f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2033671098404998995, guid: 5187148bbecb3cb4daa924391134415f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2033671098446815728, guid: 5187148bbecb3cb4daa924391134415f,
         type: 3}
@@ -3801,6 +3800,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1796637041}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1796637043 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2033671098404998989, guid: 5187148bbecb3cb4daa924391134415f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1796637041}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a4090c7bd1734592a7067c3cab0d4fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1796637044 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7377061937910937785, guid: 5187148bbecb3cb4daa924391134415f,
@@ -3815,18 +3826,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1796637044}
   m_CullTransparentMesh: 0
---- !u!114 &1796637046 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3031951219521083522, guid: 5187148bbecb3cb4daa924391134415f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1796637041}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbd65c740b5a57e45a8cb0dac8a75066, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1812227719
 GameObject:
   m_ObjectHideFlags: 0

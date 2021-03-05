@@ -306,7 +306,9 @@
     <Compile Include="Assets\Own\Scripts\AudioEffects\MathUtil.cs" />
     <Compile Include="Assets\Own\Scripts\AudioEffects\ModeSelectable.cs" />
     <Compile Include="Assets\Own\Scripts\AudioEffects\NReverb.cs" />
+    <Compile Include="Assets\Own\Scripts\AudioEffects\Oscillator.cs" />
     <Compile Include="Assets\Own\Scripts\AudioEffects\Oscilloscope.cs" />
+    <Compile Include="Assets\Own\Scripts\AudioEffects\PCMOscillator.cs" />
     <Compile Include="Assets\Own\Scripts\AudioEffects\ProceduralAudioOscillator.cs" />
     <Compile Include="Assets\Own\Scripts\AudioEffects\Waves Classes\SawWave.cs" />
     <Compile Include="Assets\Own\Scripts\AudioEffects\Waves Classes\SinusWave.cs" />
@@ -316,8 +318,6 @@
     <Compile Include="Assets\Own\Scripts\FileUtils.cs" />
     <Compile Include="Assets\Own\Scripts\MS_LeapController.cs" />
     <Compile Include="Assets\Own\Scripts\MS_LeapListener.cs" />
-    <Compile Include="Assets\Own\Scripts\Oscillator.cs" />
-    <Compile Include="Assets\Own\Scripts\PCMOscillator.cs" />
     <Compile Include="Assets\Own\Scripts\PanelUtils.cs" />
     <Compile Include="Assets\Own\Scripts\Position.cs" />
     <Compile Include="Assets\Own\Scripts\ReadMLFromFile.cs" />
