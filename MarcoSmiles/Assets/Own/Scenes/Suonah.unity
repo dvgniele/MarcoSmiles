@@ -1398,7 +1398,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1796637043}
         m_MethodName: OctaveUp
         m_Mode: 1
         m_Arguments:
@@ -3354,7 +3354,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1796637043}
         m_MethodName: OctaveDown
         m_Mode: 1
         m_Arguments:
@@ -3840,6 +3840,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1796637041}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1796637043 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3031951219521083522, guid: 5187148bbecb3cb4daa924391134415f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1796637041}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbd65c740b5a57e45a8cb0dac8a75066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1796637044 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7377061937910937785, guid: 5187148bbecb3cb4daa924391134415f,
