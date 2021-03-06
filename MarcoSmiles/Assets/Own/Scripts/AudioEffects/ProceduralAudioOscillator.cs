@@ -21,7 +21,7 @@ public class ProceduralAudioOscillator : MonoBehaviour
     public double frequency = 440;
 
 
-    private double sampleRate;  // samples per second
+    private int sampleRate;  // samples per second
     private double dataLen;     // the data length of each channel
     double chunkTime;
     double dspTimeStep;
@@ -108,6 +108,7 @@ public class ProceduralAudioOscillator : MonoBehaviour
         frequencyModulationOscillator = new SinusWave();
 
         sampleRate = AudioSettings.outputSampleRate;
+        Debug.Log(sampleRate );
     }
 
 
@@ -245,19 +246,21 @@ public class ProceduralAudioOscillator : MonoBehaviour
 
 
 
-    /* 
-     * This is "the current time of the audio system", as given
-     * by Unity. It is updated every time the OnAudioFilterRead() function
-     * is called. It's usually every 1024 samples.
-     * 
-     * A note on the sample rate:
-     * We don't actually see real numbers for the sample rate, we instead
-     * read it from the system in the Start() function.
-     */
-
     void OnAudioFilterRead(float[] data, int channels)
     {
-        currentDspTime = AudioSettings.dspTime; // Returns the current time of the audio system.
+
+        /* 
+         * This is "the current time of the audio system", as given
+         * by Unity. It is updated every time the OnAudioFilterRead() function
+         * is called. It's usually every 1024 samples.
+         * 
+         * A note on the sample rate:
+         * We don't actually see real numbers for the sample rate, we instead
+         * read it from the system in the Start() function.
+         */
+
+
+        currentDspTime = AudioSettings.dspTime;
         dataLen = data.Length / channels;   // the actual data length for each channel
         chunkTime = dataLen / sampleRate;   // the time that each chunk of data lasts
         dspTimeStep = chunkTime / dataLen;  // the time of each dsp step. (the time that each individual audio sample (actually a float value) lasts)
@@ -269,17 +272,15 @@ public class ProceduralAudioOscillator : MonoBehaviour
         sqrOutput = 0;
         noiseOutput = 0;
 
-        // goes through data chunk
-        for (int i = 0; i < data.Length; i += channels)
+
+
+        for (int i = 0; i < dataLen; i++)               // go through data chunk
         {
             preciseDspTime = currentDspTime + i * dspTimeStep;
 
-            // lets you modulate the frequency
             double currentFreq = frequency;
 
-
-            
-            // Applies Frequency Modulation
+            //Applies Frequency Modulation
             if (useFrequencyModulation)
             {
                 double freqOffset = (frequencyModulationOscillatorIntensity * frequency * 0.75) / 100.0;
@@ -291,9 +292,6 @@ public class ProceduralAudioOscillator : MonoBehaviour
                 frequencyModulationRangeOut = 0.0f;
             }
 
-            
-
-            // Calculate the next output sample , using the waveform classes and thir espective weights
 
             sinOutput = (float)(sinWeight * sinusAudioWave.calculateSignalValue(preciseDspTime, currentFreq));
 
@@ -301,30 +299,25 @@ public class ProceduralAudioOscillator : MonoBehaviour
 
             sqrOutput = (float)(sqrWeight * squareAudioWave.calculateSignalValue(preciseDspTime, currentFreq));
 
-            // Adds noise wave to the next output sample
-            // Im not really using this but its there.
-           // noiseOutput = PinkNoise.Noise();
 
+            /*      Mixa assieme tutti gli output
+             http://www.vttoth.com/CMS/index.php/technical-notes/68
+             Let's say we have two signals, A and B. If A is quiet, we want to hear B on the output in unaltered form. If B 
+            is quiet, we want to hear A on the output (i.e., A and B are treated symmetrically.) If both A and B have a non-zero amplitude,
+            the mixed signal must have an amplitude between the greater of A and B, and the maximum permissible amplitude.
+            If we take A and B to have values between 0 and 1, there is actually a simple equation that satisfies all of the
+            above conditions:       Z= A + B − AB.
+            Simple, isn't it! Moreover, it can be easily adapted for more than two signals. 
+            Consider what happens if we mix another signal, C, to Z:  T= Z + C − Z C = A + B + C − AB − AC − BC + ABC.
 
-
-            /*      Mix togheter all the outputs
-                    http://www.vttoth.com/CMS/index.php/technical-notes/68
-
-            Let's say we have two signals, A and B. If A is quiet, we want to hear B on the output in unaltered form. If B 
-           is quiet, we want to hear A on the output (i.e., A and B are treated symmetrically.) If both A and B have a non-zero amplitude,
-           the mixed signal must have an amplitude between the greater of A and B, and the maximum permissible amplitude.
-           If we take A and B to have values between 0 and 1, there is actually a simple equation that satisfies all of the
-           above conditions:       Z= A + B − AB.
-           Simple, isn't it! Moreover, it can be easily adapted for more than two signals. 
-           Consider what happens if we mix another signal, C, to Z:  T= Z + C − Z C = A + B + C − AB − AC − BC + ABC.
-
-            */
+             */
 
             nextOutput = sinOutput + sawOutput + sqrOutput - (sinOutput * sawOutput) -
                                     (sinOutput * sqrOutput) - (sawOutput * sqrOutput) + (sinOutput * sawOutput * sqrOutput);
 
-            
-            // Applies Amplitude Modulation
+
+
+
             if (useAmplitudeModulation)
             {
                 nextOutput *= (float)mapValueD(amplitudeModulationOscillator.calculateSignalValue(preciseDspTime, amplitudeModulationOscillatorFrequency), -1.0, 1.0, 0.0, 1.0);
@@ -335,43 +328,24 @@ public class ProceduralAudioOscillator : MonoBehaviour
                 amplitudeModulationRangeOut = 0.0f;
             }
 
-            
+
+
             float x = volume * 0.5f * (float)nextOutput;
 
-            // Write the output to the audio filter
-            data[i] += x;
-            // Copy the sound from one channel into the next channel for stereo
-            if (channels == 2) data[i + 1] = data[i];
+            for (int j = 0; j < channels; j++)
+            {
+                data[i * channels + j] = x;
+            }
 
-           
 
 
         }
+
+
+
     }
 
-
-    /* These are needed in order to control values fro the gui  */
-
-    public void ChangeSinWeight(float weight)
-    {
-        sinWeight = weight;
-    }
-
-    public void ChangeSqrWeight(float weight)
-    {
-        sqrWeight = weight;
-    }
-
-    public void ChangeSawWeight(float weight)
-    {
-        sawWeight = weight;
-    }
-
-    public void ChangeLowPass(float value)
-    {
-        lowPass = value;
-    }
-
+  
 
 
 
@@ -432,5 +406,60 @@ public class ProceduralAudioOscillator : MonoBehaviour
         /* This function maps (converts) a Double value from one range to another */
         return toMin + (referenceValue - fromMin) * (toMax - toMin) / (fromMax - fromMin);
     }
+
+
+
+    /* These are needed in order to control values fro the gui  */
+
+    public void ChangeSinWeight(float weight)
+    {
+        sinWeight = weight;
+    }
+
+    public void ChangeSqrWeight(float weight)
+    {
+        sqrWeight = weight;
+    }
+
+    public void ChangeSawWeight(float weight)
+    {
+        sawWeight = weight;
+    }
+
+    public void ChangeLowPass(float value)
+    {
+        lowPass = value;
+    }
+
+    public void ActivateFm()
+    {
+        useFrequencyModulation = !useFrequencyModulation;
+    }
+
+    public void ChangeFMFreq(float value)
+    {
+        frequencyModulationOscillatorFrequency = value;
+    }
+
+
+    public void ChangeFMIntensity(float value)
+    {
+        frequencyModulationOscillatorIntensity = value;
+    }
+
+    public void ActivateAm()
+    {
+        useAmplitudeModulation = !useAmplitudeModulation;
+    }
+
+    public void ChangeAMFreq(float value)
+    {
+        amplitudeModulationOscillatorFrequency = value;
+    }
+
+
+
+
+
 }
 
