@@ -118,4 +118,16 @@ public class NReverb : MonoBehaviour
             data [offset + 1] = out2;
         }
     }
+
+
+    public void ChangeMix(float value)
+    {
+        wetMix = value;
+    }
+
+    public void ChangeDecay(float value)
+    {
+        decayTime = value;
+    }
+
 }

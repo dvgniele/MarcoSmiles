@@ -234,6 +234,7 @@ public static class TestML
             maxValues[i] = float.Parse(max[i], CultureInfo.InvariantCulture);
         }
 
+        /*
         for (int i = 0; i < minValues.Length; i++)
         {
             Debug.Log("index " + i + " (valori min): " + minValues[i]);
@@ -242,7 +243,7 @@ public static class TestML
         {
             Debug.Log("index " + i + " (valori max): " + maxValues[i]);
         }
-
+        */
 
         for (int i = 0; i < unscaledFeatures.Length; i++)
         {

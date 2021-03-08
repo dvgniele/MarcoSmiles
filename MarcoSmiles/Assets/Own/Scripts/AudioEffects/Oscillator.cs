@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 
 
+/* This class is the main audio engine, 
+	- It uses the OnAudioFilterRead() function to create sound by applying mathematical functions
+	on each separate audio sample.
+	- SineHP classe to produce Sinewaves, as well as the Frequency and Amplitude Modulations. */
+
+[RequireComponent(typeof(AudioSource))]
 public class Oscillator : MonoBehaviour
 {
-
-  
 
     public double frequency = 440;
     // For oscillation
@@ -26,7 +30,10 @@ public class Oscillator : MonoBehaviour
 
 
     public float gain;
-    public float volume = 0.05f;
+    [Range(0f, 1f)]
+    public float volume;
+    [Range(0f, 1f)]
+    public float volumeValue = 0.3f;
 
     private float[] frequencies = new float[] {
                         261.630f , 277.180f , 293.660f , 311.130f , 329.630f , 349.990f ,
@@ -46,44 +53,77 @@ public class Oscillator : MonoBehaviour
     [Range(0f, 1f)]
     public double noiseWeight;
 
-
-
-
+    /* These control the single pole low pass filter */
     [Range(0, 1)]
     public double lowPass;
     [Range(20, 20000)]
     public double filterFreq;
-    [Range(1, 5)]
-    public float resonance;
+
+
+    //For amplitude and frequency modulation
+    SineHP amplitudeModulationOscillator;
+    SineHP frequencyModulationOscillator;
+
+
+    [Header("Amplitude Modulation")]
+    public bool useAmplitudeModulation;             //Boolean parameter that determines whether or not to apply amplitude modulation on the produced sound.
+    [Range(0.2f, 30.0f)]
+    public float amplitudeModulationOscillatorFrequency = 1.0f;     //Float parameter that determines the Amplitude Modulation Oscillator’s frequency.
+
+    private double phaseIncrementAM;
+    private double phaseAM;
+
+    [Header("Frequency Modulation")]
+    public bool useFrequencyModulation;             // Boolean Parameter that determines whether or not to apply frequency modulation on the produced sound.
+    [Range(0.2f, 30.0f)]
+    public float frequencyModulationOscillatorFrequency = 1.0f;         //Float parameter that determines the Frequency Modulation Oscillator’s frequency.
+    [Range(1.0f, 100.0f)]
+    public float frequencyModulationOscillatorIntensity = 10.0f;        //Float parameter that determines the Frequency Modulation Oscillator’s intensity.
+                                                                       
+    private double phaseIncrementFM;
+    private double phaseFM;
+    /*
+     These parameters are for external use, only (they are calculated, based on the previous parameters and time-dependent functions). 
+     So, actually they do not control the Synthesizer, but can be used to “drive” (control) other scripts’ parameters.
+     */
+    [Header("Out Values")]
+    [Range(0.0f, 1.0f)]
+    public float amplitudeModulationRangeOut;       //The Amplitude Modulation Oscillator’s current value (range 0 to 1)
+    [Range(0.0f, 1.0f)]
+    public float frequencyModulationRangeOut;       //The Frequency Modulation Oscillator’s current value (range 0 to 1)
+
+
+
+    void Awake()
+    {
+
+        amplitudeModulationOscillator = new SineHP();
+        frequencyModulationOscillator = new SineHP();
+
+        // Grab the sample rate from the system
+        _FS = AudioSettings.outputSampleRate;
+        // Calculate how long each sample lasts
+        _sampleDuration = 1.0 / _FS;
+
+    }
 
 
 
     void Start()
     {
-      
-
 
         sinWeight = 0.75;
         sqrWeight = 0.25;
         sawWeight = 0.25;
 
 
-        //thisWaveform = 0;
-
-        // Grab the sample rate from the system
-        _FS = AudioSettings.outputSampleRate;
-        // Calculate how long each sample lasts
-        _sampleDuration = 1.0 / _FS;
-        // Generate frequencies corresponding to all MIDI values
-        //frequencies = GenerateFrequencies();
-
         if (_GM.isActive)
         {
-            gain = volume;
+            volume = volumeValue;
         }
         else
         {
-            gain = 0.0f;           //in teoria -inf
+            volume  = 0.0f;           //in teoria -inf
         }
         changeNote(_GM.indexPlayingNote);
 
@@ -91,19 +131,19 @@ public class Oscillator : MonoBehaviour
 
 
 
-    void Update()
+    void FixedUpdate()
     {
 
         if (_GM.isActive)
         {
-            gain = volume;              /*questo valore si potrebbe moltiplicare per qualche valore scalato che rappresenti la distanza 
+            volume = volumeValue;              /*questo valore si potrebbe moltiplicare per qualche valore scalato che rappresenti la distanza 
                                          * delle mani dal leap, così da dare espressività al suono
                                          * 
                                          */
         }
         else
         {
-            gain = 0.0f;           //in teoria -inf
+            volume = 0.0f;           //in teoria -inf
         }
 
         changeNote(_GM.indexPlayingNote);
@@ -216,6 +256,7 @@ public class Oscillator : MonoBehaviour
 
         //currentDspTime = AudioSettings.dspTime;
 
+        // goes through data chunk
         for (int i = 0; i < data.Length; i += channels)
         {
             /*
@@ -224,6 +265,31 @@ public class Oscillator : MonoBehaviour
              */
             //  currentDspTime += _sampleDuration;
             //  envelope = ComputeAmplitude(currentDspTime) * volume;
+
+            // lets you modulate the frequency
+            double currentFreq = frequency;
+
+
+
+            // Applies Frequency Modulation
+            if (useFrequencyModulation)
+            {
+                phaseIncrementFM = (frequencyModulationOscillatorFrequency) * 2.0 * Mathf.PI / _FS;
+                phaseFM += phaseIncrementFM;
+                if (phaseFM > (Mathf.PI * 2))
+                {
+                    phaseFM = phaseFM % (Mathf.PI * 2);
+                }
+
+                double freqOffset = (frequencyModulationOscillatorIntensity * frequency * 0.75) / 100.0;
+                currentFreq += mapValueD(SineHP.Sin((float)phaseFM), -1.0, 1.0, -freqOffset, freqOffset);
+                frequencyModulationRangeOut = (float)SineHP.Sin((float)phaseFM) * 0.5f + 0.5f;
+            }
+            else
+            {
+                frequencyModulationRangeOut = 0.0f;
+            }
+
 
             /*
              * The phase variable below increments by the calculated amount for
@@ -238,7 +304,8 @@ public class Oscillator : MonoBehaviour
              * it so we don't have an ever-increasing variable that will cause
              * an overflow error.
              */
-            phaseIncrement = (frequency * octave) * 2.0 * Mathf.PI / _FS;
+
+            phaseIncrement = (currentFreq * octave) * 2.0 * Mathf.PI / _FS;
             phase += phaseIncrement;
             if (phase > (Mathf.PI * 2))
             {
@@ -279,23 +346,23 @@ public class Oscillator : MonoBehaviour
             noiseOutput = PinkNoise.Noise();
 
 
-        /*      Mixa tutti gli output
-               http://www.vttoth.com/CMS/index.php/technical-notes/68
-         Let's say we have two signals, A and B. If A is quiet, we want to hear B on the output in unaltered form. If B 
-        is quiet, we want to hear A on the output (i.e., A and B are treated symmetrically.) If both A and B have a non-zero amplitude,
-        the mixed signal must have an amplitude between the greater of A and B, and the maximum permissible amplitude.
-        If we take A and B to have values between 0 and 1, there is actually a simple equation that satisfies all of the
-        above conditions:       Z= A + B − AB.
-        Simple, isn't it! Moreover, it can be easily adapted for more than two signals. 
-        Consider what happens if we mix another signal, C, to Z:  T= Z + C − Z C = A + B + C − AB − AC − BC + ABC.
+            /*      Mixa tutti gli output
+                   http://www.vttoth.com/CMS/index.php/technical-notes/68
+             Let's say we have two signals, A and B. If A is quiet, we want to hear B on the output in unaltered form. If B 
+            is quiet, we want to hear A on the output (i.e., A and B are treated symmetrically.) If both A and B have a non-zero amplitude,
+            the mixed signal must have an amplitude between the greater of A and B, and the maximum permissible amplitude.
+            If we take A and B to have values between 0 and 1, there is actually a simple equation that satisfies all of the
+            above conditions:       Z= A + B − AB.
+            Simple, isn't it! Moreover, it can be easily adapted for more than two signals. 
+            Consider what happens if we mix another signal, C, to Z:  T= Z + C − Z C = A + B + C − AB − AC − BC + ABC.
 
 
-         */
-        nextOutput = sinOutput + sawOutput + sqrOutput - (sinOutput * sawOutput) -
-                                (sinOutput * sqrOutput) - (sawOutput * sqrOutput) + (sinOutput * sawOutput * sqrOutput);
+             */
+            nextOutput = sinOutput + sawOutput + sqrOutput - (sinOutput * sawOutput) -
+                                    (sinOutput * sqrOutput) - (sawOutput * sqrOutput) + (sinOutput * sawOutput * sqrOutput);
 
-        nextOutput += noiseOutput * (float)noiseWeight;      //da cambiare
-           
+            nextOutput += noiseOutput * (float)noiseWeight;      //da cambiare
+
             /*
              * Here we apply a single-pole low-pass filter. Even if the filter
              * is completely open (lowPass = 1) we still compute this step so we
@@ -303,7 +370,28 @@ public class Oscillator : MonoBehaviour
              */
             nextOutput = (float)((nextOutput * lowPass) + (previousOutput * (1 - lowPass)));
 
-            nextOutput = nextOutput * gain;
+            nextOutput = nextOutput * 0.5f * volume;
+
+
+
+
+            // Applies Amplitude Modulation
+            if (useAmplitudeModulation)
+            {
+                phaseIncrementAM = (amplitudeModulationOscillatorFrequency) * 2.0 * Mathf.PI / _FS;
+                phaseAM += phaseIncrementAM;
+                if (phaseAM > (Mathf.PI * 2))
+                {
+                    phaseAM = phaseAM % (Mathf.PI * 2);
+                }
+                nextOutput *= (float)mapValueD(SineHP.Sin((float)phaseAM), -1.0, 1.0, 0.0, 1.0);
+                amplitudeModulationRangeOut = (float)SineHP.Sin((float)phaseAM) * 0.5f + 0.5f;
+            }
+            else
+            {
+                amplitudeModulationRangeOut = 0.0f;
+            }
+
 
 
 
@@ -340,7 +428,7 @@ public class Oscillator : MonoBehaviour
         lowPass = value;
     }
 
-   
+
 
 
     //pink noise approximation
@@ -350,16 +438,47 @@ public class Oscillator : MonoBehaviour
 
         public static float Noise()
         {
-            return (float) rnd.NextDouble();
+            return (float)rnd.NextDouble();
         }
     }
 
     // High percision sine approximation
     public class SineHP
     {
-        private static float sin = 0; 
+        private static float sin = 0;
 
         public static float Sin(float x)
+        {
+            if (x < -3.14159265f)
+                x += 6.28318531f;
+            else
+                if (x > 3.14159265f)
+                x -= 6.28318531f;
+
+            if (x < 0)
+            {
+                sin = x * (1.27323954f + 0.405284735f * x);
+
+                if (sin < 0)
+                    sin = sin * (-0.255f * (sin + 1) + 1);
+                else
+                    sin = sin * (0.255f * (sin - 1) + 1);
+            }
+            else
+            {
+                sin = x * (1.27323954f - 0.405284735f * x);
+
+                if (sin < 0)
+                    sin = sin * (-0.255f * (sin + 1) + 1);
+                else
+                    sin = sin * (0.255f * (sin - 1) + 1);
+            }
+
+            return sin;
+        }
+
+
+        public float CalculateSin(float x)
         {
             if (x < -3.14159265f)
                 x += 6.28318531f;
@@ -403,7 +522,7 @@ public class Oscillator : MonoBehaviour
         }
     }
 
-    public void OctaveDown()   
+    public void OctaveDown()
     {
         octaveNumber -= 1;
         UpdateOctaveNumber();
@@ -420,5 +539,21 @@ public class Oscillator : MonoBehaviour
         text.text = "C" + (octaveNumber) + " - C" + (octaveNumber + 1);
 
     }
+
+
+    //These functions scale floats and double values from one range to another 
+
+    float mapValue(float referenceValue, float fromMin, float fromMax, float toMin, float toMax)
+    {
+        /* This function maps (converts) a Float value from one range to another */
+        return toMin + (referenceValue - fromMin) * (toMax - toMin) / (fromMax - fromMin);
+    }
+
+    double mapValueD(double referenceValue, double fromMin, double fromMax, double toMin, double toMax)
+    {
+        /* This function maps (converts) a Double value from one range to another */
+        return toMin + (referenceValue - fromMin) * (toMax - toMin) / (fromMax - fromMin);
+    }
 }
+
 
