@@ -73,10 +73,12 @@ public class ProceduralAudioOscillator : MonoBehaviour
 
     /* These control the amplitude of the general signal  */
     public float gain;
+    //general volume of the oscillators, the output is moltiplied by this value
     [Range(0f, 1f)]
     public float volume = 0;
+    //the value that is assigned to the variable volume
     [Range(0f, 1f)]
-    public float volumeValue= 0.3f;
+    public float volumeValue;
 
 
 
@@ -109,7 +111,10 @@ public class ProceduralAudioOscillator : MonoBehaviour
 
         sampleRate = AudioSettings.outputSampleRate;
         Debug.Log(sampleRate );
-    }
+
+        //the value that is assigned to the variable volume, this is the actual volume of the synth
+        volumeValue = 0.2f;
+}
 
 
     void Start()
@@ -330,7 +335,7 @@ public class ProceduralAudioOscillator : MonoBehaviour
 
 
 
-            float x = volume * 0.5f * (float)nextOutput;
+            float x = volume  * (float)nextOutput;
 
             for (int j = 0; j < channels; j++)
             {
