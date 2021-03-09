@@ -128,7 +128,6 @@ public static class TestML
         for (int i = 0 ; i < k - (j + 1) ; i++)
         {
             W2.Add(weightsArrays.ElementAt(j + 1 + i));
-
         }
 
 
@@ -150,10 +149,9 @@ public static class TestML
     {
       
         
-        float[] scaledFeatures = ScaleValues(features);         //Sostituire dove sta features con scaledFeatures
+        float[] scaledFeatures = ScaleValues(features);         
         for (int i = 0; i < scaledFeatures.Length; i++)
         {
-            //Debug.Log(scaledFeatures[i]);
             features[i] = scaledFeatures[i];
         }
 
@@ -214,17 +212,21 @@ public static class TestML
     }
 
 
-
-    //Funzione per scalare i valori: converte le features in valori da 0 a 1
-
+    /// <summary>
+    /// Scala i valori convertendo le features non scalate in valori tra 0 e 1
+    /// </summary>
+    /// <param name="unscaledFeatures">features da scalare</param>
+    /// <returns>features scalate con valori tra 0 e 1</returns>
     private static float[] ScaleValues(float[] unscaledFeatures)
     {
         var scaledFeatures = new float[unscaledFeatures.Length];
         var minValues = new float[unscaledFeatures.Length];
         var maxValues = new float[unscaledFeatures.Length];
 
-        string[] readText = File.ReadAllLines(FileUtils.GeneratePath("min&max_values_dataset_out.txt"));        //primo elemento contiene riga contenente valori min
-                                                                                                            //secondo elemento contiene riga contenente valori max
+        string[] readText = File.ReadAllLines(FileUtils.GeneratePath("min&max_values_dataset_out.txt"));       
+        
+        //primo elemento contiene riga contenente valori min                                                                                           
+        //secondo elemento contiene riga contenente valori max
         string[] min = readText[0].Split(' ');
         string[] max = readText[1].Split(' ');
 
@@ -234,25 +236,11 @@ public static class TestML
             maxValues[i] = float.Parse(max[i], CultureInfo.InvariantCulture);
         }
 
-        /*
-        for (int i = 0; i < minValues.Length; i++)
-        {
-            Debug.Log("index " + i + " (valori min): " + minValues[i]);
-        }
-        for (int i = 0; i < maxValues.Length; i++)
-        {
-            Debug.Log("index " + i + " (valori max): " + maxValues[i]);
-        }
-        */
 
         for (int i = 0; i < unscaledFeatures.Length; i++)
         {
             scaledFeatures[i] = (unscaledFeatures[i] - minValues[i]) / (maxValues[i] - minValues[i]);
         }
-
-        //foreach (float e in scaledFeatures){
-        //     Debug.Log("features scalate  : " + e);
-        // }
 
         return scaledFeatures;
 

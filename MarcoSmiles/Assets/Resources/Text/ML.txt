@@ -64,12 +64,12 @@ def grid(cl, classifier, param_grid, n_folds, t_s_D, tLab_downsampled):
     # cambiare il percorso dove si salvano i vari esperimenti di validation con k-fold cross-validation
     with open(cl+".out.txt", "w") as f:
 
-        # CAMBIARE NUMERO DI JOBS A SECONDA DELLA PROPRIA CPU ALTRIMENTI SKRT, ORA STA MESSO 20 SOLO PERCHE' VOGLIO FLEXARE
+        # sceglie quanti core della cpu utilizzare, verranno usati solo 5/6 di tutti i core disponibili
         quotient = 5/6
         n_core = int(quotient * os.cpu_count())
-        
+
         estimator = GridSearchCV(
-            classifier, cv=n_folds, param_grid=param_grid, n_jobs = n_core, verbose=1, scoring='f1_weighted')
+            classifier, cv=n_folds, param_grid=param_grid, n_jobs=n_core, verbose=1, scoring='f1_weighted')
         estimator.fit(t_s_D, tLab_downsampled)
         means = estimator.cv_results_['mean_test_score']
         stds = estimator.cv_results_['std_test_score']
@@ -86,10 +86,6 @@ def grid(cl, classifier, param_grid, n_folds, t_s_D, tLab_downsampled):
     return best
 
 
-# carico il dataset
-
-# x = pickle.load(open("/path","rb")) #path da cambiare
-# y = pickle.load(open("/path","rb")) #path da cambiare
 '''
 Il dataset deve avere questa forma. Preferibilmente un np.array
 Ricordare che np.array non si pu� dichiarare vuoto e riempire mano mano,
@@ -117,7 +113,7 @@ ___
 |3| classe dell'elemento 6
 |...|
 |0| classe dell'elemento n
-  
+
 '''
 
 
@@ -131,22 +127,11 @@ x.drop(x.columns[xcols], axis=1, inplace=True)
 y.drop(y.columns[ycols], axis=1, inplace=True)
 
 
-# print(y)
-'''
-#se le label sono stringhe o non sono numerate da 0
-label_encoder = LabelEncoder()
-y = label_encoder.fit_transform(y)
-y = y.reshape(len(y),) #(righe,colonne) (default=1)
-
-print(y)
-'''
-
-
-# 1 divido il dataset in modo stratificato in una parte per il training (80%) ed una parte per il testing (20%)
+# 1 Divido il dataset in modo stratificato in una parte per il training (80%) ed una parte per il testing (20%)
 training_set_data, test_set_data, training_set_labels, test_set_labels = train_test_split(
     x, y, test_size=0.2, stratify=y)
 
-# 4 Scaling dei dati se non sono normalizzati. Vedere se � meglio Robust o Standard
+# 2 Scaling dei dati se non sono normalizzati. Vedere se � meglio Robust o Standard
 scaler = MinMaxScaler()
 train_scaled_D = scaler.fit_transform(training_set_data)
 test_scaled_D = scaler.transform(test_set_data)
@@ -161,7 +146,7 @@ for col in ycols:
     min_values.append(min(train_scaled_D[col]))
     max_values.append(max(train_scaled_D[col]))
 
-with open('min&max_values_dataset_out_SCALED.txt', 'w') as f:
+with open('min&max_values_dataset_out.txt', 'w') as f:
     for item_min in min_values:
         f.write(str(item_min) + " ")
     f.write("\n")
@@ -171,28 +156,18 @@ with open('min&max_values_dataset_out_SCALED.txt', 'w') as f:
 min_values = []
 max_values = []
 
-for col in ycols:
-    min_values.append(min(training_set_data[col]))
-    max_values.append(max(training_set_data[col]))
-
-with open('min&max_values_dataset_out.txt', 'w') as f:
-    for item_min in min_values:
-        f.write(str(item_min) + " ")
-    f.write("\n")
-    for item_max in max_values:
-        f.write(str(item_max) + " ")
 
 # feature importance
 feature_importance(train_scaled_D, training_set_labels)
 
 
-# 5 validation con k-fold cross-validation
+# validation con k-fold cross-validation
 n_folds = 10
 
 
 # classificatore
 classificatore = MLPClassifier()
-# parametri da testare, sostituire numero hidden layer in base a grandezza input, sostituire max_iter in base a grandezza dataset
+# 3 parametri da testare, sostituire numero hidden layer in base a grandezza input, sostituire max_iter in base a grandezza dataset
 #                   ['tanh', 'relu']
 pg = {'activation': ['relu'], 'learning_rate': ['invscaling', 'adaptive', 'constant'],
       'solver': ['adam', 'lbfgs', 'sgd'],
