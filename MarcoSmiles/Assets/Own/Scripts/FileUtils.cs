@@ -19,6 +19,8 @@ public static class FileUtils
     public static string filename = "marcosmiles_dataset.csv";
     //static string ext = "csv";
 
+    public static string confusiongrid_filename = "confusion_grid_data.csv";
+
     /// <summary>
     /// Nome della cartella contenente i datasets importati
     /// </summary>
@@ -33,6 +35,11 @@ public static class FileUtils
     /// Dataset selezionato
     /// </summary>
     public static string selectedDataset = defaultFolder;
+
+    /// <summary>
+    /// Dimensione della matrice di confusione
+    /// </summary>
+    public static int matrixSize = 24;
 
     /// <summary>
     /// Restituisce il nome della cartella del dataset
@@ -145,6 +152,32 @@ public static class FileUtils
 
             //  stampa il messaggio nella console di debug
             Debug.Log("FILE CREATO");
+        }
+    }
+
+    public static void Save(int[,] confusionList)
+    {
+        if(File.Exists(GeneratePath(confusiongrid_filename)))
+        {
+            var str = "";
+            for(int i = 0; i < matrixSize; i++)
+            {
+                for(int j = 0; j < matrixSize; j++)
+                {
+                    str += confusionList[i, j];
+
+                    if (j != matrixSize-1)
+                        str += ", ";
+                }
+                str += Environment.NewLine;
+            }
+
+            File.WriteAllText(GeneratePath(confusiongrid_filename), str);
+        }
+        else
+        {
+            File.Create(GeneratePath(confusiongrid_filename)).Dispose();
+            Save(confusionList);
         }
     }
 

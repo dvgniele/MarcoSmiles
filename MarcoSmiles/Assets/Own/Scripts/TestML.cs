@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -15,6 +16,10 @@ public static class TestML
     private static List<float> B2 = new List<float>();
 
     public static System.DateTime DateLatestLearning;
+
+    private static string[] readText;
+    private static string[] min;
+    private static string[] max;
 
 
     /// <summary>
@@ -86,7 +91,7 @@ public static class TestML
 
 
     /// <summary>
-    /// Riempe le Matrici W1 ; B1 ; W2; B2. 
+    /// Riempe le Matrici W1 ; B1 ; W2; B2.  Legge il file dei minimi e massimi e lo carica in memoria
     /// Usa il metodo ReadArraysFromFormattedFile, per leggere da un file una lista di arrays di tipo float. 
     /// Questa lista restituita è formattata logicamente.
     /// </summary>
@@ -130,6 +135,19 @@ public static class TestML
             W2.Add(weightsArrays.ElementAt(j + 1 + i));
         }
 
+        try
+        {
+            readText = File.ReadAllLines(FileUtils.GeneratePath("min&max_values_dataset_out.txt"));
+            //primo elemento contiene riga contenente valori min                                                                                           
+            //secondo elemento contiene riga contenente valori max
+            min = readText[0].Split(' ');
+            max = readText[1].Split(' ');
+        }
+        catch(Exception)
+        {
+            Debug.LogError("File MinMax non esistente.");
+        }
+
 
         return true;
         
@@ -147,22 +165,18 @@ public static class TestML
     /// <returns>Id nota trovata</returns>
     public static int ReteNeurale(float[] features)
     {
-      
-        
-        float[] scaledFeatures = ScaleValues(features);         
-        for (int i = 0; i < scaledFeatures.Length; i++)
-        {
-            features[i] = scaledFeatures[i];
-        }
 
+
+        //float[] scaledFeatures = ScaleValues(features);         
+        float[] scaledFeatures = features;
+        for (int i = 0; i < scaledFeatures.Length; i++)
+            features[i] = scaledFeatures[i];
+        
 
         // output_hidden1 ha lo stesso numero di elementi di B1
         var output_hidden1 = new float[B1.Count];
         // output_hidden2 ha lo stesso numero di elementi di B2
         var output_hidden2 = new float[B2.Count];
-
-
-
 
 
         float x, w, r;
@@ -222,14 +236,7 @@ public static class TestML
         var scaledFeatures = new float[unscaledFeatures.Length];
         var minValues = new float[unscaledFeatures.Length];
         var maxValues = new float[unscaledFeatures.Length];
-
-        string[] readText = File.ReadAllLines(FileUtils.GeneratePath("min&max_values_dataset_out.txt"));       
         
-        //primo elemento contiene riga contenente valori min                                                                                           
-        //secondo elemento contiene riga contenente valori max
-        string[] min = readText[0].Split(' ');
-        string[] max = readText[1].Split(' ');
-
         for (int i = 0; i < unscaledFeatures.Length; i++)
         {
             minValues[i] = float.Parse(min[i], CultureInfo.InvariantCulture);

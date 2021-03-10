@@ -24,6 +24,7 @@ public class _GM : MonoBehaviour
     public static Hand hand_R;
     public static Hand hand_L;
 
+    public ConfusionTestingScript tester;
     //public static int currentNoteId;
 
     [Range(1, 2)]
@@ -71,7 +72,8 @@ public class _GM : MonoBehaviour
     {
         Mainpage,
         Suonah,
-        TrainingScene
+        TrainingScene,
+        TestingScene
     }
     private SceneEnum currSceneEnum;
 
@@ -127,6 +129,9 @@ public class _GM : MonoBehaviour
             case (2):
                 currSceneEnum = SceneEnum.TrainingScene;
                 break;
+            case (3):
+                currSceneEnum = SceneEnum.TestingScene;
+                break;
         }
 
 
@@ -149,7 +154,11 @@ public class _GM : MonoBehaviour
             }
             else
                 SetLearnStatus(false);
+        }
 
+        if(currSceneEnum == SceneEnum.TestingScene)
+        {
+            TestML.Populate();
         }
     }
 
@@ -205,6 +214,12 @@ public class _GM : MonoBehaviour
 
             startTime = Time.time;
             LoadingCircle.SetActive(false);
+        }
+
+        if(currSceneEnum == SceneEnum.TestingScene)
+        {
+            ConnectLeapPanel = GameObject.Find("ConnectLeapPanel");
+            ClosePopUp();
         }
 
     }
@@ -264,7 +279,10 @@ public class _GM : MonoBehaviour
     /// </summary>
     public void TrainButtonClick()
     {
-        trainer.Trainer();
+        if (currSceneEnum == SceneEnum.TrainingScene)
+            trainer.Trainer();
+        else if (currSceneEnum == SceneEnum.TestingScene)
+            tester.Tester();
     }
 
     /// <summary>
@@ -346,7 +364,13 @@ public class _GM : MonoBehaviour
 
         var skrtino = listaPulsanti.IndexOf(listaPulsanti.FirstOrDefault(x => x.gameObject.Equals(sender.gameObject)));
         //Debug.Log(skrtino);
-        trainer.ChangeNoteId(skrtino);
+
+        if(currSceneEnum == SceneEnum.TrainingScene)
+            trainer.ChangeNoteId(skrtino);
+
+        if (currSceneEnum == SceneEnum.TestingScene)
+            tester.ChangeNoteId(skrtino);
+
 
         //Debug.Log($"{listaPulsanti[skrtino].gameObject.name}, {skrtino}");
     }
@@ -402,6 +426,12 @@ public class _GM : MonoBehaviour
     /// Effettua la navigazione alla scena di test
     /// </summary>
     public void NavigateToTestScene() => SceneManager.LoadScene(1);
+
+
+    /// <summary>
+    /// Effettua la navigazione alla sena di testing della matrice
+    /// </summary>
+    public void NavigateToTestingMatrixScene() => SceneManager.LoadScene(3);
 
     /// <summary>
     /// Effettua la navigazione alla scena di training
