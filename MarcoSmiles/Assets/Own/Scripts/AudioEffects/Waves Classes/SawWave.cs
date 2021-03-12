@@ -19,7 +19,7 @@ public class SawWave
 	{
 		1.0, 		// level of 1st harmonic
 		0.5,		// level of 2nd harmonic
-		0.43333333,	// level of 3rd harmonic
+		0.33333333,	// level of 3rd harmonic
 		0.25,		// level of 4th harmonic
 		0.2,		// level of 5th harmonic
 		0.16666666,		// level of 6th harmonic

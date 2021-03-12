@@ -113,7 +113,8 @@ public class ProceduralAudioOscillator : MonoBehaviour
         Debug.Log(sampleRate );
 
         //the value that is assigned to the variable volume, this is the actual volume of the synth
-        volumeValue = 0.2f;
+        volumeValue = 0.3f;
+        volume = volumeValue;
 }
 
 
@@ -124,17 +125,7 @@ public class ProceduralAudioOscillator : MonoBehaviour
         sinWeight = 0.75;
         sqrWeight = 0.25;
         sawWeight = 0.25;
-
         lowPass = 1;
-
-        if (_GM.isActive)
-        {
-            volume = volumeValue;
-        }
-        else
-        {
-            volume = 0.0f;           
-        }
 
         changeNote(_GM.indexPlayingNote);
 
@@ -144,24 +135,8 @@ public class ProceduralAudioOscillator : MonoBehaviour
 
     void Update()
     {
-
-        if (_GM.isActive)
-        {
-            volume = volumeValue;             /*questo valore si potrebbe moltiplicare per qualche valore scalato che rappresenti la distanza 
-                                         * delle mani dal leap, così da dare espressività al suono
-                                         * 
-                                         */
-        }
-        else
-        {
-            volume = 0.0f;           
-        }
-
         changeNote(_GM.indexPlayingNote);
         //Debug.Log(frequency);
-
-
-
     }
 
     /* Uses a switch case.... in order to check on the index of the playing note and to change the frequency of the oscillator */
@@ -253,19 +228,21 @@ public class ProceduralAudioOscillator : MonoBehaviour
 
     void OnAudioFilterRead(float[] data, int channels)
     {
+        if (_GM.isActive)
+        {
 
-        /* 
-         * This is "the current time of the audio system", as given
-         * by Unity. It is updated every time the OnAudioFilterRead() function
-         * is called. It's usually every 1024 samples.
-         * 
-         * A note on the sample rate:
-         * We don't actually see real numbers for the sample rate, we instead
-         * read it from the system in the Start() function.
-         */
+            /* 
+             * This is "the current time of the audio system", as given
+             * by Unity. It is updated every time the OnAudioFilterRead() function
+             * is called. It's usually every 1024 samples.
+             * 
+             * A note on the sample rate:
+             * We don't actually see real numbers for the sample rate, we instead
+             * read it from the system in the Start() function.
+             */
 
 
-        currentDspTime = AudioSettings.dspTime;
+            currentDspTime = AudioSettings.dspTime;
         dataLen = data.Length / channels;   // the actual data length for each channel
         chunkTime = dataLen / sampleRate;   // the time that each chunk of data lasts
         dspTimeStep = chunkTime / dataLen;  // the time of each dsp step. (the time that each individual audio sample (actually a float value) lasts)
@@ -344,6 +321,7 @@ public class ProceduralAudioOscillator : MonoBehaviour
 
 
 
+        }
         }
 
 

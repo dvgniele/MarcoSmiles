@@ -167,8 +167,8 @@ public static class TestML
     {
 
 
-        //float[] scaledFeatures = ScaleValues(features);         
-        float[] scaledFeatures = features;
+        float[] scaledFeatures = ScaleValues(features);         
+        //float[] scaledFeatures = features;
         for (int i = 0; i < scaledFeatures.Length; i++)
             features[i] = scaledFeatures[i];
         
