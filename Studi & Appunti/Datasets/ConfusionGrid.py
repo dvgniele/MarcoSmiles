@@ -16,7 +16,8 @@ df = pd.DataFrame(array_data)
 X = df[df.columns]
 y = df[df.columns]
 
-sn.set(rc={'figure.figsize': (11.7, 8.27)}) 
+sn.set(rc={'figure.figsize': (11.7, 8.27)})
+#sn.set(rc={'figure.figsize': (15, 10)})
 sn.heatmap(df,
            annot=True,
            annot_kws={"size": 16},
