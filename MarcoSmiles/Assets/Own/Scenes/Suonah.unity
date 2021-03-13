@@ -3745,7 +3745,7 @@ PrefabInstance:
     - target: {fileID: 2033671098404998995, guid: 5187148bbecb3cb4daa924391134415f,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2033671098446815728, guid: 5187148bbecb3cb4daa924391134415f,
         type: 3}
@@ -3770,7 +3770,7 @@ PrefabInstance:
     - target: {fileID: 2805031028665184522, guid: 5187148bbecb3cb4daa924391134415f,
         type: 3}
       propertyPath: _onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeDecay
+      value: set_decayTime
       objectReference: {fileID: 0}
     - target: {fileID: 2914934521947793566, guid: 5187148bbecb3cb4daa924391134415f,
         type: 3}
