@@ -86,7 +86,7 @@ public class PanelUtils
             tmp_path += item + '/';
 
         //  Apre il pannello
-        var paths = StandaloneFileBrowser.OpenFolderPanel("Export Dataset", tmp_path, false);
+        var paths = StandaloneFileBrowser.OpenFolderPanel("Change Dataset", tmp_path, false);
         if ( paths.Length > 0 ) {
             var path = paths.Last().Split('\\').ToList().Last();
 
