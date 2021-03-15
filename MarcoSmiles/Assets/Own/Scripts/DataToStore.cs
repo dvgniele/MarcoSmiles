@@ -1,6 +1,9 @@
 ﻿using Leap;
 
 [System.Serializable]
+///<summary>
+/// Incapsula i dati relativi alla configurazione di una mano.
+///</summary>
 public class DataToStore
 {
     public Hand hand { get; set; }

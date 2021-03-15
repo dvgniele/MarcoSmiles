@@ -1,4 +1,8 @@
 ﻿[System.Serializable]
+
+///<summary>
+///Incapsula una configurazione della mano sinistra e destra.
+/// </summary>
 public class Position
 {
     public DataToStore Left_Hand { get; set; }
