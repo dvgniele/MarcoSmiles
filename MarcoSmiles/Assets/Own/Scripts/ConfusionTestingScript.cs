@@ -26,8 +26,6 @@ public class ConfusionTestingScript : MonoBehaviour
     [SerializeField]
     public int currentNoteId;
 
-    public int noteToPlay = 0;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -119,6 +117,9 @@ public class ConfusionTestingScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Salva la matrice di confusione
+    /// </summary>
     public void Save()
     {
         FileUtils.Save(TestingList);

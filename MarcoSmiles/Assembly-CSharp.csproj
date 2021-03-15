@@ -329,7 +329,6 @@
     <Compile Include="Assets\Own\Scripts\TestingScript.cs" />
     <Compile Include="Assets\Own\Scripts\TrainingScript.cs" />
     <Compile Include="Assets\Own\Scripts\_GM.cs" />
-    <Compile Include="Assets\Own\Scripts\_GM_testing.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowser.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserEditor.cs" />

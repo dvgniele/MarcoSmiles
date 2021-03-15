@@ -8,65 +8,52 @@ using System;
 using System.IO;
 using System.Collections;
 
-
-/*__________!Ci Converrebbe fare una classe contenente tutte le costanti,  contenente ad esempio il numero delle note etc....!___________*/
-
-
-
 public class _GM : MonoBehaviour
 {
-    public static bool IsLeapConnected = false;             //  PIU' IMPORTANTE DI QUEL CHE SEMBRA
+    public static bool IsLeapConnected = false;             //  Flag necessario per sapere se il leap motion è connesso
 
-    private Scene currentScene;
-    private Button playButton;
+    private Button playButton;                              //  Vottone preseente nel main menu per passare a scena "Play"
 
-    public TrainingScript trainer;                          // viene usata solo nella scena di training per salvare nel dataset
-    public static Hand hand_R;
-    public static Hand hand_L;
+    public TrainingScript trainer;                          //  Istanza della classe trainer, utilizzata esclusvamente nella scena di training
+    public static Hand hand_R;                              //  Dati statici della mano destra
+    public static Hand hand_L;                              //  Dati statici della mano sinistra
 
     public ConfusionTestingScript tester;
-    //public static int currentNoteId;
+                        
+    public static List<Position> list_posizioni;            //  Viene usata solo nella scena di training per salvare nel dataset
 
-    [Range(1, 2)]
-    public static int octaves;
+    public static List<int> trainedNotes;                   //  Contiene una lista di indici, che rappresentano le note allenate (0-23)
 
-    public static List<Position> list_posizioni;            // viene usata solo nella scena di training per salvare nel dataset
-
-    public static List<int> trainedNotes;
-
-    public bool shouldPlay = false;                         //  decide se bisogna suonare IN BASE ALLA SCENA ATTIVA. true solo se è nella scena di testing
-
-
-    public static bool isActive = false;                     // se ci sono le mani, suona, altrimenti no, lo script oscillator osserva questa variabile per deicdere se deve suonare 
-    public static float[] current_Features;                //  attualmente le features sono floats, risolviamo sto problemo
-    public static int indexPlayingNote;                     //  indice della nota da suonare che è letta da PCMOscillator
-    public static int indexPreviousNote;                    //  indice della nota suonata nel fixed update precedente
+    public static bool isActive = false;                    //  true se ci sono le mani, altrimenti false. lo script ProceduralAudioOscillator.cs osserva questa variabile per decidere se deve suonare 
+    public static float[] current_Features;                 //  Attualmente le features sono floats, risolviamo sto problemo
+    public static int indexPlayingNote;                     //  Indice della nota corrente da suonare, è letta da PCMOscillator
+    public static int indexPreviousNote;                    //  Indice della nota precedentemente suonata nel fixed update precedente
 
     [SerializeField]
-    public List<Button> listaPulsanti;
-    public GameObject piano;
+    public List<Button> listaPulsanti;                      //  Contiene una lista dei tasti del piano
+    public GameObject piano;                                //  Rappresenta il piano all'interno della scena          
 
-    public GameObject PopupPanel;
+    //  Variabili contenenti riferimenti ai pannelli di popup
+    public GameObject PopupPanel;                   
     public static GameObject ConnectLeapPanel;
 
-    public GameObject ConfLearn;
-    public GameObject ConfNotLearn;
-    public GameObject DateLatestLearning;
+    //  Interfaccia. Per sapere se è stato fatto Learn su configurazione selezionata
+    public GameObject ConfLearn;                            // Gameobject contenente immagine che indica che è stato fatto Learn per la conf. selezionata. (TRAINING SCENE)                           
+    public GameObject ConfNotLearn;                         // Gameobject contenente immagine che indica che NON è stato fatto Learn per la conf. selezionata. (TRAINING SCENE)                           
+    public GameObject DateLatestLearning;                   // Gameobject contenente la data dell'ultimo Learn per la conf. selezionata. (TRAINING SCENE)                           
 
-    //Variabili animazione loading circle
+    //  Variabili animazione loading circle
     public GameObject LoadingCircle;
     public RectTransform mainIcon;
-    public static float timeStep = 0.1f;
-    public static float oneStepAngle = -36;
+    public static float timeStep = 0.1f;                    //  Intervallo di tempo per l'animazione di caricamento
+    public static float oneStepAngle = -36;                 //  Angolo di rotazione per l'animazione di caricamento
     float startTime;
 
+    //  Testo contenente il nome della Configurazione (cartella) selezionata 
     public Text SelectedDatasetText;
 
-    //  inizializza la cariabile selectedDataset con la cartella FileUtils.defaultFolder (DefaultDataset)
-    //public static string selectedDataset = "DefaultDataset";
-
     /// <summary>
-    /// Enum per le scene unity esistenti
+    /// Enum per le scene unity esistenti nella build
     /// </summary>
     private enum SceneEnum
     {
@@ -75,50 +62,33 @@ public class _GM : MonoBehaviour
         TrainingScene,
         TestingScene
     }
-    private SceneEnum currSceneEnum;
-
-    public static void ShowConnectLeapPopup()
-    {
-        ConnectLeapPanel.SetActive(true);
-    }
-
-    public static void HideConnectLeapPopup()
-    {
-        ConnectLeapPanel.SetActive(false);
-    }
-
-    public void StartCircleAnimation()
-    {
-        
-        if (Time.time - startTime >= timeStep)
-        {
-            Vector3 iconAngle = mainIcon.localEulerAngles;
-            iconAngle.z += oneStepAngle;
-
-            mainIcon.localEulerAngles = iconAngle;
-
-            startTime = Time.time;
-        }
-
-        //mainIcon.transform.Rotate(new Vector3(0f, 0f, oneStepAngle));
-    }
+    private SceneEnum currSceneEnum;                        //  Variabile per tenere traccia della scena corrente
+    private Scene currentScene;                             //  Oggetto scena, utilizzato per modificare la variabile currSceneEnum
 
 
     #region UNITY METH
 
     /// <summary>
-    /// Chiamato quando viene inizializzato un oggetto con lo script _GM.cs
+    /// Chiamato quando viene inizializzato un oggetto contenente lo script _GM.cs
     /// </summary>
     private void Awake()
     {
-        //selectedDataset = FileUtils.defaultFolder;
-        string nameFile = "ML";           //Nome del file python. 
-        var MLFile = Resources.Load<TextAsset>("Text/" + nameFile);     //carica lo script dalla cartella resources (file .txt)
-        FileUtils.SavePy(MLFile.bytes, MLFile.name);                    //Converte il file .txt in script .py
+        /*
+         * In unity, possono essere caricati nella build solo determinati tipi di file. File .txt vengono copiati all'interno della cartella 
+         * della build.
+         * In questo modo riusciamo ad avere lo script .py (che in questo momento è un file .txt) all'interno della build.
+         * Dunque, leggiamo il file .txt dalla cartella Resources, e usaando il metodo SavePy, salviamo lo script letto dal file .txt
+         * in un file ad estensione .py. Questo file potrà poi essere lanciato su linea di comando.    
+         */
 
-        currentScene = SceneManager.GetActiveScene();
+        string nameFile = "ML";                                         //  Nome dello script python. 
+        var MLFile = Resources.Load<TextAsset>("Text/" + nameFile);     //  Carica lo script dalla cartella Resources di Unity(file .txt)
+        FileUtils.SavePy(MLFile.bytes, MLFile.name);                    //  Converte il file .txt in script .py
 
-        switch (currentScene.buildIndex)
+        currentScene = SceneManager.GetActiveScene();                   //  Prende la scena correntemente attiva
+
+        
+        switch (currentScene.buildIndex)                                
         {
             case (0):
                 currSceneEnum = SceneEnum.Mainpage;
@@ -134,29 +104,31 @@ public class _GM : MonoBehaviour
                 break;
         }
 
-
-
+        //  Caso in cui la scena corrente è la scena mainpage(Mainpage)
         if (currSceneEnum == SceneEnum.Mainpage)
         {
 
         }
 
+        //  Caso in cui la scena corrente è la scena per suonare (PlayScene)
         if (currSceneEnum == SceneEnum.Suonah)
         {
-            TestML.Populate();
+            TestML.Populate();                                              //  Effettua il caricamento dei file necessari per la scena Suonah
         }
 
+        // Se la scena corrente è la scena di training (TrainingScene)
         if (currSceneEnum == SceneEnum.TrainingScene)
         {
-            if (TestML.Populate()) { 
-                SetLearnStatus(true);
-                UpdateLatestLearningDate();
+            if (TestML.Populate()) {                                        //  Restituisce true se trova i file weights.txt e bias.txt
+                SetLearnStatus(true);                                       //  Segnala che è stato effettuato il Learning sul dataset selezionato 
+                UpdateLatestLearningDate();                                 //  Aggiorna il testo contente la data dell'ultimo training effettuato sul dataset selezionato
             }
             else
-                SetLearnStatus(false);
+                SetLearnStatus(false);                                      //  Segnala che non è stato effettuato il trianing sul dataset selezionato 
         }
 
-        if(currSceneEnum == SceneEnum.TestingScene)
+        // Se la scena corrente è la scena di testing (TestingScene)
+        if (currSceneEnum == SceneEnum.TestingScene)
         {
             TestML.Populate();
         }
@@ -165,21 +137,13 @@ public class _GM : MonoBehaviour
 
     void Start()
     {
-        /*
-         * In unity, possono essere caricati nella build solo determinati tipi di file. File .txt vengono copiati all'interno della cartella 
-         * della build.
-         * In questo modo riusciamo ad avere lo script .py (che in questo momento è un file .txt) all'interno della build.
-         * Dunque, leggiamo il file .txt dalla cartella Resources, e usaando il metodo SavePy, salviamo lo script letto dal file .txt
-         * in un file ad estensione .py. Questo file potrà poi essere lanciato su linea di comando.    
-         */
-
         list_posizioni = new List<Position>();
 
         if (currSceneEnum == SceneEnum.Mainpage)
         {
-            playButton = GameObject.Find("PlayButton").GetComponent<Button>();
+            playButton = GameObject.Find("PlayButton").GetComponent<Button>();          //  Istanzia il pulsante PlayButton
 
-            //Controlla se ci sono i file necessari per passare alla scena "Play"
+            //  Controlla se ci sono i file necessari per passare alla scena "Play"
             try
             {
                 playButton.interactable = FileUtils.CheckForDefaultFiles();
@@ -190,36 +154,35 @@ public class _GM : MonoBehaviour
             }
 
 
-            UpdateSelectedDatasetText();
+            UpdateSelectedDatasetText();            //  Aggiorna il testo del dataset selezionato
 
         }
 
         if (currSceneEnum == SceneEnum.Suonah)
         {
-            ConnectLeapPanel = GameObject.Find("ConnectLeapPanel");
+            ConnectLeapPanel = GameObject.Find("ConnectLeapPanel");         //  Istanzia il popup ConnectLeapPanel
+            ClosePopUp();                                                   //  Chiude il popup
         }
 
         if (currSceneEnum == SceneEnum.TrainingScene)
         {
-            ConnectLeapPanel = GameObject.Find("ConnectLeapPanel");
+            ConnectLeapPanel = GameObject.Find("ConnectLeapPanel");         //  Istanzia il popup ConnectLeapPanel
+            ClosePopUp();                                                   //  Chiude il popup
 
-            //PopupPanel = GameObject.FindGameObjectWithTag("PopupPanel");
-            ClosePopUp();
-
-            //  il programma parte con la prima nota della tastiera selezionata
+            //  Il programma parte con la prima nota della tastiera selezionata
             listaPulsanti.ElementAt(0).Select();
 
-            FileUtils.UpdateTrainedNotesList(FileUtils.filename);
-            UpdateButtonsKeyboard();
+            FileUtils.UpdateTrainedNotesList(FileUtils.filename);           //  Aggiorna la lista delle note già registrate
+            UpdateButtonsKeyboard();                                        //  Aggiorna la tastiera
 
-            startTime = Time.time;
+            startTime = Time.time;              
             LoadingCircle.SetActive(false);
         }
 
         if(currSceneEnum == SceneEnum.TestingScene)
         {
-            ConnectLeapPanel = GameObject.Find("ConnectLeapPanel");
-            ClosePopUp();
+            ConnectLeapPanel = GameObject.Find("ConnectLeapPanel");         //  Istanzia il popup ConnectLeapPanel
+            ClosePopUp();                                                   //  Chiude il popup
         }
 
     }
@@ -233,39 +196,40 @@ public class _GM : MonoBehaviour
                 current_Features = TestingScript.GetCurrentFeatures();
 
                 //salva la nota che si stava suonando nell'update precedente prima di calcolare la nuova nota
-                indexPreviousNote = indexPlayingNote;
-                indexPlayingNote = TestML.ReteNeurale(current_Features);                    //rappresenta la nota che deve essere suonata
+                indexPreviousNote = indexPlayingNote;                                       //  Salva in memoria l'indice dell'ultima nota suonata
+                indexPlayingNote = TestML.ReteNeurale(current_Features);                    //  Rappresenta la nota che deve essere suonata
 
-                ChangeColor(indexPreviousNote, indexPlayingNote);
+                ChangeColor(indexPreviousNote, indexPlayingNote);                           //  Cambia il colore del tasto sulla tastiera corrispondente alla nota che si sta suonando  
             }
 
 
             if (!isActive)
             {
-                ResetColorNotes();
+                ResetColorNotes();                                                          //  Ripristina i colori delle note al default
             }
 
        
         }
-        //Debug.Log("L'indice che rappresenta la nota da suonare è:  " + indexPlayingNote);
 
         if (currSceneEnum == SceneEnum.TrainingScene)
         {
-            //  Debug.Log(FileUtils.selectedDataset);
-
+            //  Avvia l'animazione di caricamento se necessario
             if (LoadingCircle.activeSelf)
-                StartCircleAnimation();
-            
-            
+                StartCircleAnimation(); 
         }
     }
 
+    /// <summary>
+    /// Aggiorna il nome della configurazione selezionata all'interno del Menu Principale
+    /// </summary>
     public void UpdateSelectedDatasetText()
     {
         SelectedDatasetText.text = "Selected Configuration: " + FileUtils.selectedDataset;
     }
 
-
+    /// <summary>
+    /// Aggiorna la data dell'ultimo addestramento effettuato all'interno della scena Training
+    /// </summary>
     public void UpdateLatestLearningDate()
     {
         DateLatestLearning.GetComponent<Text>().text = "Latest Learning: \n " + TestML.DateLatestLearning.ToString();
@@ -273,6 +237,14 @@ public class _GM : MonoBehaviour
 
     #endregion
 
+
+
+
+
+
+
+
+    #region Configurations Management
 
     /// <summary>
     /// Lanciato quando viene premuto il pulsante di training per la nota selezionata
@@ -299,7 +271,6 @@ public class _GM : MonoBehaviour
         }
     }
 
-
     /// <summary>
     /// Elimina tutti i file nel Dataset selezionato
     /// </summary>
@@ -309,10 +280,12 @@ public class _GM : MonoBehaviour
         ResetColorNotes();
     }
 
+    #endregion
+
     #region Keyboard Buttons
 
     /// <summary>
-    /// Cambia il colore della nota da suonare, ripristinando al colore di dafault la nota precedentemente premuta (se necessario)
+    /// Cambia il colore della nota da suonare, ripristinando al colore di default la nota precedentemente suonata (se necessario)
     /// Se la nota da suonare è la stessa della precedente non cambia nulla
     /// </summary>
     /// <param name="id_prev">id nota precedenteme</param>
@@ -325,54 +298,44 @@ public class _GM : MonoBehaviour
         }
         else
         {
-            //resetta il colore di default al tasto corrispondente alla nota precedente
-            //il colore di default è "salvato" nella variabile DisabledColor del ColorBlock del Button
+            //  resetta il colore di default al tasto corrispondente alla nota precedentemente suonata
+            //  il colore di default è "salvato" nella variabile DisabledColor del ColorBlock del Button
             Button b_prev = listaPulsanti[id_prev];
             ColorBlock cb_prev = b_prev.colors;
             cb_prev.normalColor = cb_prev.disabledColor;
             b_prev.colors = cb_prev;
 
-            //evidenzia il tasto corrispondente alla nota che si sta suonando
-            //il colore che evidenzia il tasto è "salvato" nella variabile PressedColor del ColorBlock del Button
+            //  evidenzia il tasto corrispondente alla nota che si sta suonando
+            //  il colore che evidenzia il tasto è "salvato" nella variabile PressedColor del ColorBlock del Button
             Button b_curr = listaPulsanti[id_curr];
             ColorBlock cb_curr = b_curr.colors;
             cb_curr.normalColor = cb_curr.pressedColor;
             b_curr.colors = cb_curr;
 
-
-            //  se è la scena di training
-            if (currSceneEnum == SceneEnum.TrainingScene)
-            {
-                //  cambia l'id della nota nel trainer
-                //trainer.ChangeNoteId(id_curr);
-                return;
-            }
+                    
 
         }
 
     }
 
     /// <summary>
-    /// Viene chiamato ogni volta che un pulsante della tastiera (del pianoforte) viene premuto, per far sì che venga cambiato l'id
-    /// della nota corrente
+    /// Viene chiamato ogni volta che un tasto del pianoforte viene premuto, in modo che venga cambiato l'id
+    /// della nota selezionata. Serve alla classe Trainer.
     /// </summary>
     /// <param name="sender"></param>
     public void GetClickedKey(Button sender)
     {
-        // var previousIndexTrainNote = trainer.currentNoteId;
-        //Debug.Log(previousIndexTrainNote);
 
         var skrtino = listaPulsanti.IndexOf(listaPulsanti.FirstOrDefault(x => x.gameObject.Equals(sender.gameObject)));
-        //Debug.Log(skrtino);
 
+        //  Cambia l'id della nota che si allenando all'interno della classe Trainer
         if(currSceneEnum == SceneEnum.TrainingScene)
             trainer.ChangeNoteId(skrtino);
 
+        //  Serve per testing... Usa un altro script trainer (ConfusionTestingScript.cs)
         if (currSceneEnum == SceneEnum.TestingScene)
             tester.ChangeNoteId(skrtino);
 
-
-        //Debug.Log($"{listaPulsanti[skrtino].gameObject.name}, {skrtino}");
     }
 
     /// <summary>
@@ -442,6 +405,9 @@ public class _GM : MonoBehaviour
 
     #region Panels (Managing Configurations)
 
+    /// <summary>
+    /// Apre il pannello per selezionare una configurazione.
+    /// </summary>
     public void OpenPanel()
     {
         PanelUtils.OpenPanel();
@@ -473,30 +439,68 @@ public class _GM : MonoBehaviour
         PanelUtils.OpenExportPanel();
     }
 
+    #endregion
 
-    //Apre il PopUp dopo aver cliccato il bottone info
+
+    #region Popups
+    /// <summary>
+    /// Apre il PopUp dopo aver cliccato il bottone info
+    /// </summary>
     public void OpenPopUp()
     {
         PopupPanel.SetActive(true);
-
     }
 
+    /// <summary>
+    /// Chiude il PopUp dopo aver cliccato il bottone info
+    /// </summary>
     public void ClosePopUp()
     {
         PopupPanel.SetActive(false);
     }
 
-    //visualizza spunta vicino tasto "learn" per comunicare che per la configurazione selezionata è stato fatto precedentemente il learning
+    /// <summary>
+    /// Mostra il popup che richiede di connettere il LeapMotion
+    /// </summary>
+    public static void ShowConnectLeapPopup()
+    {
+        ConnectLeapPanel.SetActive(true);
+    }
+
+    /// <summary>
+    /// Nasconde il popup che richiede di connettere il LeapMotion
+    /// </summary>
+    public static void HideConnectLeapPopup()
+    {
+        ConnectLeapPanel.SetActive(false);
+    }
+
+    #endregion
+
+    ///<summary>
+    ///  Avvia l'animazione del caricamento
+    ///</summary>
+    public void StartCircleAnimation()
+    {
+        if (Time.time - startTime >= timeStep)
+        {
+            Vector3 iconAngle = mainIcon.localEulerAngles;
+            iconAngle.z += oneStepAngle;
+
+            mainIcon.localEulerAngles = iconAngle;
+
+            startTime = Time.time;
+        }
+    }
+
+    /// <summary>
+    /// Visualizza la spunta vicino tasto "learn" per comunicare che per la configurazione selezionata è stato fatto precedentemente il learning
+    /// </summary>
+    /// <param name="state">true se è stato effettuato il learning, false altrimenti</param>
     public void SetLearnStatus(bool state)
     {
         ConfLearn.SetActive(state);
         DateLatestLearning.SetActive(state);
         ConfNotLearn.SetActive(!state);
     }
-
-
-
-    #endregion
-
-
 }
