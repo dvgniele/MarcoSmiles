@@ -60,6 +60,18 @@ def feature_importance(X, y):
     # plt.savefig('foo.png', bbox_inches='tight') #salva senza mettere bordi bianchi troppo spessi
 
 
+print("\n\n\n\n\n#####\t\t IGNORE ALL THE FOLLOWING MESSAGES, EVERYTHING IS WORKING FINE. \t\t#####")
+print("#####\t\t IGNORE ALL THE FOLLOWING MESSAGES, EVERYTHING IS WORKING FINE. \t\t#####")
+print("#####\t\t IGNORE ALL THE FOLLOWING MESSAGES, EVERYTHING IS WORKING FINE. \t\t#####")
+print("#####\t\t IGNORE ALL THE FOLLOWING MESSAGES, EVERYTHING IS WORKING FINE. \t\t#####")
+print("#####\t\t IGNORE ALL THE FOLLOWING MESSAGES, EVERYTHING IS WORKING FINE. \t\t#####")
+print("#####\t\t IGNORE ALL THE FOLLOWING MESSAGES, EVERYTHING IS WORKING FINE. \t\t#####")
+print("#####\t\t IGNORE ALL THE FOLLOWING MESSAGES, EVERYTHING IS WORKING FINE. \t\t#####")
+print("#####\t\t IGNORE ALL THE FOLLOWING MESSAGES, EVERYTHING IS WORKING FINE. \t\t#####")
+print("#####\t\t IGNORE ALL THE FOLLOWING MESSAGES, EVERYTHING IS WORKING FINE. \t\t#####")
+print("#####\t\t IGNORE ALL THE FOLLOWING MESSAGES, EVERYTHING IS WORKING FINE. \t\t#####\n\n")
+
+
 def grid(cl, classifier, param_grid, n_folds, t_s_D, tLab_downsampled):
     # cambiare il percorso dove si salvano i vari esperimenti di validation con k-fold cross-validation
     with open(cl+".out.txt", "w") as f:
