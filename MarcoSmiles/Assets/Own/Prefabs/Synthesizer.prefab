@@ -1391,9 +1391,10 @@ GameObject:
   - component: {fileID: 2033671098404998990}
   - component: {fileID: 2033671098404998988}
   - component: {fileID: 3031951219521083522}
-  - component: {fileID: 2033671098404998995}
   - component: {fileID: 2033671098404998993}
   - component: {fileID: 2033671098404998994}
+  - component: {fileID: 2033671098404998995}
+  - component: {fileID: 493622755439916439}
   m_Layer: 0
   m_Name: SynthSound
   m_TagString: Untagged
@@ -1543,20 +1544,6 @@ MonoBehaviour:
   thisFreq: 0
   lowPass: 0
   filterFreq: 0
---- !u!114 &2033671098404998995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2033671098404998991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0af70b67e1a7c8248b9142affd116a93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  decayTime: 1
-  wetMix: 0.1
 --- !u!166 &2033671098404998993
 AudioChorusFilter:
   m_ObjectHideFlags: 0
@@ -1597,6 +1584,43 @@ AudioLowPassFilter:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2033671098404998995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033671098404998991}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0af70b67e1a7c8248b9142affd116a93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  decayTime: 1
+  wetMix: 0.1
+--- !u!164 &493622755439916439
+AudioReverbFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033671098404998991}
+  m_Enabled: 1
+  m_DryLevel: 0
+  m_Room: 0
+  m_RoomHF: 0
+  m_DecayTime: 0.1
+  m_DecayHFRatio: 0.5
+  m_ReflectionsLevel: -10000
+  m_ReverbLevel: 0
+  m_ReverbDelay: 0.04
+  m_Diffusion: 100
+  m_Density: 100
+  m_HFReference: 5000
+  m_RoomLF: 0
+  m_LFReference: 250
+  m_ReflectionsDelay: 0
+  m_ReverbPreset: 27
 --- !u!1 &2033671098446815730
 GameObject:
   m_ObjectHideFlags: 0
@@ -4441,11 +4465,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2033671098404998995}
+      objectReference: {fileID: 493622755439916439}
     - target: {fileID: 4239142674229545619, guid: 076a90c6b08a9f348b7a22e210e1faf1,
         type: 3}
       propertyPath: _onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeMix
+      value: set_reverbLevel
       objectReference: {fileID: 0}
     - target: {fileID: 4239142674229545619, guid: 076a90c6b08a9f348b7a22e210e1faf1,
         type: 3}
@@ -4888,11 +4912,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2033671098404998995}
+      objectReference: {fileID: 493622755439916439}
     - target: {fileID: 4239142674229545619, guid: 076a90c6b08a9f348b7a22e210e1faf1,
         type: 3}
       propertyPath: _onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeDecay
+      value: set_decayTime
       objectReference: {fileID: 0}
     - target: {fileID: 4239142674229545619, guid: 076a90c6b08a9f348b7a22e210e1faf1,
         type: 3}
@@ -4902,17 +4926,17 @@ PrefabInstance:
     - target: {fileID: 4239142674229545619, guid: 076a90c6b08a9f348b7a22e210e1faf1,
         type: 3}
       propertyPath: _minValue
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4239142674229545619, guid: 076a90c6b08a9f348b7a22e210e1faf1,
         type: 3}
       propertyPath: _value
-      value: 0.3
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4239142674229545619, guid: 076a90c6b08a9f348b7a22e210e1faf1,
         type: 3}
       propertyPath: _maxValue
-      value: 1
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8186049143557477489, guid: 076a90c6b08a9f348b7a22e210e1faf1,
         type: 3}
