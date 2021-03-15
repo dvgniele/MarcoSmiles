@@ -5,7 +5,7 @@ using Leap;
 
 
 /// <summary>
-///     CLASS CREATED FOR MARCO_SMILES
+/// Gestisce interfacciamento tra Unity3D e LeapMotion
 /// </summary>
 public class MS_LeapController : MonoBehaviour
 {
