@@ -17,8 +17,10 @@ public static class FileUtils
     /// Nome del dataset da utilizzare
     /// </summary>
     public static string filename = "marcosmiles_dataset.csv";
-    //static string ext = "csv";
 
+    /// <summary>
+    /// Nome del file per la confusion matrix
+    /// </summary>
     public static string confusiongrid_filename = "confusion_grid_data.csv";
 
     /// <summary>
@@ -58,8 +60,6 @@ public static class FileUtils
     /// <returns></returns>
     public static string GeneratePath(string filename)
     {
-        //Debug.Log($"{path}/{folderName}/{_GM.selectedDataset}/{filename}");
-
         return $"{path}/{folderName}/{selectedDataset}/{filename}";
     }
 
@@ -74,8 +74,6 @@ public static class FileUtils
     /// <returns></returns>
     private static string GeneratePath(string filename, string folder)
     {
-        //Debug.Log($"{path}/{folderName}/{folder}/{filename}");
-
         return $"{path}/{folderName}/{folder}/{filename}";
     }
 
@@ -104,16 +102,16 @@ public static class FileUtils
     /// <param name="data">Lista di posizioni da salvare</param>
     public static void Save(List<Position> data)
     {
-        //  imposta il separatore dei numeri decimali a "." (nel caso si avesse il pc in lingua che usa "," come separatore si potrebbero avere problemi, quindi lo imposta manualmente)
+        //  Imposta il separatore dei numeri decimali a "." (nel caso si avesse il pc in lingua che usa "," come separatore si potrebbero avere problemi, quindi lo imposta manualmente)
         System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
         customCulture.NumberFormat.NumberDecimalSeparator = ".";
         System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
 
 
-        //  controlla se il file nel path esiste
+        //  Controlla se il file nel path esiste
         if(File.Exists(GeneratePath(filename)))
         {
-            //  se il file è presente nel path, crea una stringa contenente tutte le features e id della nota, per salvare sul file nel path
+            //  Se il file è presente nel path, crea una stringa contenente tutte le features e id della nota, per salvare sul file nel path
 
             foreach (var item in data)
             {
@@ -124,18 +122,14 @@ public static class FileUtils
                     $" {item.ID}"
                     .ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US"));
 
-                //  va a capo per la prossima feature da salvare
+                //  Va a capo per la prossima feature da salvare
                 str += Environment.NewLine;
 
-                //  stampa la riga che si sta salvando sul file
-                //Debug.Log(str);
-
-                //  stampa la stringa str sul file, aggiungendo quindi tutte le posizioni registrate per la nota selezionata
+                //  Stampa la stringa str sul file, aggiungendo quindi tutte le posizioni registrate per la nota selezionata
                 File.AppendAllText(GeneratePath(filename), str);
             }
 
-            //  pulisce la lista delle posizioni, per poter registrare altre posizioni nella stessa sessione, senza dover 
-            //  riavviare il programma
+            //  Pulisce la lista delle posizioni, per poter registrare altre posizioni nella stessa sessione, senza dover Riavviare il programma
             _GM.list_posizioni.Clear();
 
             //  stampa il messaggio nella console di debug
@@ -143,11 +137,11 @@ public static class FileUtils
         }
         else
         {
-            //  se il file non è presente nel path, lo crea
-
+            //  IL FILE NON ESISTE
+            //  crea il file nel path appropriato
             File.Create(GeneratePath(filename)).Dispose();
 
-            //  effettua una chiamata ricorsiva per salvare sul file appena creato
+            //  Effettua una chiamata ricorsiva per salvare sul file appena creato
             Save(data);
 
             //  stampa il messaggio nella console di debug
@@ -155,8 +149,13 @@ public static class FileUtils
         }
     }
 
+    /// <summary>
+    /// Salva la confusion list su file appropriato
+    /// </summary>
+    /// <param name="confusionList"></param>
     public static void Save(int[,] confusionList)
     {
+        //  Se il file esiste, vi scrive la confusion list
         if(File.Exists(GeneratePath(confusiongrid_filename)))
         {
             var str = "";
@@ -173,11 +172,21 @@ public static class FileUtils
             }
 
             File.WriteAllText(GeneratePath(confusiongrid_filename), str);
+
+            //  stampa il messaggio nella console di debug
+            Debug.Log("CONFUSION MATRIX SAVED");
+
         }
         else
         {
+            //  IL FILE NON ESISTE
             File.Create(GeneratePath(confusiongrid_filename)).Dispose();
+
+            //  Effettua una chiamata ricorsiva per salvare sul file appena creato
             Save(confusionList);
+
+            //  stampa il messaggio nella console di debug
+            Debug.Log("FILE CREATO");
         }
     }
 
@@ -185,12 +194,11 @@ public static class FileUtils
     /// <summary>
     /// Carica il contenuto del file
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="name">Filename</param>
     /// <returns></returns>
     public static string LoadFile(string name)
     {
-
-        //  se il file è presente nel path, lo legge
+        //  Se il file è presente nel path, lo legge
         if (File.Exists(GeneratePath($"{name}")))
         {
             return File.ReadAllText(GeneratePath($"{name}"));
@@ -198,7 +206,6 @@ public static class FileUtils
         else
         {
             //se il file non è presente nel path stampa un errore
-            //Debug.LogError("File non trovato");
             return null;
         }
     }
@@ -225,13 +232,14 @@ public static class FileUtils
             }
         }
 
+        //  Aggiorna la lista delle note registrate
         _GM.trainedNotes = id_list;
     }
 
     /// <summary>
     /// Cancella la nota dal dataset
     /// </summary>
-    /// <param name="note"></param>
+    /// <param name="note">Nota da cancellare</param>
     public static Task DeleteRowsNote(int note)
     {
         return Task.Run(() =>
@@ -239,18 +247,16 @@ public static class FileUtils
             var filePath = GeneratePath(filename);
             var txt = LoadFile(filename);
 
-            var rows = txt.Split('\n').Select(tag => tag.Trim()).Where(tag => !string.IsNullOrEmpty(tag));      //trim elimina le entrate vuote ;
+            var rows = txt.Split('\n').Select(tag => tag.Trim()).Where(tag => !string.IsNullOrEmpty(tag));      //  trim elimina le entrate vuote
 
-            //Debug.Log(rows.Count());
-
-            //  toglie tutte le righe dal file del dataset
-
+            //  Toglie tutte le righe dal file del dataset
             File.WriteAllText(filePath, "");
 
+            //  Scrive sul file del dataset solo le note da mantenere
             foreach (var row in rows)
             {
                 int tmp_id = int.Parse(row.Split(',').Last());
-                if (tmp_id != note)
+                if (tmp_id != note)             //  Se l'id a fine riga è diverso dall'id della nota da cancellare, aggiunge sul file
                 {
                     var actualRow = "";
                     actualRow = row + "\n";
@@ -258,6 +264,7 @@ public static class FileUtils
                 }
             }
 
+            //  Aggiorna la lista delle note registrate
             UpdateTrainedNotesList(filename);
         }
         );
@@ -328,8 +335,8 @@ public static class FileUtils
     /// <summary>
     /// Importa il dataset
     /// </summary>
-    /// <param name="path">path del dataset da importare</param>
-    /// <param name="destination">path destinazione per il dataset da importare</param>
+    /// <param name="path">Path del dataset da importare</param>
+    /// <param name="destination">Path destinazione per il dataset da importare</param>
     public static void Import(string path, string destination)
     {
         ProcessDirectory(path, destination, true);
@@ -338,8 +345,8 @@ public static class FileUtils
     /// <summary>
     /// Esporta il dataset
     /// </summary>
-    /// <param name="path">path del dataset da esportare</param>
-    /// <param name="destination">path destinazione per il dataset da esportare</param>
+    /// <param name="path">Path del dataset da esportare</param>
+    /// <param name="destination">Path destinazione per il dataset da esportare</param>
     public static void Export(string path, string destination)
     {
         ProcessDirectory(path, destination);
@@ -352,9 +359,9 @@ public static class FileUtils
     /// <summary>
     /// Processa una cartella, salvando tutto il contenuto in un'altra destinazione
     /// </summary>
-    /// <param name="dir">cartella da copiare</param>
-    /// <param name="destination">path destinazione per la cartella da copiare</param>
-    /// <param name="setDS">True se deve essere selezionato il dataset passato in input, False altrimenti</param>
+    /// <param name="dir">Cartella da copiare</param>
+    /// <param name="destination">Path destinazione per la cartella da copiare</param>
+    /// <param name="setDS">true se deve essere selezionato il dataset passato in input, false altrimenti</param>
     private static void ProcessDirectory(string dir, string destination, bool setDS = false)
     {
         Debug.Log(dir);
@@ -362,7 +369,6 @@ public static class FileUtils
         Directory.CreateDirectory(destination);
 
         string[] files = Directory.GetFiles(dir);
-        //Debug.Log(dir);
 
         foreach (var item in files)
             ProcessFile(item, destination);
@@ -380,8 +386,8 @@ public static class FileUtils
     /// <summary>
     /// Processa un file, salvandolo in un'altra destinazione
     /// </summary>
-    /// <param name="file">path del file da copiare</param>
-    /// <param name="destination">path destinazione per il file da copiare</param>
+    /// <param name="file">Path del file da copiare</param>
+    /// <param name="destination">Path destinazione per il file da copiare</param>
     private static void ProcessFile(string file, string destination)
     {
         var tmp = file.Split('/').ToList();
@@ -416,13 +422,9 @@ public static class FileUtils
             if(!File.Exists(GeneratePath("ML.py")))
                 File.Copy($"{path}/{folderName}/ML.py",GeneratePath("ML.py"));
             
-
-            if (!File.Exists(GeneratePath("bias_out.txt")) || !File.Exists(GeneratePath("weights_out.txt"))) { 
-                return false;
-            }
-
+            if (!File.Exists(GeneratePath("bias_out.txt")) || !File.Exists(GeneratePath("weights_out.txt")))
+                return false;   
         }
-
         return true;
     }
 
@@ -446,9 +448,9 @@ public static class FileUtils
             }
         }
 
-        string nameFile = "ML";           //Nome del file python. 
-        var MLFile = Resources.Load<TextAsset>("Text/" + nameFile);     //carica lo script dalla cartella resources (file .txt)
-        SavePy(MLFile.bytes, MLFile.name);                    //Converte il file .txt in script .py
+        string nameFile = "ML";                                         //  Nome del file python. 
+        var MLFile = Resources.Load<TextAsset>("Text/" + nameFile);     //  Carica lo script dalla cartella resources (file .txt)
+        SavePy(MLFile.bytes, MLFile.name);                              //  Converte il file .txt in script .py
 
         UpdateTrainedNotesList(filename);
     }
