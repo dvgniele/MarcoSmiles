@@ -1,12 +1,10 @@
 ﻿public class TestingScript
 {
 
-    //private static float[] current_features = new float[18];
-
     /// <summary>
     /// Seleziona la feature corrente
     /// </summary>
-    /// <returns>ritorna i valori della feature corrente</returns>
+    /// <returns>Ritorna i valori della feature corrente</returns>
     public static float[] GetCurrentFeatures()
     {
         float[] current_features = new float[18];

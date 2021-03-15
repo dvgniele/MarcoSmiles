@@ -4,7 +4,7 @@ using Leap;
 
 
 /// <summary>
-///     CLASS CREATED FOR MARCO_SMILES
+///  Gestisce la connessione del LeapMotion a Unity3d.
 /// </summary>
 public class MS_LeapListener : MonoBehaviour
 {
@@ -21,7 +21,11 @@ public class MS_LeapListener : MonoBehaviour
         Debug.Log("Connesso");
         Connected = true;
     }
-    
+    /// <summary>
+    /// Evento attivato se il Leap Moton viene disconnesso
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
     public static void OnLeapDisconnect(object sender, DeviceEventArgs args)
     {
         //  stampa un messaggio di log
@@ -30,17 +34,16 @@ public class MS_LeapListener : MonoBehaviour
     }
 
     /// <summary>
-    /// rileva frame
+    /// Rileva frame
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>
     public static void OnFrame(object sender, FrameEventArgs args)
     {
-        //Debug.Log("Frame disponibile");
 
         Frame frame = args.frame;
 
-        //  ci sono delle mani rilevate
+        //  Se ci sono delle mani rilevate
         if(frame.Hands.Count > 1)
         {
             _GM.isActive = true;            //  deve suonare
