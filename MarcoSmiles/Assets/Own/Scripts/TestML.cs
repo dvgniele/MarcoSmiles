@@ -64,8 +64,6 @@ public static class TestML
 
         foreach (string vettore in vettori)
         {
-            //temp.Add(vettore.Split(' ', StringSplitOptions.RemoveEmptyEntries) );      //divide per ' ', ma lascia entrate vuote
-
             temp.Add(vettore.Split(' ')                                       //divide per ' ' e mette l'array di stringhe all'interno della lista temp
                 .Select(tag => tag.Trim())                                    //elimina le entrate vuote
                 .Where(tag => !string.IsNullOrEmpty(tag)).ToList());
@@ -84,7 +82,6 @@ public static class TestML
                 t[i] = float.Parse(arr[i], CultureInfo.InvariantCulture);
             }
             listOfReadArrays.Add(t.ToList());
-            // listOfReadArrays.Add( arr.ToList().ConvertAll(x => Convert.Tofloat(x)).ToArray() );       
         }
         return listOfReadArrays;
     }
@@ -165,8 +162,6 @@ public static class TestML
     /// <returns>Id nota trovata</returns>
     public static int ReteNeurale(float[] features)
     {
-
-
         float[] scaledFeatures = ScaleValues(features);         
         //float[] scaledFeatures = features;
         for (int i = 0; i < scaledFeatures.Length; i++)
@@ -177,7 +172,6 @@ public static class TestML
         var output_hidden1 = new float[B1.Count];
         // output_hidden2 ha lo stesso numero di elementi di B2
         var output_hidden2 = new float[B2.Count];
-
 
         float x, w, r;
 
@@ -210,6 +204,8 @@ public static class TestML
             }
         }
 
+
+
         float sum = 0;
         foreach (var item in output_hidden2)
         {
@@ -230,7 +226,7 @@ public static class TestML
     /// Scala i valori convertendo le features non scalate in valori tra 0 e 1
     /// </summary>
     /// <param name="unscaledFeatures">features da scalare</param>
-    /// <returns>features scalate con valori tra 0 e 1</returns>
+    /// <returns>features scalate con valori tra min e max</returns>
     private static float[] ScaleValues(float[] unscaledFeatures)
     {
         var scaledFeatures = new float[unscaledFeatures.Length];
@@ -243,20 +239,11 @@ public static class TestML
             maxValues[i] = float.Parse(max[i], CultureInfo.InvariantCulture);
         }
 
-
         for (int i = 0; i < unscaledFeatures.Length; i++)
         {
             scaledFeatures[i] = (unscaledFeatures[i] - minValues[i]) / (maxValues[i] - minValues[i]);
         }
 
         return scaledFeatures;
-
     }
 }
-
-
-
-
-
-
-
