@@ -161,7 +161,6 @@ public class _GM : MonoBehaviour
         if (currSceneEnum == SceneEnum.PlayScene)
         {
             ConnectLeapPanel = GameObject.Find("ConnectLeapPanel");         //  Istanzia il popup ConnectLeapPanel
-            ClosePopUp();                                                   //  Chiude il popup
         }
 
         if (currSceneEnum == SceneEnum.TrainingScene)
