@@ -58,7 +58,7 @@ public class _GM : MonoBehaviour
     private enum SceneEnum
     {
         Mainpage,
-        Suonah,
+        PlayScene,
         TrainingScene,
         TestingScene
     }
@@ -94,7 +94,7 @@ public class _GM : MonoBehaviour
                 currSceneEnum = SceneEnum.Mainpage;
                 break;
             case (1):
-                currSceneEnum = SceneEnum.Suonah;
+                currSceneEnum = SceneEnum.PlayScene;
                 break;
             case (2):
                 currSceneEnum = SceneEnum.TrainingScene;
@@ -111,9 +111,9 @@ public class _GM : MonoBehaviour
         }
 
         //  Caso in cui la scena corrente è la scena per suonare (PlayScene)
-        if (currSceneEnum == SceneEnum.Suonah)
+        if (currSceneEnum == SceneEnum.PlayScene)
         {
-            TestML.Populate();                                              //  Effettua il caricamento dei file necessari per la scena Suonah
+            TestML.Populate();                                              //  Effettua il caricamento dei file necessari per la scena PlayScene
         }
 
         // Se la scena corrente è la scena di training (TrainingScene)
@@ -158,7 +158,7 @@ public class _GM : MonoBehaviour
 
         }
 
-        if (currSceneEnum == SceneEnum.Suonah)
+        if (currSceneEnum == SceneEnum.PlayScene)
         {
             ConnectLeapPanel = GameObject.Find("ConnectLeapPanel");         //  Istanzia il popup ConnectLeapPanel
             ClosePopUp();                                                   //  Chiude il popup
@@ -188,7 +188,7 @@ public class _GM : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (currSceneEnum == SceneEnum.Suonah)
+        if (currSceneEnum == SceneEnum.PlayScene)
         {
             if (isActive)
             {

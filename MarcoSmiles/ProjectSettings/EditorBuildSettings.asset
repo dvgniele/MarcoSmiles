@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Own/Scenes/Test.unity
     guid: 3cdde01cf1d63eb4684e8540683c194e
   - enabled: 1
-    path: Assets/Own/Scenes/Suonah.unity
+    path: Assets/Own/Scenes/PlayScene.unity
     guid: ae0b697bf1fcdee4983a3f27bf88426f
   - enabled: 1
     path: Assets/Own/Scenes/TrainingScene 1.unity
