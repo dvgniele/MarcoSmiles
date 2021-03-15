@@ -3,61 +3,52 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
 [RequireComponent(typeof(AudioSource))]
 public class ProceduralAudioOscillator : MonoBehaviour
 {
 
-
-    SawWave sawAudioWave;
-    SquareWave squareAudioWave;
-    SinusWave sinusAudioWave;
+    SawWave sawAudioWave;                       //  Classe per Saw Wave
+    SquareWave squareAudioWave;                 //  Classe per Square Wave
+    SinusWave sinusAudioWave;                   //  Classe per Sine Wave
 
     //For amplitude and frequency modulation
-    SinusWave amplitudeModulationOscillator;
-    SinusWave frequencyModulationOscillator;
+    SinusWave amplitudeModulationOscillator;        //  Oscillatore usato per Modulazione di Ampiezza
+    SinusWave frequencyModulationOscillator;        //  Oscillatore usato per Modulazione di Frequenza
 
 
-    public double frequency = 440;
+    private int sampleRate;                         //  Frequenza di campionamento usata da Unity
+    private double dataLen;                         //  Numero di campionamenti in data per ogni canale 
+    double chunkTime;                               //  La durata di ogni porzione di data  
+    double dspTimeStep;                                 
+    double currentDspTime;                          //  Il tempo corrente del sistema sonoro di Unity
 
-
-    private int sampleRate;  // samples per second
-    private double dataLen;     // the data length of each channel
-    double chunkTime;
-    double dspTimeStep;
-    double currentDspTime;
-
-    // For single-pole low pass filter
-    private float previousOutput;
-    private float nextOutput;
-
-    // Waveshape output weights
+    //  Pesi delle diverse forme d'onda sull'output 
     [Range(0f, 1f)]
     public double sinWeight;
     [Range(0f, 1f)]
     public double sqrWeight;
     [Range(0f, 1f)]
     public double sawWeight;
-    [Range(0f, 1f)]
-    public double noiseWeight;
 
-    //waves actual output
+    //  Output per ogni forma d'onda (sarebbero i campionamenti effettuati)
     private float sinOutput;
     private float sawOutput;
     private float sqrOutput;
-    private float noiseOutput;
+
+    //  The output of the synthesizer. This contains the mixed output between all the waveforms. (tsarebbero i campionamenti effettuati che poi vengono scritti nel motore audio)
+    private float nextOutput;
 
     [Header("Amplitude Modulation")]
-    public bool useAmplitudeModulation;             //Boolean parameter that determines whether or not to apply amplitude modulation on the produced sound.
+    public bool useAmplitudeModulation;             //  Boolean parameter that determines whether or not to apply amplitude modulation on the produced sound.
     [Range(0.2f, 30.0f)]
-    public float amplitudeModulationOscillatorFrequency = 1.0f;     //Float parameter that determines the Amplitude Modulation Oscillator’s frequency.
+    public float amplitudeModulationOscillatorFrequency = 1.0f;     //  Float parameter that determines the Amplitude Modulation Oscillator’s frequency.
 
     [Header("Frequency Modulation")]
-    public bool useFrequencyModulation;             // Boolean Parameter that determines whether or not to apply frequency modulation on the produced sound.
+    public bool useFrequencyModulation;             //  Boolean Parameter that determines whether or not to apply frequency modulation on the produced sound.
     [Range(0.2f, 30.0f)]
-    public float frequencyModulationOscillatorFrequency = 1.0f;         //Float parameter that determines the Frequency Modulation Oscillator’s frequency.
+    public float frequencyModulationOscillatorFrequency = 1.0f;         //  Float parameter that determines the Frequency Modulation Oscillator’s frequency.
     [Range(1.0f, 100.0f)]
-    public float frequencyModulationOscillatorIntensity = 10.0f;        //Float parameter that determines the Frequency Modulation Oscillator’s intensity.
+    public float frequencyModulationOscillatorIntensity = 10.0f;        //  Float parameter that determines the Frequency Modulation Oscillator’s intensity.
 
 
     /*
@@ -73,31 +64,21 @@ public class ProceduralAudioOscillator : MonoBehaviour
 
     /* These control the amplitude of the general signal  */
     public float gain;
-    //general volume of the oscillators, the output is moltiplied by this value
+    //  general volume of the oscillators, the output is moltiplied by this value
     [Range(0f, 1f)]
     public float volume = 0;
-    //the value that is assigned to the variable volume
+    //  the value that is assigned to the variable volume
     [Range(0f, 1f)]
     public float volumeValue;
 
-
-
-    // Manage Frequencies and notes 
+    //  The frequency that the synth is playing
+    private float frequency = 440;
+    //  Contains the frequencies of an octave starting from C4
     private float[] frequencies = new float[] {
                         261.630f , 277.180f , 293.660f , 311.130f , 329.630f , 349.990f ,
                         369.990f , 392.000f , 415.300f , 440.000f , 466.160f , 493.880f };
-    private float octave = 1f;
-    public int octaveNumber = 3;
-
-    public int thisFreq;
-
-
-    /* These control the single pole low pass filter */
-    [Range(0, 1)]
-    public double lowPass;
-    [Range(20, 20000)]
-    public double filterFreq;
-
+    //  Indicates the name of the octave that the user can play. It starts with C4
+    public int octaveNumber = 4;
 
 
     void Awake()
@@ -109,37 +90,39 @@ public class ProceduralAudioOscillator : MonoBehaviour
         amplitudeModulationOscillator = new SinusWave();
         frequencyModulationOscillator = new SinusWave();
 
+        // Gets the Sample Rate of the audio system in Unity
         sampleRate = AudioSettings.outputSampleRate;
-        Debug.Log(sampleRate );
+        //Debug.Log(sampleRate);
 
-        //the value that is assigned to the variable volume, this is the actual volume of the synth
-        volumeValue = 0.3f;
+        //  The value that is assigned to the variable volume, this is the actual volume of the synth
+        volumeValue = 0.3f;                             //  Change this value to make it louder
         volume = volumeValue;
 }
 
 
     void Start()
     {
-
         //Initial Preset. You can eventually save different presets in a similar way.
         sinWeight = 0.75;
         sqrWeight = 0.25;
         sawWeight = 0.25;
-        lowPass = 1;
 
+        //  Used to change the note playing by the synth
         changeNote(_GM.indexPlayingNote);
-
     }
-
-
 
     void Update()
     {
+        //  Used to change the note playing by the synth
         changeNote(_GM.indexPlayingNote);
         //Debug.Log(frequency);
     }
 
-    /* Uses a switch case.... in order to check on the index of the playing note and to change the frequency of the oscillator */
+
+    /// <summary>
+    ///   Uses a switch case... In order to check on the index of the playing note and change the frequency of the oscillator 
+    /// </summary>
+    /// <param name="noteIndex"> The index of the playing note. This index is contained inside the game master (_GM)</param>
     void changeNote(int noteIndex)
     {
         switch (noteIndex)                  //sostituire con qualche design pattern?
@@ -225,44 +208,41 @@ public class ProceduralAudioOscillator : MonoBehaviour
 
 
 
-
+    /// <summary>
+    ///  OnAudioFilterRead consente di intercettare ciò che l' audio source collegato a questo oggetto sta riproducendo. In questo modo possiamo modificare 
+    ///  ciò che l'audio source sta riproducendo, sia scrivendo nuovi campionamenti all'interno, che modificando l'audio clip che l'audio source sta riproducendo.
+    /// </summary>
+    /// <param name="data">Buffer contenente i campionamenti dell'aduio source.. possiamo scrivere qui per far rispodurre suoni all'oggetto audiosource</param>
+    /// <param name="channels"> Numero di canali disponibili dal motore audio unity. Per audio stereo, channels = 2.</param>
     void OnAudioFilterRead(float[] data, int channels)
     {
         if (_GM.isActive)
         {
-
             /* 
              * This is "the current time of the audio system", as given
              * by Unity. It is updated every time the OnAudioFilterRead() function
              * is called. It's usually every 1024 samples.
              * 
-             * A note on the sample rate:
-             * We don't actually see real numbers for the sample rate, we instead
-             * read it from the system in the Start() function.
              */
 
+        currentDspTime = AudioSettings.dspTime;     // the current time of the audio system     
+        dataLen = data.Length / channels;           // the actual data length for each channel
+        chunkTime = dataLen / sampleRate;           // the time that each chunk of data lasts
+        dspTimeStep = chunkTime / dataLen;          // the time of each dsp step. (the time that each individual audio sample (actually a float value) lasts)
 
-            currentDspTime = AudioSettings.dspTime;
-        dataLen = data.Length / channels;   // the actual data length for each channel
-        chunkTime = dataLen / sampleRate;   // the time that each chunk of data lasts
-        dspTimeStep = chunkTime / dataLen;  // the time of each dsp step. (the time that each individual audio sample (actually a float value) lasts)
-
-        double preciseDspTime;
+        double preciseDspTime;                      //  used to get a precise approximation of the time
         nextOutput = 0;
         sinOutput = 0;
         sawOutput = 0;
         sqrOutput = 0;
-        noiseOutput = 0;
-
-
 
         for (int i = 0; i < dataLen; i++)               // go through data chunk
         {
-            preciseDspTime = currentDspTime + i * dspTimeStep;
+            preciseDspTime = currentDspTime + i * dspTimeStep;      //  we calculate the current dsp time adding the time of every step
 
-            double currentFreq = frequency;
+            double currentFreq = frequency;                         //  this lets us modulate the frequency
 
-            //Applies Frequency Modulation
+            //  Applies Frequency Modulation
             if (useFrequencyModulation)
             {
                 double freqOffset = (frequencyModulationOscillatorIntensity * frequency * 0.75) / 100.0;
@@ -274,11 +254,11 @@ public class ProceduralAudioOscillator : MonoBehaviour
                 frequencyModulationRangeOut = 0.0f;
             }
 
-
+            //  the samples calculated for the sine wave
             sinOutput = (float)(sinWeight * sinusAudioWave.calculateSignalValue(preciseDspTime, currentFreq));
-
+            //  the samples calculated for the saw wave
             sawOutput = (float)(sawWeight * sawAudioWave.calculateSignalValue(preciseDspTime, currentFreq));
-
+            //  the samples calculated for the square wave
             sqrOutput = (float)(sqrWeight * squareAudioWave.calculateSignalValue(preciseDspTime, currentFreq));
 
 
@@ -293,13 +273,12 @@ public class ProceduralAudioOscillator : MonoBehaviour
             Consider what happens if we mix another signal, C, to Z:  T= Z + C − Z C = A + B + C − AB − AC − BC + ABC.
 
              */
-
             nextOutput = sinOutput + sawOutput + sqrOutput - (sinOutput * sawOutput) -
                                     (sinOutput * sqrOutput) - (sawOutput * sqrOutput) + (sinOutput * sawOutput * sqrOutput);
 
 
 
-
+            //  Applies Amplitude Modulation
             if (useAmplitudeModulation)
             {
                 nextOutput *= (float)mapValueD(amplitudeModulationOscillator.calculateSignalValue(preciseDspTime, amplitudeModulationOscillatorFrequency), -1.0, 1.0, 0.0, 1.0);
@@ -311,39 +290,24 @@ public class ProceduralAudioOscillator : MonoBehaviour
             }
 
 
-
+            //  regulates the output based on the current volume of the synth
             float x = volume  * (float)nextOutput;
 
+            //  Copies the samples on every available channels of the sound system
             for (int j = 0; j < channels; j++)
             {
                 data[i * channels + j] = x;
             }
 
-
-
         }
         }
-
-
 
     }
 
   
-
-
-
-    //pink noise approximation
-    public class PinkNoise
-    {
-        private static System.Random rnd = new System.Random();
-
-        public static float Noise()
-        {
-            return (float)rnd.NextDouble();
-        }
-    }
-
-
+    /// <summary>
+    /// Change the starting octave that the user can play. This makes everything an octave up
+    /// </summary>
     public void OctaveUp()
     {
         octaveNumber += 1;
@@ -355,6 +319,9 @@ public class ProceduralAudioOscillator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Change the starting octave that the user can play. This makes everything an octave down
+    /// </summary>
     public void OctaveDown()
     {
         octaveNumber -= 1;
@@ -366,6 +333,9 @@ public class ProceduralAudioOscillator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates the number of the starting octave that the user can play inside the scene (gui)
+    /// </summary>
     public void UpdateOctaveNumber()
     {
         var text = GameObject.Find("NumeroOttava").GetComponent<UnityEngine.UI.Text>();
@@ -374,10 +344,7 @@ public class ProceduralAudioOscillator : MonoBehaviour
     }
 
 
-
-
     //These functions scale floats and double values from one range to another 
-
     float mapValue(float referenceValue, float fromMin, float fromMax, float toMin, float toMax)
     {
         /* This function maps (converts) a Float value from one range to another */
@@ -391,8 +358,9 @@ public class ProceduralAudioOscillator : MonoBehaviour
     }
 
 
+    #region Change Synth Parameters From GUI
 
-    /* These are needed in order to control values fro the gui  */
+    /* These are needed in order to control values from the gui  */
 
     public void ChangeSinWeight(float weight)
     {
@@ -407,11 +375,6 @@ public class ProceduralAudioOscillator : MonoBehaviour
     public void ChangeSawWeight(float weight)
     {
         sawWeight = weight;
-    }
-
-    public void ChangeLowPass(float value)
-    {
-        lowPass = value;
     }
 
     public void ActivateFm()
@@ -440,7 +403,7 @@ public class ProceduralAudioOscillator : MonoBehaviour
         amplitudeModulationOscillatorFrequency = value;
     }
 
-
+    #endregion
 
 
 
