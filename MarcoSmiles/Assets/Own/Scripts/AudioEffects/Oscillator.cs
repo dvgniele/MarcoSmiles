@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 
-
-/* This class is the main audio engine, 
-	- It uses the OnAudioFilterRead() function to create sound by applying mathematical functions
-	on each separate audio sample.
-	- SineHP classe to produce Sinewaves, as well as the Frequency and Amplitude Modulations. */
-
+/// <summary>
+/// Classe che gestisce il sintetizzatore e genera audio
+/// Genera campionamenti descrivendo funzioni periodiche
+/// Scrive i campionamenti nel motore audio di unity utilizzando MonoBehaviour.OnAudioFilterRead.
+/// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class Oscillator : MonoBehaviour
 {
