@@ -242,3 +242,6 @@ with open('learning_time.txt', 'a+') as lt:
     # dd/mm/YY H:M:S
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
     lt.write(str("Data Fine Learning: " + dt_string + "\n"))
+
+
+input("Press Enter to Close this Window...")
