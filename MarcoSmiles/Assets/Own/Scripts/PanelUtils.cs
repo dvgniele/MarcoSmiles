@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class PanelUtils
 {
-
-
-
     /// <summary>
     /// Apre un pannello per selezionare un dataset da esportare in una qualsiasi directory sul pc
     /// </summary>

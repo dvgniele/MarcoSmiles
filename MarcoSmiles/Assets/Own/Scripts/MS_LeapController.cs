@@ -9,11 +9,26 @@ using Leap;
 /// </summary>
 public class MS_LeapController : MonoBehaviour
 {
+    /// <summary>
+    /// Controller leap motion
+    /// </summary>
     Controller controller;
+    /// <summary>
+    /// Listener
+    /// </summary>
     MS_LeapListener listener;
 
+    /// <summary>
+    /// Flag per tenere traccia della connessione del leap
+    /// </summary>
     bool connected = false;
+    /// <summary>
+    /// Flag per tenere traccia della notifica (non a video) della connesione del leap
+    /// </summary>
     bool notified = false;
+    /// <summary>
+    /// Flag per tenere traccia della notifica tramite popup che il leap non è connesso
+    /// </summary>
     bool notConnectedShowed = true;
 
     // Start is called before the first frame update
