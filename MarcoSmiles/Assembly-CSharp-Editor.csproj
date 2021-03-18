@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Editor\Doxygen\DoxygenWindow.cs" />
     <Compile Include="Assets\LeapMotion\Core\Editor\CorePreferences.cs" />
     <Compile Include="Assets\LeapMotion\Core\Editor\CustomEditorBase.cs" />
     <Compile Include="Assets\LeapMotion\Core\Editor\CustomPropertyDrawerBase.cs" />
@@ -118,6 +119,8 @@
     <Compile Include="Assets\LeapMotion\Modules\InteractionEngine\Scripts\Utility\Editor\InteractionControllerSwitcherEditor.cs" />
     <Compile Include="Assets\LeapMotion\Modules\UIInput\Editor\CompressibleUIEditor.cs" />
     <Compile Include="Assets\LeapMotion\Modules\UIInput\Editor\LeapInputModuleEditor.cs" />
+    <None Include="Assets\Editor\Doxygen\Resources\BaseDoxyfile.txt" />
+    <None Include="Assets\Editor\Doxygen\ReadMe.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

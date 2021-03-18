@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/// <summary>
+/// Classe che gestisce il sintetizzatore e genera audio
+/// Utilizza le Classi SawWave, SquareWave e  SinusWave,
+/// Scrive i campionamenti nel motore audio di unity utilizzando MonoBehaviour.OnAudioFilterRead
+/// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class ProceduralAudioOscillator : MonoBehaviour
 {
@@ -35,7 +39,7 @@ public class ProceduralAudioOscillator : MonoBehaviour
     private float sawOutput;
     private float sqrOutput;
 
-    //  The output of the synthesizer. This contains the mixed output between all the waveforms. (tsarebbero i campionamenti effettuati che poi vengono scritti nel motore audio)
+    ///The output of the synthesizer. This contains the mixed output between all the waveforms. (tsarebbero i campionamenti effettuati che poi vengono scritti nel motore audio)
     private float nextOutput;
 
     [Header("Amplitude Modulation")]

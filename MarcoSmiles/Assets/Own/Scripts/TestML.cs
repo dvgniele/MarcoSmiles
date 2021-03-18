@@ -5,6 +5,9 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Classe statica che gestisce le operazioni riguardanti il machine learning e mantiene lo stato della rete neurale per la configurazione selezionata.
+/// </summary>
 public static class TestML
 {
     private static List<List<float>> W1 = new List<List<float>>();

@@ -8,6 +8,9 @@ using System;
 using System.IO;
 using System.Collections;
 
+/// <summary>
+/// Game Master Contiene lo stato dell'applicazione.
+/// </summary>
 public class _GM : MonoBehaviour
 {
     /// <summary>
