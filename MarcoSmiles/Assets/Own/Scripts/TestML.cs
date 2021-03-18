@@ -10,18 +10,37 @@ using UnityEngine;
 /// </summary>
 public static class TestML
 {
+    /// <summary>
+    /// Weights, layer 1
+    /// </summary>
     private static List<List<float>> W1 = new List<List<float>>();
-
+    /// <summary>
+    /// Bias, layer 1
+    /// </summary>
     private static List<float> B1 = new List<float>();
-
+    /// <summary>
+    /// Weights, layer 2
+    /// </summary>
     private static List<List<float>> W2 = new List<List<float>>();
-
+    /// <summary>
+    /// Bias, layer 2
+    /// </summary>
     private static List<float> B2 = new List<float>();
 
+    /// <summary>
+    /// Data dell'ultimo learning effettuato per la configurazione (dataset) selezionata
+    /// </summary>
     public static System.DateTime DateLatestLearning;
 
+    ///Variabile temporanea per leggere valori min e max
     private static string[] readText;
+    /// <summary>
+    /// Il minimo valore per ogni features nel dataset (per scalare)
+    /// </summary>
     private static string[] min;
+    /// <summary>
+    /// Il massimo valore per ogni features nel dataset (per scalare)
+    /// </summary>
     private static string[] max;
 
 

@@ -300,8 +300,6 @@
     <Compile Include="Assets\LeapMotion\Modules\UIInput\Scripts\Utilities\ToggleToggler.cs" />
     <Compile Include="Assets\Own\Prefabs\Knob\Configuration.cs" />
     <Compile Include="Assets\Own\Prefabs\Knob\Knob.cs" />
-    <Compile Include="Assets\Own\Scripts\AudioEffects\AudioManipulation.cs" />
-    <Compile Include="Assets\Own\Scripts\AudioEffects\AudioMixerController.cs" />
     <Compile Include="Assets\Own\Scripts\AudioEffects\Oscillator.cs" />
     <Compile Include="Assets\Own\Scripts\AudioEffects\Oscilloscope\ModeSelectable.cs" />
     <Compile Include="Assets\Own\Scripts\AudioEffects\Oscilloscope\Oscilloscope.cs" />

@@ -13,7 +13,11 @@ using System.Collections;
 /// </summary>
 public class _GM : MonoBehaviour
 {
-    public static bool IsLeapConnected = false;             //  Flag necessario per sapere se il leap motion è connesso
+
+    /// <summary>
+    /// Flag necessario per sapere se il leap motion è connesso
+    /// </summary>
+    public static bool IsLeapConnected = false;        
 
     private Button playButton;                              //  Vottone preseente nel main menu per passare a scena "Play"
 
