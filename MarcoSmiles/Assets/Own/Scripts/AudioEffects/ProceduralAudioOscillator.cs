@@ -11,35 +11,60 @@ using UnityEngine;
 public class ProceduralAudioOscillator : MonoBehaviour
 {
 
+    /// <summary>
+    /// Per costruire una Saw Wave
+    /// </summary>
     SawWave sawAudioWave;                       //  Classe per Saw Wave
+    /// <summary>
+    /// Per costruire una Square Wave
+    /// </summary>
     SquareWave squareAudioWave;                 //  Classe per Square Wave
+    /// <summary>
+    /// Per costruire una Sine Wave
+    /// </summary>
     SinusWave sinusAudioWave;                   //  Classe per Sine Wave
 
-    //For amplitude and frequency modulation
+    /// <summary>
+    /// Oscillatore usato per la modulazione d'ampiezza
+    /// </summary>
     SinusWave amplitudeModulationOscillator;        //  Oscillatore usato per Modulazione di Ampiezza
+    /// <summary>
+    /// Oscillatore usato per la modulazione di frequenza
+    /// </summary>
     SinusWave frequencyModulationOscillator;        //  Oscillatore usato per Modulazione di Frequenza
 
 
     private int sampleRate;                         //  Frequenza di campionamento usata da Unity
     private double dataLen;                         //  Numero di campionamenti in data per ogni canale 
-    double chunkTime;                               //  La durata di ogni porzione di data  
-    double dspTimeStep;                                 
-    double currentDspTime;                          //  Il tempo corrente del sistema sonoro di Unity
+    /// <summary>
+    /// La durata di ogni porzione di data  
+    /// </summary>
+    double chunkTime;
+    /// <summary>
+    /// Il tempo di ogni step (the time that each individual audio sample lasts)
+    /// </summary>
+    double dspTimeStep;
+    /// <summary>
+    /// Il tempo corrente del sistema sonoro di Unity
+    /// </summary>
+    double currentDspTime;
 
-    //  Pesi delle diverse forme d'onda sull'output 
+
     [Range(0f, 1f)]
-    public double sinWeight;
+    public double sinWeight; /*!< Peso dell'oscillatore Sine sull'output */
+
     [Range(0f, 1f)]
-    public double sqrWeight;
+    public double sqrWeight;    /*!< Peso dell'oscillatore Square sull'output */
+
     [Range(0f, 1f)]
-    public double sawWeight;
+    public double sawWeight;        /*!< Peso dell'oscillatore Saw sull'output */
 
     //  Output per ogni forma d'onda (sarebbero i campionamenti effettuati)
     private float sinOutput;
     private float sawOutput;
     private float sqrOutput;
 
-    ///The output of the synthesizer. This contains the mixed output between all the waveforms. (tsarebbero i campionamenti effettuati che poi vengono scritti nel motore audio)
+    //  The output of the synthesizer. This contains the mixed output between all the waveforms. (tsarebbero i campionamenti effettuati che poi vengono scritti nel motore audio)
     private float nextOutput;
 
     [Header("Amplitude Modulation")]
@@ -47,31 +72,53 @@ public class ProceduralAudioOscillator : MonoBehaviour
     [Range(0.2f, 30.0f)]
     public float amplitudeModulationOscillatorFrequency = 1.0f;     //  Float parameter that determines the Amplitude Modulation Oscillator’s frequency.
 
+    /// <summary>
+    /// Boolean Parameter that determines whether or not to apply frequency modulation on the produced sou
+    /// </summary>
     [Header("Frequency Modulation")]
-    public bool useFrequencyModulation;             //  Boolean Parameter that determines whether or not to apply frequency modulation on the produced sound.
+    public bool useFrequencyModulation;
+    /// <summary>
+    ///  Float parameter that determines the Frequency Modulation Oscillator’s frequency.
+    /// </summary>
     [Range(0.2f, 30.0f)]
-    public float frequencyModulationOscillatorFrequency = 1.0f;         //  Float parameter that determines the Frequency Modulation Oscillator’s frequency.
+    public float frequencyModulationOscillatorFrequency = 1.0f;
+    /// <summary>
+    /// Float parameter that determines the Frequency Modulation Oscillator’s intensity.
+    /// </summary>
     [Range(1.0f, 100.0f)]
-    public float frequencyModulationOscillatorIntensity = 10.0f;        //  Float parameter that determines the Frequency Modulation Oscillator’s intensity.
+    public float frequencyModulationOscillatorIntensity = 10.0f;
 
 
     /*
      These parameters are for external use, only (they are calculated, based on the previous parameters and time-dependent functions). 
      So, actually they do not control the Synthesizer, but can be used to “drive” (control) other scripts’ parameters.
      */
+
+    /// <summary>
+    /// The Amplitude Modulation Oscillator’s current value (range 0 to 1)
+    /// </summary>
     [Header("Out Values")]
     [Range(0.0f, 1.0f)]
-    public float amplitudeModulationRangeOut;       //The Amplitude Modulation Oscillator’s current value (range 0 to 1)
+    public float amplitudeModulationRangeOut;     
+    /// <summary>
+    /// The Frequency Modulation Oscillator’s current value (range 0 to 1)
+    /// </summary>
     [Range(0.0f, 1.0f)]
-    public float frequencyModulationRangeOut;       //The Frequency Modulation Oscillator’s current value (range 0 to 1)
+    public float frequencyModulationRangeOut;
 
 
     /* These control the amplitude of the general signal  */
+
     public float gain;
-    //  general volume of the oscillators, the output is moltiplied by this value
+
+    /// <summary>
+    ///  general volume of the oscillators, the output is moltiplied by this value
+    /// </summary>
     [Range(0f, 1f)]
     public float volume = 0;
-    //  the value that is assigned to the variable volume
+    /// <summary>
+    /// the value that is assigned to the variable volume
+    /// </summary>
     [Range(0f, 1f)]
     public float volumeValue;
 

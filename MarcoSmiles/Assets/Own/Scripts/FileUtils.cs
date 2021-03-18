@@ -5,6 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
+/// <summary>
+/// Classe per la gestione dei file
+/// </summary>
 public static class FileUtils
 {
 

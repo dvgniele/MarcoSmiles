@@ -13,46 +13,117 @@ using System.Collections;
 /// </summary>
 public class _GM : MonoBehaviour
 {
-    public static bool IsLeapConnected = false;             //  Flag necessario per sapere se il leap motion è connesso
 
-    private Button playButton;                              //  Vottone preseente nel main menu per passare a scena "Play"
+    /// <summary>
+    /// Flag necessario per sapere se il leap motion è connesso
+    /// </summary>
+    public static bool IsLeapConnected = false;        
 
-    public TrainingScript trainer;                          //  Istanza della classe trainer, utilizzata esclusvamente nella scena di training
-    public static Hand hand_R;                              //  Dati statici della mano destra
-    public static Hand hand_L;                              //  Dati statici della mano sinistra
 
+    /// <summary>
+    /// Bottone preseente nel main menu per passare a scena "PlayScene"
+    /// </summary>
+    private Button playButton;
+
+    /// <summary>
+    /// Istanza della classe trainer, utilizzata esclusvamente nella scena di training
+    /// </summary>
+    public TrainingScript trainer;
+    /// <summary>
+    /// Dati statici della mano destra
+    /// </summary>
+    public static Hand hand_R;
+    /// <summary>
+    /// Dati statici della mano sinistra
+    /// </summary>
+    public static Hand hand_L;
+
+    /// <summary>
+    /// Istanza della classe di testing per le matrici, utilizzata esclusivamente nella scena di testing
+    /// </summary>
     public ConfusionTestingScript tester;
-                        
-    public static List<Position> list_posizioni;            //  Viene usata solo nella scena di training per salvare nel dataset
 
-    public static List<int> trainedNotes;                   //  Contiene una lista di indici, che rappresentano le note allenate (0-23)
+    /// <summary>
+    /// Viene usata solo nella scena di training per salvare nel dataset
+    /// </summary>
+    public static List<Position> list_posizioni;
+    /// <summary>
+    /// Contiene una lista di indici, che rappresentano le note allenate (0-23)
+    /// </summary>
+    public static List<int> trainedNotes;
 
-    public static bool isActive = false;                    //  true se ci sono le mani, altrimenti false. lo script ProceduralAudioOscillator.cs osserva questa variabile per decidere se deve suonare 
-    public static float[] current_Features;                 //  Attualmente le features sono floats, risolviamo sto problemo
-    public static int indexPlayingNote;                     //  Indice della nota corrente da suonare, è letta da PCMOscillator
-    public static int indexPreviousNote;                    //  Indice della nota precedentemente suonata nel fixed update precedente
+    /// <summary>
+    /// true se ci sono le mani, altrimenti false. lo script ProceduralAudioOscillator.cs osserva questa variabile per decidere se deve suonare 
+    /// </summary>
+    public static bool isActive = false;
+    /// <summary>
+    /// Attualmente le features sono floats, risolviamo sto problemo
+    /// </summary>
+    public static float[] current_Features;
+    /// <summary>
+    /// Indice della nota corrente da suonare, è letta da PCMOscillator
+    /// </summary>
+    public static int indexPlayingNote;
+    /// <summary>
+    /// Indice della nota precedentemente suonata nel fixed update precedente
+    /// </summary>
+    public static int indexPreviousNote;
 
+    /// <summary>
+    /// Contiene una lista dei tasti del piano
+    /// </summary>
     [SerializeField]
-    public List<Button> listaPulsanti;                      //  Contiene una lista dei tasti del piano
-    public GameObject piano;                                //  Rappresenta il piano all'interno della scena          
+    public List<Button> listaPulsanti;
+    /// <summary>
+    /// Rappresenta il piano all'interno della scena
+    /// </summary>
+    public GameObject piano;
 
-    //  Variabili contenenti riferimenti ai pannelli di popup
-    public GameObject PopupPanel;                   
+    /// <summary>
+    /// Variabile contenente riferimento al pannello di popup
+    /// </summary>
+    public GameObject PopupPanel;
+    /// <summary>
+    /// Variabile contenente riferimento al pannello di popup di connessione leap
+    /// </summary>
     public static GameObject ConnectLeapPanel;
 
     //  Interfaccia. Per sapere se è stato fatto Learn su configurazione selezionata
-    public GameObject ConfLearn;                            // Gameobject contenente immagine che indica che è stato fatto Learn per la conf. selezionata. (TRAINING SCENE)                           
-    public GameObject ConfNotLearn;                         // Gameobject contenente immagine che indica che NON è stato fatto Learn per la conf. selezionata. (TRAINING SCENE)                           
-    public GameObject DateLatestLearning;                   // Gameobject contenente la data dell'ultimo Learn per la conf. selezionata. (TRAINING SCENE)                           
+    /// <summary>
+    /// Gameobject contenente immagine che indica che è stato fatto Learn per la conf. selezionata. (TRAINING SCENE)                           
+    /// </summary>
+    public GameObject ConfLearn;
+    /// <summary>
+    /// Gameobject contenente immagine che indica che NON è stato fatto Learn per la conf. selezionata. (TRAINING SCENE)
+    /// </summary>
+    public GameObject ConfNotLearn;
+    /// <summary>
+    /// Gameobject contenente la data dell'ultimo Learn per la conf. selezionata. (TRAINING SCENE)
+    /// </summary>
+    public GameObject DateLatestLearning;                                              
 
     //  Variabili animazione loading circle
+    /// <summary>
+    /// Gameobject contenente l'animazione
+    /// </summary>
     public GameObject LoadingCircle;
+    /// <summary>
+    /// Icona per l'animazione
+    /// </summary>
     public RectTransform mainIcon;
-    public static float timeStep = 0.1f;                    //  Intervallo di tempo per l'animazione di caricamento
-    public static float oneStepAngle = -36;                 //  Angolo di rotazione per l'animazione di caricamento
+    /// <summary>
+    /// Intervallo di tempo per l'animazione di caricamento
+    /// </summary>
+    public static float timeStep = 0.1f;
+    /// <summary>
+    /// Angolo di rotazione per l'animazione di caricamento
+    /// </summary>
+    public static float oneStepAngle = -36;                 
     float startTime;
 
-    //  Testo contenente il nome della Configurazione (cartella) selezionata 
+    /// <summary>
+    /// Testo contenente il nome della Configurazione (cartella) selezionata
+    /// </summary>    
     public Text SelectedDatasetText;
 
     /// <summary>
@@ -65,8 +136,14 @@ public class _GM : MonoBehaviour
         TrainingScene,
         TestingScene
     }
-    private SceneEnum currSceneEnum;                        //  Variabile per tenere traccia della scena corrente
-    private Scene currentScene;                             //  Oggetto scena, utilizzato per modificare la variabile currSceneEnum
+    /// <summary>
+    /// Variabile per tenere traccia della scena corrente
+    /// </summary>
+    private SceneEnum currSceneEnum;                        
+    /// <summary>
+    /// Oggetto scena, utilizzato per modificare la variabile currSceneEnum
+    /// </summary>
+    private Scene currentScene;                             
 
 
     #region UNITY METH

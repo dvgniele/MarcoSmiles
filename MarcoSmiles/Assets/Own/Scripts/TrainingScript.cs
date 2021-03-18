@@ -28,7 +28,6 @@ public class TrainingScript : MonoBehaviour
     [SerializeField]
     public int currentNoteId;
 
-    public int aumenta;
 
     private void Start()
     {
@@ -40,7 +39,7 @@ public class TrainingScript : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        //ChangeNoteId(aumenta);
+
     }
 
     /// <summary>

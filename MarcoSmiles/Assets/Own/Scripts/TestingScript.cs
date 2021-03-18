@@ -1,4 +1,7 @@
-﻿public class TestingScript
+﻿/// <summary>
+/// Classe di testing, attualmente serve a raccogliere tutte le features in un array
+/// </summary>
+public class TestingScript
 {
 
     /// <summary>

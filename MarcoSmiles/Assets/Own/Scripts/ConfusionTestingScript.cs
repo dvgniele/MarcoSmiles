@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Classe utilizata per la creazione dei file per le confusion matrix
+/// </summary>
 public class ConfusionTestingScript : MonoBehaviour
 {
     /// <summary>
