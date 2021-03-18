@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// Crea un'approssimazione di una Sine Wave, descrivendone la serie armonica.
+/// </summary>
 public class SinusWave
 {
 

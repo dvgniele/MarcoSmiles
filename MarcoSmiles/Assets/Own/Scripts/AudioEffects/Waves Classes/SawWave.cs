@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// Crea un'approssimazione di una Saw Wave, descrivendone la serie armonica. Utilizza la classe SinusWave. i livelli di ogni armocina sono contenuti in sawHarmonicLevels.
+/// </summary>
 public class SawWave
 {
 	/* This class creates an approximation of a Saw Wave, by using harmonics of a sinus wave.

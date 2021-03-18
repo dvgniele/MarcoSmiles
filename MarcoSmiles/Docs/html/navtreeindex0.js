@@ -228,13 +228,12 @@ var NAVTREEINDEX0 =
 "class_testing_script.html#ae0bd3b8c22bf56916b57fbeeebd6e3c0":[0,0,20,0],
 "class_training_script.html":[0,0,22],
 "class_training_script.html#a2530e72193526ec5e6f721dcade06d83":[0,0,22,0],
-"class_training_script.html#a28a62ba9f99a8f048e4d9bbae0814088":[0,0,22,6],
-"class_training_script.html#a40b03d83756716d5647b7f3deef139cd":[0,0,22,5],
-"class_training_script.html#a4481e05aa11881925fe78f09b6b76280":[0,0,22,7],
+"class_training_script.html#a28a62ba9f99a8f048e4d9bbae0814088":[0,0,22,5],
+"class_training_script.html#a40b03d83756716d5647b7f3deef139cd":[0,0,22,4],
+"class_training_script.html#a4481e05aa11881925fe78f09b6b76280":[0,0,22,6],
 "class_training_script.html#a7633c65a1238296e4c8c908be1e8383d":[0,0,22,2],
-"class_training_script.html#aafb1417d15cf33a594400117b29a51f5":[0,0,22,4],
+"class_training_script.html#aafb1417d15cf33a594400117b29a51f5":[0,0,22,3],
 "class_training_script.html#ac1f918326e1cd4a055b885a86448a416":[0,0,22,1],
-"class_training_script.html#acacd2748eee57021c92d50d0820f4b29":[0,0,22,3],
 "classes.html":[0,1],
 "dir_088bad8adea8b08fbe33cbdad2fc8e5e.html":[1,0,0,0],
 "dir_5a4c888a66d9a4a3c8de08f0b623d9ec.html":[1,0,0,0,0,0,2],
@@ -249,5 +248,6 @@ var NAVTREEINDEX0 =
 "functions_prop.html":[0,3,3],
 "functions_vars.html":[0,3,2],
 "globals.html":[1,1,0],
-"globals_type.html":[1,1,1]
+"globals_type.html":[1,1,1],
+"hierarchy.html":[0,2]
 };

@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// Crea un'approssimazione di una Square Wave, descrivendone la serie armonica. Utilizza la classe SinusWave. i livelli di ogni armocina sono contenuti in squareHarmonicLevels.
+/// </summary>
 public class SquareWave
 {
 	/* This class creates an approximation of a Square Wave, by using harmonics of a sinus wave.

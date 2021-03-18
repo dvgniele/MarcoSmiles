@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Classe MonoBehaviour che gestisce il funzionmento dell'oscilloscopio, può funzionare in due modalità
+/// </summary>
 [DisallowMultipleComponent]
 public class Oscilloscope : ModeChanger
 {
@@ -10,6 +13,9 @@ public class Oscilloscope : ModeChanger
     private static int samples = 1024;
 
     private LineRenderer lineRenderer;
+    /// <summary>
+    /// Audio Source collegato allo script Oscilloscope, lo script "ascolta" questo oggetto e disegna il suono
+    /// </summary>
     public AudioSource audioSource;
 
     private enum Modes { Standard, LeftRightDeflection }
@@ -61,6 +67,10 @@ public class Oscilloscope : ModeChanger
         return modes;
     }
 
+    /// <summary>
+    /// Cambia la modalità usata dall'scilloscopio
+    /// </summary>
+    /// <param name="dropdown"></param>
     public override void SetMode(Dropdown dropdown)
     {
         mode = (Modes)dropdown.value;

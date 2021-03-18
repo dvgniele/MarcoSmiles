@@ -3,11 +3,14 @@ using System.Diagnostics;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
+/// <summary>
+/// Classe che permette di lanciare un file py su linea di comando, apre la bash di windows
+/// </summary>
 public class StartLearning : MonoBehaviour
 {
 
     /// <summary>
-    /// Avvia lo script ML.py, avvia quindi il learning sul datasets attuale
+    /// Avvia lo script ML,py su linea di comando, avvia quindi il learning sul dataset e la configurazione selezionata
     /// </summary>
     public void Learn()
     {
