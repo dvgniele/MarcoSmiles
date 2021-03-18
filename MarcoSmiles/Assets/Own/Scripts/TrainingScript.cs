@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// In questa classe sono presenti i metodi per gestire il processo di training delle note.
+/// </summary>
 public class TrainingScript : MonoBehaviour
 {
     /// <summary>

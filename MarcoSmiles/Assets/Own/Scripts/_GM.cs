@@ -16,11 +16,6 @@ public class _GM : MonoBehaviour
 
 
     /// <summary>
-    /// Flag necessario per sapere se il leap motion è connesso
-    /// </summary>
-    public static bool IsLeapConnected = false;        
-
-    /// <summary>
     /// Bottone preseente nel main menu per passare a scena "PlayScene"
     /// </summary>
     private Button playButton;

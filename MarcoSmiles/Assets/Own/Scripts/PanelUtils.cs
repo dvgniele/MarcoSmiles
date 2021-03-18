@@ -4,6 +4,9 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Contiene i metodi per gestire i pannelli per cambiare, importare ed esportare configurazioni di sistema.
+/// </summary>
 public class PanelUtils
 {
     /// <summary>
