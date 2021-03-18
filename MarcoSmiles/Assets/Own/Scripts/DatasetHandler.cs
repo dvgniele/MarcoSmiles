@@ -2,6 +2,9 @@
 
 using Leap;
 
+/// <summary>
+/// Classe che calcola le features FF ed NFA
+/// </summary>
 public class DatasetHandler : MonoBehaviour
 {
     #region Getters
