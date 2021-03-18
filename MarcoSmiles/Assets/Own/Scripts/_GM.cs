@@ -13,18 +13,12 @@ using System.Collections;
 /// </summary>
 public class _GM : MonoBehaviour
 {
-<<<<<<< HEAD
 
     /// <summary>
     /// Flag necessario per sapere se il leap motion è connesso
     /// </summary>
     public static bool IsLeapConnected = false;        
-=======
-    /// <summary>
-    /// Flag necessario per sapere se il leap motion è connesso
-    /// </summary>
-    public static bool IsLeapConnected = false;
->>>>>>> cecae9461245960420cf81a30c7bb74723455b88
+
 
     /// <summary>
     /// Bottone preseente nel main menu per passare a scena "PlayScene"
