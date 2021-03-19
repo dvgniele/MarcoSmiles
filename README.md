@@ -4,10 +4,9 @@
 
 ## Table of Contents
 - [Features](#features)
-- [Changelog](#changelog)
-- [Working On](#workingon)
-- [Wiki](#wiki)
 - [Developed By](#developedby)
+- [Wiki](#wiki)
+
 
 ###
 
@@ -19,15 +18,9 @@
 - [x] Possibility to save hands positions
 - [x] Hand Position Camera
 - [x] Basic UI
-- [x] Sound Engine
+- [x] Editable Sound Engine
 - [x] Machine-Learning Agents
-- [ ] Music Session
-
-
-### Basic UI
-- hand visualization avaiable with some basic informations.
-### Hand Data Rapresentation
-- we need another hand data rapresentation to save hands position into a dataset.
+- [x] Music Session
 
 
 <a name="developedby"></a>
@@ -42,5 +35,11 @@
 <a name="wiki"></a>
 ## Wiki
 > #### The Project
-- This Project is dedicated to all people who can't play a real instrument due to their disability.
-- It's developed with Unity3D and requires the user to have the [LeapMotion Controller](https://www.leapmotion.com/) to work.
+- It requires the user to have the [LeapMotion Controller](https://www.leapmotion.com/) drivers to work.
+> #### For the Developers, it's necessessary to install the following list
+- It's necessary to install Unity Engine at the version 2019.4.12f1
+- It's necessary to install Visual Studio with the "Game development with Unity" package
+- Clone the repo into a directory, for example "littletest"
+- Once everything is installed, open the Unity Hub and select "Add"
+- Navigate to the directory "littletest", open the folder MarcoSmiles and select the second folder named MarcoSmile
+- Confirm and open the imported project showed into Unity Hub 
